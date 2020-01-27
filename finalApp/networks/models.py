@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 # Create your models here.
 
@@ -32,7 +33,27 @@ class Statistics(models.Model):
 
 class StudentsResults(models.Model):
     index_number = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Numer indeksu')
-    # counter = models.IntegerField(default=0)
-    # A_matrix = models.
     date = models.DateTimeField(auto_now_add=True)
+    set = models.IntegerField()
+    data = ArrayField(ArrayField(models.DecimalField(max_digits=8, decimal_places=4)))
+    A_matrix = ArrayField(ArrayField(models.IntegerField()))
 
+
+
+
+# ranges = [
+#     'C2:C2', #set number
+#     'B6:D19', #raw data
+#     'A23:G36', #A
+#     'A39:N52', #LP
+#     'H23:H36'# L
+#     'A57:G63', #ATPA
+#     'H57:H63', #ATPL
+#     'C69:C75', #x
+#     'G69:G82', #V
+#     'D69:D75', #HW
+#     'H69:H82', #ObsW
+#     'C88:C88', #sig_0
+#     'F90:F96', #mx
+#     'G90:G103' #mv
+# ]

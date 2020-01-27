@@ -4,21 +4,41 @@ import xlrd
 import numpy as np
 
 ranges = [
-    ('A23:G36'), #A
-    ('A39:N52'), #LP
-    ('H23:H36')# L
+    'C2:C2', #set number
+    'B6:D19', #raw data
+    'A23:G36', #A
+    'A39:N52', #LP
+    'H23:H36'# L
+    'A57:G63', #ATPA
+    'H57:H63', #ATPL
+    'C69:C75', #x
+    'G69:G82', #V
+    'D69:D75', #HW
+    'H69:H82', #ObsW
+    'C88:C88', #sig_0
+    'F90:F96', #mx
+    'G90:G103' #mv
 ]
 
 
 def open():
+    """
+    function opens a dialog window
+    :return: name of opened file
+    """
     root = Tk()
     root.title('My final app')
     root.filename = filedialog.askopenfilename()
     root.destroy()
     return root.filename
 
-
+#converting string to row and column numbers, works only for columns A to Z
 def excelRanges(excel_range):
+    """
+    :param excel_range: range of excel cells e.g. 'A23:G36'
+    :return: list of rows and columns integer numbers
+    REMARK: works only for columns A to Z
+    """
     try:
         letters = list(string.ascii_uppercase)
         ind = excel_range.index(':')
@@ -35,6 +55,12 @@ def excelRanges(excel_range):
 
 
 def readExcercise(filename, range):
+    """
+
+    :param filename: name of excel file to read
+    :param range: raange of cells in string format, e.g. 'A23:G36'
+    :return: data from the indicated file and range as an array
+    """
     cells = excelRanges(range)
     xls_file = xlrd.open_workbook(filename)
     sheet = xls_file.sheet_by_index(0)
@@ -43,7 +69,6 @@ def readExcercise(filename, range):
     matrix = np.empty((rows_num, columns_num))
     for i in range(cells[0], cells[1]+1):
         for j in range(cells[2], cells[3]+1):
-            matrix[i,j] = sheet.cell_value(i, j)
-
+            matrix[i-cells[0],j-cells[2]] = sheet.cell_value(i, j)
     print(matrix)
     return matrix
