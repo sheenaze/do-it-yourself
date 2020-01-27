@@ -54,21 +54,24 @@ def excelRanges(excel_range):
         print('Wprowadzony zakres nie jest zakresem komórek Excela')
 
 
-def readExcercise(filename, range):
+def readExcercise(filename, excel_range):
     """
-
     :param filename: name of excel file to read
     :param range: raange of cells in string format, e.g. 'A23:G36'
     :return: data from the indicated file and range as an array
     """
-    cells = excelRanges(range)
     xls_file = xlrd.open_workbook(filename)
     sheet = xls_file.sheet_by_index(0)
-    rows_num = cells[1]-cells[0]+1
-    columns_num = cells[3]-cells[2]+1
-    matrix = np.empty((rows_num, columns_num))
-    for i in range(cells[0], cells[1]+1):
-        for j in range(cells[2], cells[3]+1):
-            matrix[i-cells[0],j-cells[2]] = sheet.cell_value(i, j)
+    cells = excelRanges(excel_range)
+    rows_num = cells[1] - cells[0] + 1
+    columns_num = cells[3] - cells[2] + 1
+    matrix = np.zeros((rows_num, columns_num))
+    for i in range(cells[0], cells[1] + 1):
+        for j in range(cells[2], cells[3] + 1):
+            matrix[i - cells[0], j - cells[2]] = sheet.cell_value(i, j)
+
     print(matrix)
     return matrix
+
+
+
