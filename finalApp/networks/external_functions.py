@@ -8,16 +8,16 @@ ranges = [
     'B6:D19', #raw data
     'A23:G36', #A
     'A39:N52', #LP
-    'H23:H36'# L
+    'H23:H36',# L
     'A57:G63', #ATPA
     'H57:H63', #ATPL
     'C69:C75', #x
     'G69:G82', #V
     'D69:D75', #HW
     'H69:H82', #ObsW
-    'C88:C88', #sig_0
     'F90:F96', #mx
-    'G90:G103' #mv
+    'G90:G103', #mv
+    'C88:C88',  # sig_0
 ]
 
 
@@ -66,12 +66,18 @@ def readExcercise(filename, excel_range):
     rows_num = cells[1] - cells[0] + 1
     columns_num = cells[3] - cells[2] + 1
     matrix = np.zeros((rows_num, columns_num))
-    for i in range(cells[0], cells[1] + 1):
-        for j in range(cells[2], cells[3] + 1):
-            matrix[i - cells[0], j - cells[2]] = sheet.cell_value(i, j)
+    try:
+        if rows_num == 1 and columns_num == 1:
+            matrix = sheet.cell_value(cells[0], cells[2])
+            return matrix
+        else:
+            for i in range(cells[0], cells[1] + 1):
+                for j in range(cells[2], cells[3] + 1):
+                    matrix[i - cells[0], j - cells[2]] = sheet.cell_value(i, j)
+            return matrix.tostring()
+    except:
+        return matrix.tostring()
 
-    print(matrix)
-    return matrix
 
 
 

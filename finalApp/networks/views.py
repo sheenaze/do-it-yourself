@@ -1,26 +1,15 @@
-from django.http import HttpRequest
+#========  external libraries ==================
+from django.http import HttpResponse
 from django.shortcuts import render
-from tkinter import *
-from tkinter import filedialog
-
-from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView
-
-
+import xlrd
+#========  my files ==================
 from .models import  *
 from .forms import *
-from .functions import *
-
-import xlrd
-# class MainView(CreateView):
-#     model = Statistics
-#     fields = ['index_number', 'set_number']
-#     success_url = reverse_lazy("")
+from .external_functions import *
 
 
-
-
+# ================== Views ===============================================
 class MainView(View):
     def get(self, request):
         form = MainViewForm()
@@ -33,15 +22,17 @@ class MainView(View):
         title = 'Automatyczny sprawdzacz ćwiczeń'
         if form.is_valid():
             index_num = form.cleaned_data['index_number']
-            obj = Statistics.objects.filter(index_number = index_num)
-            if len(obj) == 0:
-                counter = 1
-            else:
-                counter = len(obj)+1
             filename = open()
-            Statistics.objects.create(counter= counter, index_number=index_num)
-            xls_file = xlrd.open_workbook(filename)
-            sheet = xls_file.sheet_by_index(0)
-            print(sheet.cell_value(23, 0))
+            fields = StudentsResults._meta.fields
+            object = StudentsResults.objects.create(index_number=index_num)
+            # object.index_number = index_num
+            # object.save()
+            for i in range(0, len(ranges)):
+                j = i+3 #field in StudentsResults index
+                value = readExcercise(filename, ranges[i])
+                setattr(object, fields[j].name, value)
+                object.save()
+
             return render(request, 'networks/base.html', {'form':form, 'file_name':index_num, 'title':title})
+            # return HttpResponse(text)
 
