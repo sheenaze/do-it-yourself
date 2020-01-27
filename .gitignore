@@ -1,1 +1,8 @@
 .idea/
+migrations
+venv
+function_test
+excel_files
+**/__pycache__*
+**/.pyc
+*.pyo
