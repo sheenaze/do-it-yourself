@@ -3,6 +3,12 @@ from tkinter import Tk, filedialog
 import xlrd
 import numpy as np
 
+def validate_empty(value):
+    if value is not "":
+        return value
+    else:
+        return 1000000
+
 ranges = [
     'C2:C2', #set number
     'B6:D19', #raw data
@@ -68,15 +74,15 @@ def readExcercise(filename, excel_range):
     matrix = np.zeros((rows_num, columns_num))
     try:
         if rows_num == 1 and columns_num == 1:
-            matrix = sheet.cell_value(cells[0], cells[2])
+            matrix = validate_empty(sheet.cell_value(cells[0], cells[2]))
             return matrix
         else:
             for i in range(cells[0], cells[1] + 1):
                 for j in range(cells[2], cells[3] + 1):
                     matrix[i - cells[0], j - cells[2]] = sheet.cell_value(i, j)
-            return matrix.tostring()
+            return matrix.tolist()#.tostring()
     except:
-        return matrix.tostring()
+        return matrix.tolist()#.tostring()
 
 
 

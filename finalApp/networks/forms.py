@@ -5,5 +5,5 @@ from .models import *
 
 class MainViewForm(ModelForm):
     class Meta:
-        model = Statistics
+        model = StudentsResults
         fields = ['index_number']
