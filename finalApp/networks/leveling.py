@@ -120,7 +120,7 @@ class LevelingAdjustment:
             pk = np.where(points[:,0] == row[2])[0][0]
             dh = points[pk, 1] - points[pp,1]
             l = dh - row[3]
-            vector.append(l)
+            vector.append([l])
         return np.array(vector)
 
     def ATPA_matrix(self):
@@ -148,9 +148,7 @@ class LevelingAdjustment:
 
     def HW_vector(self):
         points = self.points_height()
-        print(points)
         dH = self.x_vector()
-        print(dH)
         points[:,1] = np.add(points[:,1], dH)
         return points
 
@@ -235,7 +233,6 @@ class LevelingAdjustment:
 
 
 network = LevelingAdjustment(data, consts)
-print(network)
 # points = network.points_height()
 # print(network.points_to_find())
 # print(network.points_height())
