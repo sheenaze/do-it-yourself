@@ -1,19 +1,19 @@
 import numpy as np
 
-data = np.array([[1,	1,	2,	16.925,	7],
-                 [2,	1,	3,	10.047,	4],
-                 [3,	1,	5,	8.537, 5],
-                 [4,	2,	4,	-4.678,	6],
-                 [5,	2,	5,	-8.383, 4],
-                 [6,	2,	6,	-1.215,	6],
-                 [7,	3,	6,	5.654,	5],
-                 [8,	3,	7,	0.750,	6],
-                 [9,	4,	5,	-3.708,	4],
-                 [10,	4,	6,	3.462,	4],
-                 [11,	4,	7,	-1.441,	7],
-                 [12,	2,	101, -2.791, 3],
-                 [13,	5,	102	,-5.987, 8],
-                 [14,	6,	103	,-8.318, 5]])
+data = np.array([[1,	1,	2,	16.925,	0.007],
+                 [2,	1,	3,	10.047,	0.004],
+                 [3,	1,	5,	8.537, 0.005],
+                 [4,	2,	4,	-4.678,	0.006],
+                 [5,	2,	5,	-8.383, 0.004],
+                 [6,	2,	6,	-1.215,	0.006],
+                 [7,	3,	6,	5.654,	0.005],
+                 [8,	3,	7,	0.750,	0.006],
+                 [9,	4,	5,	-3.708,	0.004],
+                 [10,	4,	6,	3.462,	0.004],
+                 [11,	4,	7,	-1.441,	0.007],
+                 [12,	2,	101, -2.791, 0.003],
+                 [13,	5,	102	,-5.987, 0.008],
+                 [14,	6,	103	,-8.318, 0.005]])
 # data = np.array([[1,	2,	16.925,	0.007],
 #                  [1,	3,	10.047,	0.004],
 #                  [1,	5,	8.537, 0.005],
@@ -105,7 +105,7 @@ class LevelingAdjustment:
 
 
     def P_matrix(self):
-        variances = [1/(sig/1000)**2 for sig in self.data[:,-1]]
+        variances = [1/(sig)**2 for sig in self.data[:,-1]]
         return np.diag(variances)
 
 
@@ -149,13 +149,13 @@ class LevelingAdjustment:
     def HW_vector(self):
         points = self.points_height()
         dH = self.x_vector()
-        points[:,1] = np.add(points[:,1], dH)
+        points[:,1] = np.add(points[:,1], dH.reshape((len(dH),)))
         return points
 
     def obsW_matrix(self):
         V = self.V_vector()
         obs = self.data[:,1:4]
-        obs[:,-1] = np.add(obs[:,-1],V)
+        obs[:,-1] = np.add(obs[:,-1],V.reshape((len(V),)))
         return obs
 
     def sigma0(self):

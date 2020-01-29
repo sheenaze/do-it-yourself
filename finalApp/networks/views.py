@@ -1,13 +1,9 @@
 #========  external libraries ==================
-from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.views import View
-import xlrd
-import numpy as np
 #========  my files ==================
-from .models import  *
 from .forms import *
-from .external_functions import *
+from networks.functions_and_classes.external_functions import *
 
 
 # ================== Views ===============================================

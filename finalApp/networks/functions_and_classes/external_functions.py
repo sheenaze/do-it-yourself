@@ -7,13 +7,12 @@ django.setup()
 import string
 from tkinter import Tk, filedialog
 import xlrd
-import numpy as np
 
 
-import numpy as np
+# import numpy as np
 from networks.models import *
 from .leveling import *
-from .stage_first import *
+# from .stage_first import *
 
 
 def validate_empty(value):
@@ -100,58 +99,58 @@ def readExcercise(filename, excel_range):
 
 
 
-# functions
-# def savePoint(num, H, set_num):
-#     Points.objects.create(point = num, height = H, network_name=set_num)
-#
-# def gettingRealData(set_num):
-#     real_data_set = Leveling.objects.filter(network_name = set_num)
-#     real_data = []
-#     for item in real_data_set:
-#         insert = [int(item.obs_number), int(item.start_point), int(item.end_point), item.observation, item.accuracy]
-#         real_data.append(insert)
-#     return np.array(real_data)
-#
-# def constPoints():
-#     const_set = Consts.objects.all()
-#     constPoints = []
-#     for item in const_set:
-#         insert = [int(item.point), item.height]
-#         constPoints.append(insert)
-#     return np.array(constPoints)
-#
-# def getAllPoints(set_num):
-#     points_set = Points.objects.filter(network_name = set_num)
-#     if len(points_set) == 0:
-#         return None
-#     else:
-#         points = []
-#         for item in points_set:
-#             insert = [float(item.point), item.height]
-#             points.append(insert)
-#         return np.array(points)
-#
-# def createLevelingObject(data, consts, points, set_num):
-#     if points is None:
-#         real_network = LevelingAdjustment(data, consts)
-#         points = real_network.points_height()
-#
-#         for point in points:
-#             savePoint(point[0], point[1], set_num)
-#     else:
-#         real_network = LevelingAdjustment(data, consts, points)
-#
-#     return real_network
-#
-# def matrixInRangeValidation(pattern, matrix2validate, value):
-#     return np.all(pattern-value <= matrix2validate) and np.all(pattern+value >= matrix2validate)
-#
-#
-# def failedRows(matrix):
-#     rows = []
-#     for ind in range(0, len(matrix)):
-#         if sum(matrix[ind, :]) != np.shape(matrix)[1]:
-#             rows.append(ind + 1)
-#     return rows
+# functions for checking
+def savePoint(num, H, set_num):
+    Points.objects.create(point = num, height = H, network_name=set_num)
+
+def gettingRealData(set_num):
+    real_data_set = Leveling.objects.filter(network_name = set_num)
+    real_data = []
+    for item in real_data_set:
+        insert = [int(item.obs_number), int(item.start_point), int(item.end_point), item.observation, item.accuracy]
+        real_data.append(insert)
+    return np.array(real_data)
+
+def constPoints():
+    const_set = Consts.objects.all()
+    constPoints = []
+    for item in const_set:
+        insert = [int(item.point), item.height]
+        constPoints.append(insert)
+    return np.array(constPoints)
+
+def getAllPoints(set_num):
+    points_set = Points.objects.filter(network_name = set_num)
+    if len(points_set) == 0:
+        return None
+    else:
+        points = []
+        for item in points_set:
+            insert = [float(item.point), item.height]
+            points.append(insert)
+        return np.array(points)
+
+def createLevelingObject(data, consts, points, set_num):
+    if points is None:
+        real_network = LevelingAdjustment(data, consts)
+        points = real_network.points_height()
+
+        for point in points:
+            savePoint(point[0], point[1], set_num)
+    else:
+        real_network = LevelingAdjustment(data, consts, points)
+
+    return real_network
+
+def matrixInRangeValidation(pattern, matrix2validate, value):
+    return np.all(pattern-value <= matrix2validate) and np.all(pattern+value >= matrix2validate)
+
+
+def failedRows(matrix):
+    rows = []
+    for ind in range(0, len(matrix)):
+        if sum(matrix[ind, :]) != np.shape(matrix)[1]:
+            rows.append(ind + 1)
+    return rows
 
 

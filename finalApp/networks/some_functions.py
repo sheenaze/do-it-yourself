@@ -1,13 +1,7 @@
-import string
-
-import numpy as np
-import pandas as pd
 # -*- coding: utf-8 -*-
-import xlwt
 from tkinter import *
 from tkinter import filedialog
 import xlrd
-from xlrd.timemachine import xrange
 from external_functions import *
 # from networks.models import *
 #
