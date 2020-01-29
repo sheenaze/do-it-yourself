@@ -177,7 +177,7 @@ class LevelingAdjustment:
     def mx_vector(self):
         C = self.Cx_matrix()
         mx = np.sqrt(np.diag(C))
-        return mx
+        return mx.reshape((len(mx),1))
 
     def CobsW_matrix(self):
         A = self.A_matrix()
@@ -196,12 +196,12 @@ class LevelingAdjustment:
     def mObsW_vector(self):
         C = self.CobsW_matrix()
         mOb= np.sqrt(np.diag(C))
-        return mOb
+        return mOb.reshape((len(mOb),1))
 
     def mV_vector(self):
         C = self.CV_matrix()
         mV= np.sqrt(np.diag(C))
-        return mV
+        return mV.reshape((len(mV),1))
 
 
     def final_control(self):

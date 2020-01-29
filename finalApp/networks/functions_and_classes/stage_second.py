@@ -67,7 +67,7 @@ def secondStage(data, HP, query_set, comments, network_student):
         if counter != 4:
             comments.append('Etap II nie został wykonany poprawnie, analiza dokładności nie zostanie wykonana.')
         else:
-            comments.append('Przechodzę do III etapu')
+            comments.append('Przechodzę do III etapu.')
         return comments
 
 

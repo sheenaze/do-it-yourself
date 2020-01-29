@@ -43,7 +43,7 @@ def firstStage(data, set_num,real_data, A, P, L, HP ):
 
             if np.any([np.all(cond_l1), np.all(cond_l2)]):
                 comments.append('Wektor wyrazów wolnych poprawny')
-                comments.append('Przechodzę do etapu II')
+                comments.append('Przechodzę do etapu II.')
                 # here I should stop computing if only the first part is chosen to be checked
                 # if np.all(cond_l2):
                 #     L = np.round(L / 1000, 9)

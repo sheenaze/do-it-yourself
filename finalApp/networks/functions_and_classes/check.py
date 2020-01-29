@@ -10,6 +10,7 @@ django.setup()
 # from networks.functions_and_classes.external_functions import *
 from networks.functions_and_classes.stage_first import *
 from networks.functions_and_classes.stage_second import *
+from networks.functions_and_classes.stage_third import *
 
 index_num = 555653
 student = get_object_or_404(Student, index_number=index_num)
@@ -41,27 +42,13 @@ def checkExcersice(query_set):
 
     comments = first_stage
 
-    if comments[-1] == 'Przechodzę do etapu II':
+    if comments[-1] == 'Przechodzę do etapu II.':
         network_student = LevelingAdjustment(data, consts, HP)
         comments = secondStage(data, HP, query_set, comments, network_student)
 
         # I have to add here the column of accuracy, as I don't have an appropriate field in my model
-        if comments[-1] == 'Przechodzę do III etapu':
-
-            comments.append("======================== Etap III ========================")
-            points = getAllPoints(set_num)
-            real_network = createLevelingObject(real_data, consts, points, set_num)
-
-            sigma0 = query_set.sig_0
-            sigma0_my = real_network.sigma0()
-
-            if np.round(sigma0,7)==np.round(sigma0_my,7):
-                mx = 0
-
-
-            else:
-                comments.append('Błąd średni typowego spostrzeżenia jest niepoprawny. Dalsza analiza dokładności mija się z celem.')
-
+        if comments[-1] == 'Przechodzę do III etapu.':
+            comments = thirdStage(comments, set_num, real_data, consts, query_set)
 
         return comments
     else:
