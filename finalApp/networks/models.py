@@ -9,7 +9,7 @@ class Consts(models.Model):
     point = models.CharField(max_length=60, verbose_name='Numer punktu')
     x_coordinate = models.FloatField(verbose_name='Współrzędna X', default=0.000)
     y_coordinate = models.FloatField(verbose_name='Współrzędna Y', default=0.000)
-    height = models.DecimalField(max_digits=8, decimal_places=4, verbose_name='Wysokość', default=0.000)
+    height = models.FloatField(verbose_name='Wysokość', default=0.000)
     constant = models.BooleanField(default=False, verbose_name='Punkt stały')
 
 class Leveling(models.Model):
@@ -34,26 +34,9 @@ class Statistics(models.Model):
     counter = models.IntegerField(default=0)
     date = models.DateTimeField(auto_now=True)
 
-# class StudentsResults(models.Model):
-#     index_number = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Numer indeksu')
-#     date = models.DateTimeField(auto_now_add=True)
-#     set = models.IntegerField(blank=True, null=True)
-#     data = models.TextField(blank=True, null=True)
-#     A_matrix = models.TextField(blank=True, null=True)
-#     P_matrix =  models.TextField(blank=True, null=True)
-#     L_matrix =  models.TextField(blank=True, null=True)
-#     ATPA_matrix =  models.TextField(blank=True, null=True)
-#     ATPL_matrix =  models.TextField(blank=True, null=True)
-#     x_matrix =  models.TextField(blank=True, null=True)
-#     V_matrix = models.TextField(blank=True, null=True)
-#     HW_matrix = models.TextField(blank=True, null=True)
-#     dhW_matrix =  models.TextField(blank=True, null=True)
-#     mx_matrix =  models.TextField(blank=True, null=True)
-#     mV_matrix =  models.TextField(blank=True, null=True)
-#     sig_0 =  models.TextField(blank=True, null=True)
-
 class Points(models.Model):
-    network_name = models.ForeignKey(Leveling, on_delete=models.CASCADE)
+    point = models.CharField(max_length=60, verbose_name='Numer punktu')
+    network_name = models.CharField(max_length=60)
     x_coordinate = models.FloatField(verbose_name='Współrzędna X', default=0.000)
     y_coordinate = models.FloatField( verbose_name='Współrzędna Y', default=0.000)
     height = models.FloatField(verbose_name='Wysokość', default=0.000)
@@ -73,6 +56,7 @@ class Points(models.Model):
 #     date = models.DateTimeField(auto_now_add=True)
 #     set = models.IntegerField(blank=True, null=True)
 #     data =ArrayField(models.FloatField(blank=True, null=True))
+#     HP_matrix = ArrayField(models.FloatField(blank=True, null=True))
 #     A_matrix = ArrayField(models.IntegerField(blank=True, null=True))
 #     P_matrix = ArrayField(models.FloatField(blank=True, null=True))
 #     L_matrix = ArrayField(models.FloatField(blank=True, null=True))
@@ -91,8 +75,9 @@ class Points(models.Model):
 class StudentsResults(models.Model):
     index_number = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Numer indeksu')
     date = models.DateTimeField(auto_now_add=True)
-    set = models.IntegerField(blank=True, null=True)
+    set_num = models.IntegerField(blank=True, null=True)
     data = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
+    HP_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
     A_matrix = ArrayField(ArrayField(models.IntegerField(blank=True, null=True)))
     P_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
     L_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
@@ -108,6 +93,7 @@ class StudentsResults(models.Model):
 
 
 
+# [[1,	207.516], [2,	224.4489], [3,	217.5761], [4,	219.7721], [5,  216.0611], [6,	223.225], [7,	218.3281]]
 
 
 

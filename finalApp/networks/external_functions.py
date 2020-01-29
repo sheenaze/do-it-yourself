@@ -11,7 +11,8 @@ def validate_empty(value):
 
 ranges = [
     'C2:C2', #set number
-    'B6:D19', #raw data
+    'A6:D19', #raw data
+    'G6:H12' , # estH
     'A23:G36', #A
     'A39:N52', #LP
     'H23:H36',# L
@@ -57,7 +58,7 @@ def excelRanges(excel_range):
         else:
             print('Wprowadzony zakres jest niepoprawny')
     except:
-        print('Wprowadzony zakres nie jest zakresem komórek Excela')
+        print(f'Wprowadzony zakres {excel_range} nie jest zakresem komórek Excela')
 
 
 def readExcercise(filename, excel_range):

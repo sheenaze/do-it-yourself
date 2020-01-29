@@ -41,7 +41,15 @@ class ResultsView(View):
     def get(self, request, index_num):
         student = get_object_or_404(Student, index_number = index_num)
         data_set = student.studentsresults_set.all().order_by('-date')[0]
+        data = data_set.data
+
+
         # context = np.fromstring(data_set.A_matrix)
-        context = np.array(data_set.A_matrix)
+        context = np.array(data_set.data)
         return render(request, 'networks/results.html', {'context' : context})
+
+
+
+
+
 

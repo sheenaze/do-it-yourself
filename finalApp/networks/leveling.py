@@ -1,19 +1,34 @@
 import numpy as np
 
-data = np.array([[1,	1,	2,	16.925,	0.007],
-                 [2,	1,	3,	10.047,	0.004],
-                 [3,	1,	5,	8.537, 0.005],
-                 [4,	2,	4,	-4.678,	0.006],
-                 [5,	2,	5,	-8.383,	0.004],
-                 [6,	2,	6,	-1.215,	0.006],
-                 [7,	3,	6,	5.654,	0.005],
-                 [8,	3,	7,	0.750,	0.006],
-                 [9,	4,	5,	-3.708,	0.004],
-                 [10,	4,	6,	3.462,	0.004],
-                 [11,	4,	7,	-1.441,	0.007],
-                 [12,	2,	101, -2.791, 0.003],
-                 [13,	5,	102	,-5.987, 0.008],
-                 [14,	6,	103	,-8.318, 0.005]])
+data = np.array([[1,	1,	2,	16.925,	7],
+                 [2,	1,	3,	10.047,	4],
+                 [3,	1,	5,	8.537, 5],
+                 [4,	2,	4,	-4.678,	6],
+                 [5,	2,	5,	-8.383, 4],
+                 [6,	2,	6,	-1.215,	6],
+                 [7,	3,	6,	5.654,	5],
+                 [8,	3,	7,	0.750,	6],
+                 [9,	4,	5,	-3.708,	4],
+                 [10,	4,	6,	3.462,	4],
+                 [11,	4,	7,	-1.441,	7],
+                 [12,	2,	101, -2.791, 3],
+                 [13,	5,	102	,-5.987, 8],
+                 [14,	6,	103	,-8.318, 5]])
+# data = np.array([[1,	2,	16.925,	0.007],
+#                  [1,	3,	10.047,	0.004],
+#                  [1,	5,	8.537, 0.005],
+#                  [2,	4,	-4.678,	0.006],
+#                  [2,	5,	-8.383,	0.004],
+#                  [2,	6,	-1.215,	0.006],
+#                  [3,	6,	5.654,	0.005],
+#                  [3,	7,	0.750,	0.006],
+#                  [4,	5,	-3.708,	0.004],
+#                  [4,	6,	3.462,	0.004],
+#                  [4,	7,	-1.441,	0.007],
+#                  [2,	101, -2.791, 0.003],
+#                  [5,	102	,-5.987, 0.008],
+#                  [6,	103	,-8.318, 0.005]])
+
 consts = np.array(
 [[101,221.6500],
 [102,210.0821],
@@ -22,7 +37,7 @@ consts = np.array(
 
 
 
-class Leveling:
+class LevelingAdjustment:
     def __init__(self, data, const_points, points=None):
         self.const_points = const_points
         self.points = points
@@ -51,7 +66,8 @@ class Leveling:
 
     def points_height(self):
         if self.points is not None:
-            return self.points
+            points = self.points
+            return points
         else:
             num_points = len(self.points_list())
             points = self.const_points
@@ -70,7 +86,7 @@ class Leveling:
                         H = points[ind,1]-dh
                         points = np.append(points, [[pp, H]], axis = 0)
             points = points[points[:,0].argsort()]
-            return points
+            return points[:-3,:]
 
     def A_matrix(self):
         points = self.points_to_find()
@@ -80,25 +96,24 @@ class Leveling:
 
         for i in range(0,num_rows):
             for j in range(0, num_cols):
-                if points[j] == data[i, 1]:
+                if points[j] == self.data[i, 1]:
                     matrix[i, j] = -1
-                elif points[j] == data[i, 2]:
+                elif points[j] == self.data[i, 2]:
                     matrix[i, j] = 1
 
         return matrix
 
 
     def P_matrix(self):
-        variances = [1/(sig)**2 for sig in self.data[:,-1]]
+        variances = [1/(sig/1000)**2 for sig in self.data[:,-1]]
         return np.diag(variances)
 
 
     def L_vector(self):
         if self.points is None:
-            points = self.points_height()
+            points = np.append(self.points_height(), self.const_points, axis=0)
         else:
-            points = self.points
-
+            points = np.append(self.points, self.const_points, axis = 0)
         vector =[]
         for row in self.data:
             pp = np.where(points[:,0] == row[1])[0][0]
@@ -132,8 +147,10 @@ class Leveling:
         return np.add(np.matmul(A,x),L)
 
     def HW_vector(self):
-        points = self.points_height()[:-3,:]
+        points = self.points_height()
+        print(points)
         dH = self.x_vector()
+        print(dH)
         points[:,1] = np.add(points[:,1], dH)
         return points
 
@@ -189,40 +206,41 @@ class Leveling:
         return mV
 
 
-    # def final_control(self):
-    #     obsW = self.obsW_matrix()
-    #     points = self.HW_vector()
-    #     points = np.append(points, self.const_points, axis=0)
-    #     vector =[]
-    #     for row in obsW:
-    #         pp = np.where(points[:,0] == row[0])[0][0]
-    #         pk = np.where(points[:,0] == row[1])[0][0]
-    #         dh = points[pk, 1] - points[pp,1]
-    #         l = dh - row[2]
-    #         vector.append(l)
-    #     return np.round(np.array(vector), 14)
+    def final_control(self):
+        obsW = self.obsW_matrix()
+        points = self.HW_vector()
+        points = np.append(points, self.const_points, axis=0)
+        vector =[]
+        for row in obsW:
+            pp = np.where(points[:,0] == row[0])[0][0]
+            pk = np.where(points[:,0] == row[1])[0][0]
+            dh = points[pk, 1] - points[pp,1]
+            l = dh - row[2]
+            vector.append(l)
+        return np.round(np.array(vector), 14)
 
-        # return points
-    # def controls(self):
-    #     AT = np.transpose(self.A_matrix())
-    #     P = self.P_matrix()
-    #     V = self.V_vector()
-    #     VT = np.transpose(V)
-    #     L = self.L_vector()
-    #     ATPV = np.matmul(np.matmul(AT,P),V)
-    #     VTPV = np.matmul(np.matmul(VT,P),V)
-    #     VTPL = np.matmul(np.matmul(VT,P),L)
-    #     control_1 = np.round(ATPV,10) == 0
-    #     control_2 = np.round(VTPL,10) == np.round(VTPV,10)
-    #     return control_1+control_2
-
+    def controls(self):
+        AT = np.transpose(self.A_matrix())
+        P = self.P_matrix()
+        V = self.V_vector()
+        VT = np.transpose(V)
+        L = self.L_vector()
+        ATPV = np.matmul(np.matmul(AT,P),V)
+        VTPV = np.matmul(np.matmul(VT,P),V)
+        VTPL = np.matmul(np.matmul(VT,P),L)
+        control_1 = np.round(ATPV,10) == 0
+        control_2 = np.round(VTPL,10) == np.round(VTPV,10)
+        return control_1+control_2
 
 
-network = Leveling(data, consts)
+
+network = LevelingAdjustment(data, consts)
+print(network)
 # points = network.points_height()
 # print(network.points_to_find())
 # print(network.points_height())
 # print(network.P_matrix())
+# print(network.A_matrix())
 # print(network.ATPA_matrix())
 # print(network.ATPL_matrix())
 # print(network.L_vector())
@@ -232,7 +250,8 @@ network = Leveling(data, consts)
 # print(network.HW_vector())
 # print(network.obsW_matrix())
 # print(network.final_control())
+# print(network.controls())
 # print(network.sigma0())
-print(network.mx_vector())
-print(network.mV_vector())
-print(network.mObsW_vector())
+# print(network.mx_vector())
+# print(network.mV_vector())
+# print(network.mObsW_vector())
