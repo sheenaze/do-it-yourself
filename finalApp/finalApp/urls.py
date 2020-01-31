@@ -20,5 +20,9 @@ from networks.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', MainView.as_view(), name = 'main'),
-    path('results/<int:index_num>', ResultsView.as_view(), name='results')
+    # path('student/', MainStudentView.as_view(), name = 'main_student'),
+    path('results/<int:index_num>', ResultsView.as_view(), name='results'),
+    path('RaW/', RaWView.as_view(), name = 'RaW_main'),
+    path('RaW/login/', LoginView.as_view(), name = 'raw_login'),
+    path('student/', StudentView.as_view(), name = 'student')
 ]
