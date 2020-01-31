@@ -1,0 +1,13 @@
+{% extends 'networks/base.html' %}
+{% block maincontent %}
+<form method="post">
+    {% csrf_token %}
+
+    <div class="col-md-4 service-item">
+        <p>Login: {{ form.login}}</p>
+        <p>Hasło: {{ form.password }}</p>
+        <p> <input type="submit" value="Zaloguj"> </p>
+    </div>
+
+</form>
+{%  endblock %}

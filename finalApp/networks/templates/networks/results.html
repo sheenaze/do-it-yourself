@@ -7,6 +7,9 @@
 {##}
 {##}
 {#</table>#}
-{{ context }}
-
+{#    <ul>#}
+   {% for comment in comments %}
+    <p>    {{ comment}} </p>
+    {% endfor %}
+{#    </ul>#}
 {% endblock %}
