@@ -92,6 +92,24 @@ class StudentsResults(models.Model):
     sig_0 = models.FloatField(blank=True, null=True)
 
 
+# class Construction(models.Model):
+#     name = models.CharField(max_length=128, verbose_name='Nazwa inwestycji')
+#     street = models.CharField(max_length=128, verbose_name='Ulica')
+#     city = models.CharField(max_length=128, verbose_name='Miasto')
+#     # manager = models.ForeignKey(Manager, on_delete=models.CASCADE)
+#
+#
+# class Tool(models.Model):
+#     name = models.CharField(max_length=128, verbose_name='Nazwa')
+#     type = models.CharField(max_length=128, verbose_name='Rodzaj')
+#     category = models.CharField(max_length=128, verbose_name='Kategoria')
+#     serial_number = models.CharField(max_length=128, verbose_name='Numer fabryczny', null=True)
+#     purchase_date = models.CharField(max_length=64, verbose_name='Data zakupu', null=True)
+#     firm = models.CharField(max_length=128, verbose_name='Firma', null=True)
+#     trade_mark = models.CharField(max_length=128, verbose_name='Znak firmowy', null=True)
+#     comment = models.CharField(max_length=128, verbose_name='Uwagi', null=True)
+#     construction = models.ForeignKey(Construction, on_delete=models.CASCADE)
+
 
 # [[1,	207.516], [2,	224.4489], [3,	217.5761], [4,	219.7721], [5,  216.0611], [6,	223.225], [7,	218.3281]]
 

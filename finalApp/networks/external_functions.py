@@ -12,8 +12,8 @@ import numpy as np
 
 import numpy as np
 from networks.models import *
-from .leveling import *
-from .stage_first import *
+from networks.functions_and_classes.leveling import *
+from networks.functions_and_classes.stage_first import *
 
 
 def validate_empty(value):

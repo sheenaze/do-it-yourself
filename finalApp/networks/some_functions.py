@@ -1,3 +1,10 @@
+# import os
+# from django.shortcuts import get_object_or_404
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'finalApp.settings')
+# import django
+# django.setup()
+
+# from .models import *
 # -*- coding: utf-8 -*-
 from tkinter import *
 from tkinter import filedialog
@@ -24,14 +31,32 @@ sheet = xls_file.sheet_by_index(0)
 print(root.filename)
 # fields = Leveling._meta.fields
 
-# for i in range(0,840):
-#     print([sheet.cell_value(i, 0), sheet.cell_value(i, 1), sheet.cell_value(i, 2), sheet.cell_value(i, 3), sheet.cell_value(i, 4), sheet.cell_value(i, 5)], i)
-#     Leveling.objects.create(network_name = str(int(sheet.cell_value(i, 0))),
-#                             obs_number = int(sheet.cell_value(i, 1)),
-#                             start_point = str(int(sheet.cell_value(i,2))),
-#                             end_point = str(int(sheet.cell_value(i,3))),
-#                             observation = float(sheet.cell_value(i,4)),
-#                             accuracy = float(sheet.cell_value(i,5)))
+# import xlrd
+# from .models import *
+# filename = '/home/monika/Projects/MyFinalApp/do-it-yourself/finalApp/excel_files/tools.xls'
+# xls_file = xlrd.open_workbook(filename)
+# sheet = xls_file.sheet_by_index(0)
+#
+# for i in range(3,262):
+#     #print([sheet.cell_value(i, 0), sheet.cell_value(i, 1), sheet.cell_value(i, 2), sheet.cell_value(i, 3), sheet.cell_value(i, 4), sheet.cell_value(i, 5), sheet.cell_value(i, 6), sheet.cell_value(i, 7), int(sheet.cell_value(i, 8))], i)
+#     Tool.objects.create(name = sheet.cell_value(i, 0),
+#     type = sheet.cell_value(i, 1),
+#     category = sheet.cell_value(i, 2),
+#     serial_number = sheet.cell_value(i, 3),
+#     purchase_date =sheet.cell_value(i, 4),
+#     firm = sheet.cell_value(i, 5),
+#     trade_mark = sheet.cell_value(i, 6),
+#     comment = sheet.cell_value(i, 7),
+#     construction_id = int(sheet.cell_value(i, 8)))
+
+
+
+    # Leveling.objects.create(network_name = str(int(sheet.cell_value(i, 0))),
+    #                         obs_number = int(sheet.cell_value(i, 1)),
+    #                         start_point = str(int(sheet.cell_value(i,2))),
+    #                         end_point = str(int(sheet.cell_value(i,3))),
+    #                         observation = float(sheet.cell_value(i,4)),
+    #                         accuracy = float(sheet.cell_value(i,5)))
     # object = Leveling()
     # for j in range(0,5):
     #     value = sheet.cell_value(i, j)

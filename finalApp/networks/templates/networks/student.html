@@ -4,19 +4,20 @@
       <div class="row">
         <div class="col-md-12">
           <h3 class="section-title">Profil</h3>
-          <div class="section-title-divider"></div>
+          <div class="section-title-divider_student"></div>
           <p class="section-description"></p>
         </div>
       </div>
     </div>
     <div class="row">
         <div class="col-md-4 service-item">
-{#          <div class="service-icon"><i class="fa fa-calculator"></i></div>#}
+            <hr>
           <h3 class="service-title"> <strong> Imię: </strong> {{ student.name }}</h3>
           <h3 class="service-title"><strong> Nazwisko: </strong> {{ student.last_name }}</h3>
           <h3 class="service-title"><strong> Numer indeksu: </strong> {{ student.index_number }}</h3>
           <h3 class="service-title"><strong> Numer zestawu RaW: </strong> {{ student.set_number }}</h3>
-
+            <hr>
+        </fieldset>
         </div>
     </div>
 {%  endblock %}

@@ -40,7 +40,7 @@ ranges = [
 ]
 
 
-def open():
+def openWindow():
     """
     function opens a dialog window
     :return: name of opened file
@@ -50,6 +50,12 @@ def open():
     root.filename = filedialog.askopenfilename()
     root.destroy()
     return root.filename
+
+def savingFile(text):
+    file = filedialog.asksaveasfile(mode='w', defaultextension=".txt")
+    file.write(text)
+    file.close()
+
 
 #converting string to row and column numbers, works only for columns A to Z
 def excelRanges(excel_range):
