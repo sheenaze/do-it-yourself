@@ -90,7 +90,7 @@ class StudentsResults(models.Model):
     mx_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
     mV_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
     sig_0 = models.FloatField(blank=True, null=True)
-
+    report = ArrayField(ArrayField(models.TextField(blank=True, null=True)))
 
 # class Construction(models.Model):
 #     name = models.CharField(max_length=128, verbose_name='Nazwa inwestycji')

@@ -10,6 +10,7 @@ from networks.functions_and_classes.external_functions import *
 from networks.functions_and_classes.check import *
 import urllib.request
 from django.utils.encoding import smart_str
+from django.contrib.auth.models import User
 
 
 # ================== Views ===============================================
@@ -44,7 +45,7 @@ class ResultsView(View):
         student = get_object_or_404(Student, index_number = index_num)
         data_set = student.studentsresults_set.all().order_by('-date')[0]
         # data = data_set.data
-        comments = checkExcersice(data_set)
+        comments = data_set.report
 
         # context = np.fromstring(data_set.A_matrix)
         context = np.array(data_set.data)
@@ -52,9 +53,20 @@ class ResultsView(View):
 
 class MainView(View):
     def get(self, request):
-        form = LoginForm()
+        form = AddUserForm()
         title = 'Sprawdź sobie sam'
-        return render(request, 'networks/index.html', {'form' : form, 'title':title})
+        return render(request, 'networks/index.html', {'form':form, 'title':title})
+    def post(self, request):
+        form = AddUserForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            name = form.cleaned_data['name']
+            last_name = form.cleaned_data['last_name']
+            User.objects.create_user(username = username, password= password, name = name, last_name=last_name)
+            return redirect('raw_login')
+        else:
+            return redirect('#contact')
     # def post(self, request):
     #     form = LoginForm(request.POST)
     #     if form.is_valid():
@@ -99,6 +111,9 @@ class RaWView(LoginRequiredMixin, View):
                     print(i)
                     setattr(student_results, fields[j].name, value)
                 student_results.save()
+                # comments = checkExcersice(student_results)
+                # student_results.report = comments
+                # student_results.save()
                 return redirect(f'/results/{index_num}')
             except:
                 return HttpResponse(self.get(request))
@@ -173,7 +188,6 @@ class LoginView(View):
         else:
             return HttpResponse('Nie działa')
             # return render(request, 'exercises/form.html', {'form': form})
-
 
 
 

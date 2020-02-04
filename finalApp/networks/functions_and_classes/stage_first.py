@@ -111,5 +111,5 @@ def firstStage(data, set_num,real_data, A, P, L, HP ):
         return comments
 
     else:
-        comments.append(f'Zostały wzięte niewłaściwe dane, dalsze sprawdzanie mija się z celem')
+        comments.append(f'Zostały wzięte niewłaściwe dane (lub dane nie zostały wprowadzone), dalsze sprawdzanie mija się z celem')
         return comments
