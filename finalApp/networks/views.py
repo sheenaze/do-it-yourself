@@ -45,8 +45,8 @@ class ResultsView(View):
         student = get_object_or_404(Student, index_number = index_num)
         data_set = student.studentsresults_set.all().order_by('-date')[0]
         # data = data_set.data
-        comments = data_set.report
-
+        comments = checkExcersice(data_set)
+        # comments = data_set.report
         # context = np.fromstring(data_set.A_matrix)
         context = np.array(data_set.data)
         return render(request, 'networks/results.html', {'comments' : comments})
@@ -104,16 +104,13 @@ class RaWView(LoginRequiredMixin, View):
                 filename = openWindow()
                 fields = StudentsResults._meta.fields
                 student = Student.objects.get(index_number = index_num)
+                print(student.index_number)
                 student_results = StudentsResults(index_number=student)
                 for i in range(0, len(ranges)):
-                    j = i + 3  # field in StudentsResults index
+                    j = i + 3 # field in StudentsResults index
                     value = readExcercise(filename, ranges[i])
-                    print(i)
                     setattr(student_results, fields[j].name, value)
                 student_results.save()
-                # comments = checkExcersice(student_results)
-                # student_results.report = comments
-                # student_results.save()
                 return redirect(f'/results/{index_num}')
             except:
                 return HttpResponse(self.get(request))
