@@ -141,16 +141,6 @@ class RaWView(LoginRequiredMixin, View):
 
 
 
-            # response = HttpResponse(content_type='application/force-download')  # mimetype is replaced by content_type for django 1.7
-            # response['Content-Disposition'] = f'attachment; filename={smart_str("RaW1_Imie_Nazwisko.xlsx")}'
-            # # response['Content-Disposition'] = 'attachment; filename=%s' % smart_str('RaW1_Imie_Nazwisko.xlsx')
-            #
-            # response['X-Sendfile'] = smart_str("/home/monika/Projects/MyFinalApp/do-it-yourself/finalApp/excel_files/")
-            # # It's usually a good idea to set the 'Content-Length' header too.
-            # # You can also set any other required headers: Cache-Control, etc.
-            # return response
-
-
         if button == 'profile':
             return redirect('/student/')
 
@@ -159,8 +149,29 @@ class StudentView(View):
     def get(self, request):
         username = request.user.username
         student = get_object_or_404(Student, index_number = int(username))
+        student_results_raw = StudentsResults.objects.filter(index_number=student)
 
-        return render(request, 'networks/student.html', {'student':student})
+        return render(request, 'networks/student.html', {'student':student, 'raw_results':student_results_raw})
+
+    def post(self, request):
+        button = request.POST.get('report_button')
+        results = StudentsResults.objects.get(pk = int(button))
+        if results.report is None:
+            results.report = checkExcersice(results)
+            results.save()
+        report = results.report
+
+        text = ''
+        for item in report:
+            text += f'{item} \n'
+
+        filename = f'Raport_{results.date}.txt'
+        response = HttpResponse(text, content_type='text/plain')
+        response['Content-Disposition'] = 'attachment; filename={0}'.format(filename)
+        return response
+
+        # return HttpResponse(report)
+
 
 
 class LoginView(View):

@@ -17,7 +17,28 @@
           <h3 class="service-title"><strong> Numer indeksu: </strong> {{ student.index_number }}</h3>
           <h3 class="service-title"><strong> Numer zestawu RaW: </strong> {{ student.set_number }}</h3>
             <hr>
-        </fieldset>
+        </div>
+    </div>
+        <div class="row">
+        <div class="col-md-4 service-item">
+            <hr>
+            <form method="post">
+            {% csrf_token %}
+                <table>
+                <tr>
+                    <th> Data dodania ćwiczenia</th>
+                    <th> Raport </th>
+
+                </tr>
+                {% for result in raw_results %}
+                 <tr>
+                     <td>{{ result.date }}</td>
+                     <td> <button class="tn-services" name="report_button" value="{{ result.pk }}"> Pobierz raport </button> </td>
+
+                 </tr>
+                {% endfor %}
+                </table>
+            </form>
         </div>
     </div>
 {%  endblock %}
