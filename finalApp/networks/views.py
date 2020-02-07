@@ -1,5 +1,5 @@
 #========  external libraries ==================
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -88,6 +88,7 @@ class MainView(View):
 class RaWView(LoginRequiredMixin, View):
     def get(self, request):
         title = 'Automatyczny sprawdzacz ćwiczeń'
+        raise_exception = True
         # form = UploadFileForm()
         # # return HttpResponse(username)
         return render(request, 'networks/RaW.html', {'title': title})
@@ -197,6 +198,10 @@ class LoginView(View):
             return HttpResponse('Nie działa')
             # return render(request, 'exercises/form.html', {'form': form})
 
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('main')
 
 
 
