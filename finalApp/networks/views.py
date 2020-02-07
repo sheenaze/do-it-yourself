@@ -111,7 +111,7 @@ class RaWView(LoginRequiredMixin, View):
                     value = readExcercise(filename, ranges[i])
                     setattr(student_results, fields[j].name, value)
                 student_results.save()
-                return redirect(f'/results/{index_num}')
+                return redirect("student")
             except:
                 return HttpResponse(self.get(request))
 

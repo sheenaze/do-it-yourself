@@ -21,10 +21,11 @@
     </div>
         <div class="row">
         <div class="col-md-4 service-item">
-            <hr>
+{#            <hr>#}
             <form method="post">
             {% csrf_token %}
-                <table>
+                <h3 class="service-title"><strong> Rachunek Wyrównawczy </strong>  </h3>
+                <table class="raw_table">
                 <tr>
                     <th> Data dodania ćwiczenia</th>
                     <th> Raport </th>
@@ -33,7 +34,7 @@
                 {% for result in raw_results %}
                  <tr>
                      <td>{{ result.date }}</td>
-                     <td> <button class="tn-services" name="report_button" value="{{ result.pk }}"> Pobierz raport </button> </td>
+                     <td> <button class="report_btn" name="report_button" value="{{ result.pk }}"> Pobierz raport </button> </td>
 
                  </tr>
                 {% endfor %}
