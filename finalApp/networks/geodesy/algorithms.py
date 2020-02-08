@@ -24,8 +24,7 @@ def getData(number, group=1):
             s = 450 + number
             z = 73.0
             A = 30.0+number
-            c = mt.pi / 180
-            return [X, Y, Z, s, z*c, A*c]
+            return [X, Y, Z, s, z, A]
         else:
             return 'Podano nieprawidłowy numer grupy'
     except:

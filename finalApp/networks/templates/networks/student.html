@@ -4,7 +4,10 @@
       <div class="row">
         <div class="col-md-12">
           <h3 class="section-title">Profil</h3>
-            <p align="center"> <a href="{% url 'logout' %}"> Wyloguj </a> </p>
+            <p align="center">
+                <a href="{% url 'GW_main' %}"> GW </a> |
+                <a href="{% url 'RaW_main' %}"> RaW </a> |
+                <a href="{% url 'logout' %}"> Wyloguj </a> </p>
           <div class="section-title-divider_student"></div>
           <p class="section-description"></p>
         </div>
@@ -16,7 +19,8 @@
           <h3 class="service-title"> <strong> Imię: </strong> {{ student.name }}</h3>
           <h3 class="service-title"><strong> Nazwisko: </strong> {{ student.last_name }}</h3>
           <h3 class="service-title"><strong> Numer indeksu: </strong> {{ student.index_number }}</h3>
-          <h3 class="service-title"><strong> Numer zestawu RaW: </strong> {{ student.set_number }}</h3>
+          <h3 class="service-title"><strong> Numer zestawu RaW: </strong> {{ student.RW_set_number }}</h3>
+          <h3 class="service-title"><strong> Numer zestawu GW: </strong> {{ student.GW_set_number }}</h3>
             <hr>
         </div>
     </div>
@@ -40,6 +44,30 @@
                  </tr>
                 {% endfor %}
                 </table>
+            </form>
+        </div>
+    </div>
+     <hr>
+    <div class="row">
+        <div class="col-md-4 service-item">
+{#            <hr>#}
+            <form method="post">
+            {% csrf_token %}
+                <h3 class="service-title"><a href="{% url "GW_main" %}"><strong> Geodezja Wyższa </strong> </a> </h3>
+{#                <table class="raw_table">#}
+{#                <tr>#}
+{#                    <th> Data dodania ćwiczenia</th>#}
+{#                    <th> Raport </th>#}
+{##}
+{#                </tr>#}
+{#                {% for result in raw_results %}#}
+{#                 <tr>#}
+{#                     <td>{{ result.date }}</td>#}
+{#                     <td> <button class="report_btn" name="report_button" value="{{ result.pk }}"> Pobierz raport </button> </td>#}
+{##}
+{#                 </tr>#}
+{#                {% endfor %}#}
+{#                </table>#}
             </form>
         </div>
     </div>

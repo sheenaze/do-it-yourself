@@ -1,45 +1,18 @@
 #========  external libraries ==================
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.urls import reverse
 from django.views import View
+from networks.functions_and_classes.check import *
+
 #========  my files ==================
 from .forms import *
-from networks.functions_and_classes.external_functions import *
-from networks.functions_and_classes.check import *
-import urllib.request
-from django.utils.encoding import smart_str
-from django.contrib.auth.models import User
+# from geodesy.algorithms import *
+from networks.geodesy.geodesy_exercises import *
 
 
 # ================== Views ===============================================
-# class MainStudentView(View):
-#     def get(self, request):
-#         form = MainViewForm()
-#         title = 'Automatyczny sprawdzacz ćwiczeń'
-#         return render(request, 'networks/base.html', {'title':title, 'form':form})
-#
-#
-#     def post(self, request):
-#         form = MainViewForm(request.POST)
-#         title = 'Automatyczny sprawdzacz ćwiczeń'
-#         if form.is_valid():
-#             index_num = form.cleaned_data['index_number']
-#             filename = open()
-#             fields = StudentsResults._meta.fields
-#             # object = StudentsResults.objects.create(index_number=index_num)
-#             student = StudentsResults(index_number=index_num)
-#             for i in range(0, len(ranges)):
-#                 j = i+3 #field in StudentsResults index
-#                 value = readExcercise(filename, ranges[i])
-#                 print(i)
-#                 setattr(student, fields[j].name, value)
-#             student.save()
-#             return redirect(f'/results/{index_num}')
-#             # return render(request, 'networks/base.html', {'form':form, 'index_num':index_num, 'title':title})
-#             # return HttpResponse(student.A_matrix)
 
 class ResultsView(View):
     def get(self, request, index_num):
@@ -68,8 +41,6 @@ class MainView(View):
             User.objects.create_user(username = username, password= password)
             return redirect('raw_login')
         else:
-            # return HttpResponseRedirect(reverse('main'))
-            # return redirect('/#register', {'form':form})
             return render(request, "networks/index.html", {'form':form})
     # def post(self, request):
     #     form = LoginForm(request.POST)
@@ -121,7 +92,7 @@ class RaWView(LoginRequiredMixin, View):
 
         if button == 'get_data':
             index_num = int(username)
-            set_number = Student.objects.get(index_number=index_num).set_number
+            set_number = Student.objects.get(index_number=index_num).RW_set_number
             data = Leveling.objects.filter(network_name=set_number)
 
             text = f"Nr obs.,  Pkt. pocz.,    Pkt. końc.,   Obs. [m],  m0 [mm] \n"
@@ -155,6 +126,9 @@ class GWView(LoginRequiredMixin,View):
         username = request.user.username
         title = 'Automatyczny sprawdzacz ćwiczeń'
         button = request.POST.get('button')
+
+        if button == 'get_data':
+            return redirect('GW_data')
 
         if button == 'profile':
             return redirect('/student/')
@@ -219,6 +193,14 @@ class LogoutView(View):
         logout(request)
         return redirect('main')
 
+
+class GWDataView(LoginRequiredMixin,View):
+    def get(self, request):
+        username = request.user.username
+        student = get_object_or_404(Student, index_number=int(username))
+        data = getData(student.GW_set_number)
+        ellipsoid = GRS80()
+        return render(request, 'networks/GW_data.html', {'data':data, 'ellipsoid':ellipsoid})
 
 
 

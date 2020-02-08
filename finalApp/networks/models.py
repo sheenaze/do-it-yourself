@@ -24,7 +24,8 @@ class Student(models.Model):
     name = models.CharField(max_length=60, verbose_name='Imię')
     last_name = models.CharField(max_length=60, verbose_name='Nazwisko')
     index_number = models.IntegerField(verbose_name="Numer indeksu", unique=True)
-    set_number = models.IntegerField(verbose_name="Numer zestawu")
+    RW_set_number = models.IntegerField(verbose_name="Numer zestawu", default=0)
+    GW_set_number = models.IntegerField(verbose_name="Numer zestawu", default=0)
 
     def __str__(self):
         return f'{self.index_number}'
@@ -51,25 +52,6 @@ class Points(models.Model):
 
 
 
-# class StudentsResults(models.Model):
-#     index_number = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Numer indeksu')
-#     date = models.DateTimeField(auto_now_add=True)
-#     set = models.IntegerField(blank=True, null=True)
-#     data =ArrayField(models.FloatField(),blank=True, null=True)
-#     HP_matrix = ArrayField(models.FloatField(), blank=True, null=True)
-#     A_matrix = ArrayField(models.IntegerField(blank=True, null=True),blank=True, null=True)
-#     P_matrix = ArrayField(models.FloatField(blank=True, null=True),blank=True, null=True)
-#     L_matrix = ArrayField(models.FloatField(blank=True, null=True),blank=True, null=True)
-#     ATPA_matrix = ArrayField(models.FloatField(blank=True, null=True),blank=True, null=True)
-#     ATPL_matrix = ArrayField(models.FloatField(blank=True, null=True),blank=True, null=True)
-#     x_matrix =ArrayField(models.FloatField(blank=True, null=True),blank=True, null=True)
-#     V_matrix = ArrayField(models.FloatField(blank=True, null=True),blank=True, null=True)
-#     HW_matrix =ArrayField(models.FloatField(blank=True, null=True),blank=True, null=True)
-#     dhW_matrix = ArrayField(models.FloatField(blank=True, null=True),blank=True, null=True)
-#     mx_matrix = ArrayField(models.FloatField(blank=True, null=True),blank=True, null=True)
-#     mV_matrix = ArrayField(models.FloatField(blank=True, null=True),blank=True, null=True)
-#     sig_0 = models.FloatField(blank=True, null=True)
-#     report = ArrayField(models.TextField(blank=True, null=True),blank=True, null=True)
 
 
 # #
@@ -93,42 +75,3 @@ class StudentsResults(models.Model):
     sig_0 = models.FloatField(blank=True, null=True)
     report = ArrayField(ArrayField(models.TextField()), blank=True, null=True)
 
-# class Construction(models.Model):
-#     name = models.CharField(max_length=128, verbose_name='Nazwa inwestycji')
-#     street = models.CharField(max_length=128, verbose_name='Ulica')
-#     city = models.CharField(max_length=128, verbose_name='Miasto')
-#     # manager = models.ForeignKey(Manager, on_delete=models.CASCADE)
-#
-#
-# class Tool(models.Model):
-#     name = models.CharField(max_length=128, verbose_name='Nazwa')
-#     type = models.CharField(max_length=128, verbose_name='Rodzaj')
-#     category = models.CharField(max_length=128, verbose_name='Kategoria')
-#     serial_number = models.CharField(max_length=128, verbose_name='Numer fabryczny', null=True)
-#     purchase_date = models.CharField(max_length=64, verbose_name='Data zakupu', null=True)
-#     firm = models.CharField(max_length=128, verbose_name='Firma', null=True)
-#     trade_mark = models.CharField(max_length=128, verbose_name='Znak firmowy', null=True)
-#     comment = models.CharField(max_length=128, verbose_name='Uwagi', null=True)
-#     construction = models.ForeignKey(Construction, on_delete=models.CASCADE)
-
-
-# [[1,	207.516], [2,	224.4489], [3,	217.5761], [4,	219.7721], [5,  216.0611], [6,	223.225], [7,	218.3281]]
-
-
-
-# ranges = [
-#     'C2:C2', #set number
-#     'B6:D19', #raw data
-#     'A23:G36', #A
-#     'A39:N52', #P
-#     'H23:H36'# L
-#     'A57:G63', #ATPA
-#     'H57:H63', #ATPL
-#     'C69:C75', #x
-#     'G69:G82', #V
-#     'D69:D75', #HW
-#     'H69:H82', #ObsW
-#     'C88:C88', #sig_0
-#     'F90:F96', #mx
-#     'G90:G103' #mv
-# ]

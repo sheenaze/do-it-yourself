@@ -6,8 +6,8 @@ class Excercise1:
         self.YA = data[1]
         self.ZA = data[2]
         self.distance = data[3]
-        self.zenith = data[4]
-        self.azimuth = data[5]
+        self.zenith = data[4]*mt.pi/180
+        self.azimuth = data[5]*mt.pi/180
 
     def lat_long_H_A(self):
         return hirvonen(self.XA, self.YA, self.ZA)

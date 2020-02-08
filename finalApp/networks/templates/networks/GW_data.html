@@ -1,0 +1,37 @@
+{% extends 'networks/base.html' %}
+{% block maincontent %}
+    <div class="container wow fadeInUp">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="section-title">Zadania z Geodezji Wyższej</h3>
+            <p align="center">
+                <a href="{% url 'GW_main' %}"> GW </a> |
+                <a href="{% url 'RaW_main' %}"> RaW </a> |
+                <a href="{% url 'student' %}"> Profil </a> |
+                <a href="{% url 'logout' %}"> Wyloguj </a>
+            </p>
+          <div class="section-title-divider_student"></div>
+          <p class="section-description"></p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 service-item">
+            <hr>
+          <h3 class="service-title"> <strong> Zadanie 2</strong> </h3>
+            <p>Dane są współrzędne XYZ punktu A w układzie elipsoidy GRS80: <br>
+               <br> X = {{ data.0|floatformat:3}}
+               <br> Y = {{ data.1|floatformat:3}}
+               <br> Z = {{ data.2|floatformat:3}} <br>
+               <br>Obliczyć współrzędne &phi;, &lambda;, H punktu B, wiedząc, że w układzie lokalnym NEU zachodzą zależności: <br>
+               <br>  s<sub>AB</sub> = {{ data.3|floatformat:3}} m
+               <br> z<sub>AB</sub> = {{ data.4|floatformat}}&deg;
+               <br> Az<sub>AB</sub> = {{ data.5|floatformat}}&deg; <br>
+               <br>Rachunki współrzędnych geodezyjnych prowadzić z precyzją 0,00001".
+            </p>
+
+            <hr>
+        </div>
+    </div>
+
+{%  endblock %}
