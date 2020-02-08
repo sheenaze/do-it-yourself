@@ -1,8 +1,9 @@
 #========  external libraries ==================
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import View
 #========  my files ==================
 from .forms import *
@@ -58,15 +59,18 @@ class MainView(View):
         return render(request, 'networks/index.html', {'form':form, 'title':title})
     def post(self, request):
         form = AddUserForm(request.POST)
+        print(form.non_field_errors())
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            name = form.cleaned_data['name']
-            last_name = form.cleaned_data['last_name']
-            User.objects.create_user(username = username, password= password, name = name, last_name=last_name)
+            # name = form.cleaned_data['name']
+            # last_name = form.cleaned_data['last_name']
+            User.objects.create_user(username = username, password= password)
             return redirect('raw_login')
         else:
-            return redirect('#contact')
+            # return HttpResponseRedirect(reverse('main'))
+            # return redirect('/#register', {'form':form})
+            return render(request, "networks/index.html", {'form':form})
     # def post(self, request):
     #     form = LoginForm(request.POST)
     #     if form.is_valid():
@@ -88,7 +92,6 @@ class MainView(View):
 class RaWView(LoginRequiredMixin, View):
     def get(self, request):
         title = 'Automatyczny sprawdzacz ćwiczeń'
-        raise_exception = True
         # form = UploadFileForm()
         # # return HttpResponse(username)
         return render(request, 'networks/RaW.html', {'title': title})
@@ -145,6 +148,10 @@ class RaWView(LoginRequiredMixin, View):
         if button == 'profile':
             return redirect('/student/')
 
+class GWView(LoginRequiredMixin,View):
+    def get(self, request):
+        title = 'Automatyczny sprawdzacz ćwiczeń'
+        return render(request, 'networks/GW.html', {'title': title})
 
 class StudentView(View):
     def get(self, request):

@@ -61,9 +61,11 @@
 
         <h1>Serwis do samodzielnego sprawdzania zadań z RaWu i GW</h1>
         <h2>Na tej stronie <span class="rotating"> samodzielnie sprawdzisz swoje zadania z Rachunku Wyrównawczego i Geodezji Wyższej</span></h2>
+        <h3 id="error_msg"> {{ form.non_field_errors }} </h3>
         <div class="actions">
           <a href="#about" class="btn-get-started">Informacje o stronie</a>
           <a href="#services" class="btn-services">Logowanie</a>
+          <a href="#register" class="btn-services">Rejestracja</a>
         </div>
       </div>
     </div>
@@ -172,7 +174,7 @@
         </div>
         <div class="col-md-4 service-item">
           <div class="service-icon"><i class="fa fa-map"></i></div>
-          <h4 class="service-title"><a href="" class="login_link" name="login_link">Geodezja Wyższa</a></h4>
+          <h4 class="service-title"><a href="/GW/login/" class="login_link" name="login_link">Geodezja Wyższa</a></h4>
           <p class="service-description">Treści zadań, dane i moduł sprawdzający do zadań z Geodezji Wyższej</p>
         </div>
         <div class="col-md-4 service-item">
@@ -446,7 +448,7 @@
 {#          <p class="section-description">Aby w pełni korzystać z możliwości serwisu zarejestruj sie używając swojego numeru indeksu </p>#}
 {#        </div>#}
 {#      </div>#}
-{#        {% include 'networks/register.html' %}#}
+        {% include 'networks/register.html' %}
 {##}
 {##}
 {##}

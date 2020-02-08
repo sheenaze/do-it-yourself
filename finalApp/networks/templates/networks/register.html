@@ -8,18 +8,20 @@
         </div>
       </div>
 
-    <div class="col-md-5 col-md-push-2">
-              <div class="form">
+    <div class="register_form">
+{#              <div class="register_form">#}
                 <form  method="post">
                     {% csrf_token %}
+{#                    {{ form.as_ul }}#}
+                {{ form.non_field_errors }}
                     {% for item in form %}
-                  <div class="form-group">
-                       {{ item.label }}: {{ item }}
+                  <div id="register">
+                       {{ item.label }}: <br> {{ item }}
                   </div>
                     {% endfor %}
-                  <div class="text-center"><button type="submit">Zarejestruj się</button></div>
+                 <br> <div id="register_btn"> <button type="submit">Zarejestruj się</button></div>
                 </form>
-              </div>
+{#              </div>#}
     </div>
     </div>
   </section>

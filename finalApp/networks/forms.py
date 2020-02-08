@@ -21,13 +21,13 @@ class UploadFileForm(forms.Form):
 class AddUserForm(forms.Form):
     username = forms.IntegerField(label = 'Numer indeksu')
     password = forms.CharField(label='Hasło', max_length=120, widget=forms.PasswordInput)
-    rep_password = forms.CharField(label='Confirmed Password', max_length=120, widget=forms.PasswordInput)
-    name =  forms.CharField(label = 'Imię', max_length=120)
-    last_name =  forms.CharField(label = 'Nazwisko', max_length=120)
+    rep_password = forms.CharField(label='Powtórz hasło', max_length=120, widget=forms.PasswordInput)
+    # name =  forms.CharField(label = 'Imię', max_length=120)
+    # last_name =  forms.CharField(label = 'Nazwisko', max_length=120)
 
     def clean(self):
         cleaned_data = super().clean()
-        username = cleaned_data.get("login")
+        username = cleaned_data.get("username")
 
         userV1 = Student.objects.filter(index_number=username)
         if len(userV1) == 0:
