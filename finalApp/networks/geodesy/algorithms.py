@@ -1,4 +1,5 @@
 import math as mt
+import numpy as np
 
 def degreesToDMS(degrees):
     D = mt.floor(degrees)
@@ -23,7 +24,8 @@ def getData(number, group=1):
             s = 450 + number
             z = 73.0
             A = 30.0+number
-            return [X, Y, Z, s, z, A]
+            c = mt.pi / 180
+            return [X, Y, Z, s, z*c, A*c]
         else:
             return 'Podano nieprawidłowy numer grupy'
     except:
@@ -56,14 +58,38 @@ def hirvonen(X, Y, Z, e2 = GRS80.e2):
     lbd = mt.atan2(Y,X) if mt.atan2(Y,X) >=0 else mt.atan2(Y,X)+2*mt.pi
     return [fi, lbd, H]
 
-print(getData(9))
-print(N_radius(52*mt.pi/180))
-print(M_radius(52*mt.pi/180))
-data = getData(9)
+def XYZ_from_FiLbdH(fi, lbd, H, e2 = GRS80.e2):
+    N = N_radius(fi)
+    X = (N+H)*mt.cos(fi)*mt.cos(lbd)
+    Y = (N+H)*mt.cos(fi)*mt.sin(lbd)
+    Z = (N*(1-e2)+H)*mt.sin(fi)
+    return [X, Y, Z]
+
+def neu_vector(azimuth, zenith, distance):
+    n = distance*mt.sin(zenith)*mt.cos(azimuth)
+    e = distance*mt.sin(zenith)*mt.sin(azimuth)
+    u = distance*mt.cos(zenith)
+    return [n, e, u]
+
+def neu2XYZ(fi, lbd):
+    r1 = [-mt.sin(fi)*mt.cos(lbd), -mt.sin(lbd), mt.cos(fi)*mt.cos(lbd)]
+    r2 = [-mt.sin(fi)*mt.sin(lbd),  mt.cos(lbd), mt.cos(fi)*mt.sin(lbd)]
+    r3 = [mt.cos(fi), 0, mt.sin(fi)]
+    return np.array([r1, r2, r3])
+
+
+# print(getData(9))
+# print(N_radius(52*mt.pi/180))
+# print(M_radius(52*mt.pi/180))
+data = getData(5)
 FLH = hirvonen(data[0], data[1], data[2])
-print(degreesToDMS(FLH[0]*180/mt.pi))
-print(degreesToDMS(FLH[1]*180/mt.pi))
-print(FLH[2])
-print(FLH[0])
-print(FLH[1])
+# print(degreesToDMS(FLH[0]*180/mt.pi))
+# print(degreesToDMS(FLH[1]*180/mt.pi))
+# print(FLH[2])
+# print(FLH[0])
+# print(FLH[1])
+#
+# print(data[5], data[4], data[3])
+print(neu_vector(data[5], data[4], data[3]))
+# print(neu2XYZ(FLH[0], FLH[1]))
 
