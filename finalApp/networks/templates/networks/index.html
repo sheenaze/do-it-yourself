@@ -169,12 +169,12 @@
       <div class="row">
         <div class="col-md-4 service-item">
           <div class="service-icon"><i class="fa fa-calculator"></i></div>
-          <h4 class="service-title"><a href="/RaW/login/" class="login_link" name="login_link">Rachunek Wyrównawczy</a></h4>
+          <h4 class="service-title"><a href="/RaW/" class="login_link" name="login_link">Rachunek Wyrównawczy</a></h4>
           <p class="service-description">Treści zadań, dane i moduł sprawdzający do zadań z Rachunku Wyrównawczego</p>
         </div>
         <div class="col-md-4 service-item">
           <div class="service-icon"><i class="fa fa-map"></i></div>
-          <h4 class="service-title"><a href="/GW/login/" class="login_link" name="login_link">Geodezja Wyższa</a></h4>
+          <h4 class="service-title"><a href="/GW/" class="login_link" name="login_link">Geodezja Wyższa</a></h4>
           <p class="service-description">Treści zadań, dane i moduł sprawdzający do zadań z Geodezji Wyższej</p>
         </div>
         <div class="col-md-4 service-item">
@@ -185,7 +185,7 @@
                 {% if user.is_authenticated %}
                    Zalogowany jako {{ user }} <a href="{% url 'logout' %}"> Wyloguj </a>
                 {% else %}
-                   Jesteś niezalogowany <a href="{% url 'raw_login' %}"> Zaloguj </a>
+                   Jesteś niezalogowany <a href="{% url 'login' %}"> Zaloguj </a>
                 {% endif %}
           </p>
         </div>

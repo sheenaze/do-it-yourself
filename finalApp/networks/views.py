@@ -143,8 +143,6 @@ class RaWView(LoginRequiredMixin, View):
             response['Content-Disposition'] = f'attachment; filename= {filename}'
             return response
 
-
-
         if button == 'profile':
             return redirect('/student/')
 
@@ -152,6 +150,14 @@ class GWView(LoginRequiredMixin,View):
     def get(self, request):
         title = 'Automatyczny sprawdzacz ćwiczeń'
         return render(request, 'networks/GW.html', {'title': title})
+
+    def post(self, request):
+        username = request.user.username
+        title = 'Automatyczny sprawdzacz ćwiczeń'
+        button = request.POST.get('button')
+
+        if button == 'profile':
+            return redirect('/student/')
 
 class StudentView(View):
     def get(self, request):
@@ -189,13 +195,16 @@ class LoginView(View):
     def post(self, request):
         form = LoginForm(request.POST)
         if form.is_valid():
+            currUrl = self.request.path
+            print(currUrl)
+
             username = form.cleaned_data['login']
             password = form.cleaned_data['password']
             user = authenticate(username=username, password = password)
-            print(username, password, user)
+            # print(username, password, user)
             if user is not None:
                 login(request, user)# udało się sprawdzić użytkownika
-                url = f'/RaW' #request.GET.get("next") if request.GET.get("next") is not None else 'index'
+                url = request.GET.get("next") if request.GET.get("next") is not None else 'main'
                 return redirect(url)
                 # return HttpResponse('zalogowany')
             else:
