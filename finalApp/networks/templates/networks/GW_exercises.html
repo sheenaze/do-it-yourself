@@ -1,0 +1,27 @@
+{% extends 'networks/base.html' %}
+{% block maincontent %}
+    <div class="container wow fadeInUp">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="section-title">Zadania z Geodezji Wyższej</h3>
+            <p align="center">
+                <a href="{% url 'GW_main' %}"> GW </a> |
+                <a href="{% url 'RaW_main' %}"> RaW </a> |
+                <a href="{% url 'student' %}"> Profil </a> |
+                <a href="{% url 'logout' %}"> Wyloguj </a>
+            </p>
+          <div class="section-title-divider_student"></div>
+          <p class="section-description"></p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 service-item">
+            <hr>
+            <a href="ex2/" class="btn-get-started">Zadanie 2</a>
+
+            <hr>
+        </div>
+    </div>
+
+{%  endblock %}

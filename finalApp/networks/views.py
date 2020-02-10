@@ -133,6 +133,9 @@ class GWView(LoginRequiredMixin,View):
         if button == 'profile':
             return redirect('/student/')
 
+        if button == 'send_results':
+            return redirect('GW_exercises')
+
 class StudentView(View):
     def get(self, request):
         username = request.user.username
@@ -201,6 +204,11 @@ class GWDataView(LoginRequiredMixin,View):
         data = getData(student.GW_set_number)
         ellipsoid = GRS80()
         return render(request, 'networks/GW_data.html', {'data':data, 'ellipsoid':ellipsoid})
+
+class GWExercisesView(View):
+    def get(self, request):
+        return render(request, 'networks/GW_exercises.html')
+
 
 
 

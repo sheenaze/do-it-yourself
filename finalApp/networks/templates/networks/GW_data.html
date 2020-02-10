@@ -18,11 +18,18 @@
     <div class="row">
         <div class="col-md-4 service-item">
             <hr>
+            <h3 class="service-title"> <strong> Parametry elipsoidy GRS80:</strong> </h3>
+                    a = {{ ellipsoid.a|floatformat:3}} m
+               <br> b = {{ ellipsoid.b|floatformat:3}} m
+               <br> f = {{ ellipsoid.f|floatformat:13}}
+               <br> e<sup>2</sup> = {{ ellipsoid.e2|floatformat:13}}
+               <br> e<sup>2'</sup> = {{ ellipsoid.e2p|floatformat:13}} <br>
+            <hr>
           <h3 class="service-title"> <strong> Zadanie 2</strong> </h3>
             <p>Dane są współrzędne XYZ punktu A w układzie elipsoidy GRS80: <br>
-               <br> X = {{ data.0|floatformat:3}}
-               <br> Y = {{ data.1|floatformat:3}}
-               <br> Z = {{ data.2|floatformat:3}} <br>
+               <br> X = {{ data.0|floatformat:3}} m
+               <br> Y = {{ data.1|floatformat:3}} m
+               <br> Z = {{ data.2|floatformat:3}} m <br>
                <br>Obliczyć współrzędne &phi;, &lambda;, H punktu B, wiedząc, że w układzie lokalnym NEU zachodzą zależności: <br>
                <br>  s<sub>AB</sub> = {{ data.3|floatformat:3}} m
                <br> z<sub>AB</sub> = {{ data.4|floatformat}}&deg;

@@ -5,6 +5,7 @@ from django.db import models
 # Create your models here.
 # from matrix_field import MatrixFormField
 
+
 class Consts(models.Model):
     point = models.CharField(max_length=60, verbose_name='Numer punktu')
     x_coordinate = models.FloatField(verbose_name='Współrzędna X', default=0.000)
@@ -49,29 +50,36 @@ class Points(models.Model):
     # def get_fields(self, value):
     #     return [(field.name, field.value_to_string(value)) for field in StudentsResults._meta.fields]
 
-
-
-
-
-
 # #
 class StudentsResults(models.Model):
     index_number = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Numer indeksu')
     date = models.DateTimeField(auto_now_add=True)
     set_num = models.IntegerField(blank=True, null=True)
-    data = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
-    HP_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
-    A_matrix = ArrayField(ArrayField(models.IntegerField(blank=True, null=True)))
-    P_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
-    L_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
-    ATPA_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
-    ATPL_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
-    x_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
-    V_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
-    HW_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
-    dhW_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
-    mx_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
-    mV_matrix = ArrayField(ArrayField(models.FloatField(blank=True, null=True)))
+    data = ArrayField(ArrayField(models.FloatField()),blank=True, null=True)
+    HP_matrix = ArrayField(ArrayField(models.FloatField()),blank=True, null=True)
+    A_matrix = ArrayField(ArrayField(models.IntegerField()), blank=True, null=True)
+    P_matrix = ArrayField(ArrayField(models.FloatField()), blank=True, null=True)
+    L_matrix = ArrayField(ArrayField(models.FloatField()), blank=True, null=True)
+    ATPA_matrix = ArrayField(ArrayField(models.FloatField()), blank=True, null=True)
+    ATPL_matrix = ArrayField(ArrayField(models.FloatField()), blank=True, null=True)
+    x_matrix = ArrayField(ArrayField(models.FloatField()),blank=True, null=True)
+    V_matrix = ArrayField(ArrayField(models.FloatField()), blank=True, null=True)
+    HW_matrix = ArrayField(ArrayField(models.FloatField()), blank=True, null=True)
+    dhW_matrix = ArrayField(ArrayField(models.FloatField()), blank=True, null=True)
+    mx_matrix = ArrayField(ArrayField(models.FloatField()), blank=True, null=True)
+    mV_matrix = ArrayField(ArrayField(models.FloatField()), blank=True, null=True)
     sig_0 = models.FloatField(blank=True, null=True)
     report = ArrayField(ArrayField(models.TextField()), blank=True, null=True)
 
+class Exercise2(models.Model):
+    index_number = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Numer indeksu')
+    date = models.DateTimeField(auto_now_add=True)
+    set_num = models.IntegerField(blank=True, null=True)
+    XYZ_A =  ArrayField(ArrayField(models.FloatField()),blank=True, null=True)
+    measurements =  ArrayField(ArrayField(models.FloatField()),blank=True, null=True)
+    lon_lat_H_A =  ArrayField(ArrayField(models.FloatField()),blank=True, null=True)
+    neu_AB =  ArrayField(ArrayField(models.FloatField()),blank=True, null=True)
+    D_matrix =  ArrayField(ArrayField(models.FloatField()),blank=True, null=True)
+    dX_AB = ArrayField(ArrayField(models.FloatField()), blank=True, null=True)
+    XYZ_B = ArrayField(ArrayField(models.FloatField()), blank=True, null=True)
+    lon_lat_H_B =  ArrayField(ArrayField(models.FloatField()),blank=True, null=True)
