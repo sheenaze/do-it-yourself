@@ -1,7 +1,10 @@
 #========  external libraries ==================
+import sys
+import types
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.views import View
 from networks.functions_and_classes.check import *
@@ -11,6 +14,15 @@ from .forms import *
 # from geodesy.algorithms import *
 from networks.geodesy.geodesy_exercises import *
 
+
+
+def str_to_class(field):
+    parts = field.split('.')
+    module = ".".join(parts[:-1])
+    m = __import__( module )
+    for comp in parts[1:]:
+        m = getattr(m, comp)
+    return m
 
 # ================== Views ===============================================
 
@@ -206,8 +218,17 @@ class GWDataView(LoginRequiredMixin,View):
         return render(request, 'networks/GW_data.html', {'data':data, 'ellipsoid':ellipsoid})
 
 class GWExercisesView(View):
-    def get(self, request):
-        return render(request, 'networks/GW_exercises.html')
+    def get(self, request, ex_number=0):
+        ex_number = int(ex_number)
+        form_name = f'Exercise_{2}Form'
+        if ex_number == 0:
+            return render(request, 'networks/GW_exercises.html')
+        elif ex_number in [1,2,3,4,5,6]:
+
+            form = str_to_class(form_name)
+            return render(request, f'networks/exercise_{ex_number}.html', {'form':form})
+        else:
+            raise Http404
 
 
 
