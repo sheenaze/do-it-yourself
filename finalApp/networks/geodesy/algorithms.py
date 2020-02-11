@@ -8,7 +8,7 @@ def degreesToDMS(degrees):
     D = mt.floor(degrees)
     m = (degrees-D)*60
     M = mt.floor(m)
-    S = (m-M)*60
+    S = round((m-M)*60,5)
     return [D, M, S]
 
 class GRS80():
@@ -153,7 +153,6 @@ def GK_direct(Fi, Lbd, Lbd0, a = GRS80.a, e2 = GRS80.e2, e2p = GRS80.e2p):
     eta2 = e2p*mt.cos(Fi)**2
     l = Lbd-Lbd0
     N = N_radius(Fi)
-
     e4 = e2**2
     e6 = e2**3
     A0 = 1-e2/4-3*e4/64-5*e6/256
@@ -164,22 +163,70 @@ def GK_direct(Fi, Lbd, Lbd0, a = GRS80.a, e2 = GRS80.e2, e2p = GRS80.e2p):
     sig = a*(A0*Fi-A2*mt.sin(2*Fi)+A4*mt.sin(4*Fi)-A6*mt.sin(6*Fi))
     x1 = l**2/12*mt.cos(Fi)**2*(5-t**2+9*eta2+4*eta2**2)
     x2 = l**4/360*mt.cos(Fi)**4*(61-58*t**2+t**4+270*eta2-330*eta2*t**2)
-    X = sig + l**2/2*N*mt.sin(Fi)*mt.cos(Fi)*(l+x1+x2)
+    X = sig + l**2/2*N*mt.sin(Fi)*mt.cos(Fi)*(1+x1+x2)
     y1 = l**2/6*mt.cos(Fi)**2*(1-t**2+eta2)
     y2 = l**4/120*mt.cos(Fi)**4*(5-18*t**2+t**4+14*eta2-58*eta2*t**2)
-    Y = l*N*mt.cos(Fi)*(l+y1+y2)
+    Y = l*N*mt.cos(Fi)*(1+y1+y2)
     return [X, Y]
 
-def datum2000(Fi, Lbd, zone):
+def GK_back(XGK, YGK, Lbd0, a = GRS80.a, e2 = GRS80.e2, e2p = GRS80.e2p):
+    e4 = e2**2
+    e6 = e2**3
+    A0 = 1-e2/4-3*e4/64-5*e6/256
+    A2 = 3/8*(e2+e4/4+15*e6/128)
+    A4 = 15/256*(e4+3*e6/4)
+    A6 = 35*e6/3072
+
+    sig = XGK
+    Fi1 = sig/(a*A0)
+    eps = 1
+    while abs(eps) > 10**(-12):
+        Fi0 = Fi1
+        Fi1 = (sig/a +A2*mt.sin(2*Fi0)-A4*mt.sin(4*Fi0)+A6*mt.sin(6*Fi0))/A0
+        eps = Fi1 - Fi0
+
+    t = mt.tan(Fi1)
+    eta2 = e2p * mt.cos(Fi1) ** 2
+    N = N_radius(Fi1)
+    M = M_radius(Fi1)
+
+    f1  = -YGK**2/12/N**2*(5+3*t**2+eta2-9*eta2*t**2)
+    f2 = YGK**4/360/N**4*(61+90*t**2+45*t**4)
+    Fi = Fi1 -YGK**2*t/2/M/N*(1+f1+f2)
+    l1 = -YGK**2/6/N**2*(1+2*t**2+eta2)
+    l2 = YGK**4/120/N**4*(5+28*t**2+24*t**4+6*eta2+8*eta2*t**2)
+    Lbd = Lbd0+ YGK/N/mt.cos(Fi1)*(1+l1+l2)
+
+    return [Fi, Lbd]
+
+
+def toDatum2000(XGK, YGK, zone):
     if zone in [5, 6, 7, 8]:
-        Lbd0 = zone*3*mt.pi/180
-        XY = GK_direct(Fi, Lbd, Lbd0)
         m0 = 0.999923
-        X2000 = XY[0]*m0
-        Y2000 = XY[1]*m0 + zone*10**6+500000
+        X2000 = XGK*m0
+        Y2000 = YGK*m0 + zone*10**6+500000
         return [X2000, Y2000]
     else:
         return 'Zły numer strefy'
+
+def fromDatum2000(X2000, Y2000, zone):
+    m0 = 0.999923
+    XGK = X2000/m0
+    YGK = (Y2000 - zone*10**6-500000)/m0
+    return [XGK, YGK]
+
+def toDatum1992(XGK, YGK):
+    m0 = 0.9993
+    X1992 = XGK*m0 - 5300000
+    Y1992 = YGK*m0 + 500000
+    return [X1992, Y1992]
+
+def fromDatum1992(X1992, Y1992):
+    m0 = 0.9993
+    XGK = (X1992+5300000)/m0
+    YGK = (Y1992-500000)/m0
+    return [XGK, YGK]
+
 
 
 c = mt.pi/180
@@ -193,6 +240,13 @@ Reverse = vincentyAlgorithm(52*c, 21*c, FLA[0], FLA[1])
 print(degreesToDMS(Reverse[0]/c))
 print(degreesToDMS(Reverse[1]/c))
 print(Reverse[2])
+
+XY =  GK_direct(52*c, 22*c, 21*c)
+print(XY)
+
+FIL = GK_back(XY[0], XY[1], 21*c)
+print(degreesToDMS(FIL[0]/c))
+print(degreesToDMS(FIL[1]/c))
 
 # print(getData(9))
 # print(N_radius(52*mt.pi/180))
