@@ -8,14 +8,14 @@
             <tr>
             </tr>
             <tr>
-                <td>X<sub>A</sub> </td> <td> = </td> <td> {{ form2.XA}} m |</td>
-                <td>Y<sub>A</sub> </td> <td> = </td> <td> {{ form2.YA}} m |</td>
-                <td>Z<sub>A</sub> </td> <td> = </td> <td> {{ form2.ZA}} m </td>
+                <td>X<sub>A</sub> </td> <td> = </td> <td> {{ form.XA}} m |</td>
+                <td>Y<sub>A</sub> </td> <td> = </td> <td> {{ form.YA}} m |</td>
+                <td>Z<sub>A</sub> </td> <td> = </td> <td> {{ form.ZA}} m </td>
             </tr>
             <tr>
-                <td>s<sub>AB</sub> </td> <td> = </td> <td> {{ form2.distance}} m |</td>
-                <td>z<sub>AB</sub> </td> <td> = </td> <td> {{ form2.zenith}} &deg; |</td>
-                <td>Az<sub>AB</sub> </td> <td> = </td> <td> {{ form2.azimuth}} &deg; </td>
+                <td>s<sub>AB</sub> </td> <td> = </td> <td> {{ form.distance}} m |</td>
+                <td>z<sub>AB</sub> </td> <td> = </td> <td> {{ form.zenith}} &deg; |</td>
+                <td>Az<sub>AB</sub> </td> <td> = </td> <td> {{ form.azimuth}} &deg; </td>
             </tr>
             </table>
         </div>
@@ -24,52 +24,66 @@
              Wprowadź wyniki pośrednie: <br>
             <table class="data_table">
                 <tr>
-                <td>&phi;<sub>A</sub> </td> <td> = </td> <td> {{ form2.FiA_D}} &deg; {{ form2.FiA_M}}' {{ form2.FiA_S}}"</td>
+                <td>&phi;<sub>A</sub> </td> <td> = </td> <td> {{ form.FiA_D}} &deg; {{ form.FiA_M}}' {{ form.FiA_S}}"</td>
                 </tr>
                 <tr>
-                <td>&lambda;<sub>A</sub> </td> <td> = </td> <td> {{ form2.LbdA_D}} &deg; {{ form2.LbdA_M}}' {{ form2.LbdA_S}}"</td>
+                <td>&lambda;<sub>A</sub> </td> <td> = </td> <td> {{ form.LbdA_D}} &deg; {{ form.LbdA_M}}' {{ form.LbdA_S}}"</td>
                 </tr>
                 <tr>
-                <td>H<sub>A</sub> </td> <td> = </td> <td> {{ form2.HA}} m </td>
+                <td>H<sub>A</sub> </td> <td> = </td> <td> {{ form.HA}} m </td>
                 </tr>
             </table>
             <br>
             <table class="data_table">
                 <tr>
-                <td>n</td> <td> = </td> <td> {{ form2.neu_n}} m</td>
+                <td>n</td> <td> = </td> <td> {{ form.neu_n}} m</td>
                 </tr>
                 <tr>
-                <td>e</td> <td> = </td> <td> {{ form2.neu_e}} m</td>
+                <td>e</td> <td> = </td> <td> {{ form.neu_e}} m</td>
                 </tr>
                 <tr>
-                <td>u </td> <td> = </td> <td> {{ form2.neu_u}} m </td>
+                <td>u </td> <td> = </td> <td> {{ form.neu_u}} m </td>
                 </tr>
             </table>
             <br>
              <table class="data_table">
                 <tr>
-                <td> </td> <td>  </td> <td> {{ form2.D11}} {{ form2.D12}} {{ form2.D13}} </td>
+                <td> </td> <td>  </td> <td> {{ form.D11}} {{ form.D12}} {{ form.D13}} </td>
                 </tr>
                 <tr>
-                <td>D</td> <td> = </td> <td> {{ form2.D21}} {{ form2.D22}} {{ form2.D23}} </td>
+                <td>D</td> <td> = </td> <td> {{ form.D21}} {{ form.D22}} {{ form.D23}} </td>
                 </tr>
                 <tr>
-                <td> </td> <td>  </td> <td> {{ form2.D31}} {{ form2.D32}} {{ form2.D33}} </td>
+                <td> </td> <td>  </td> <td> {{ form.D31}} {{ form.D32}} {{ form.D33}} </td>
                 </tr>
             </table>
            <br>
             <table class="data_table">
                 <tr>
-                <td>dX<sub>AB</sub></td> <td> = </td> <td> {{ form2.dX_AB}} m</td>
+                <td>dX<sub>AB</sub></td> <td> = </td> <td> {{ form.dX_AB}} m</td>
                 </tr>
                 <tr>
-                <td>dY<sub>AB</sub></td> <td> = </td> <td> {{ form2.dY_AB}} m</td>
+                <td>dY<sub>AB</sub></td> <td> = </td> <td> {{ form.dY_AB}} m</td>
                 </tr>
                 <tr>
-                <td>dZ<sub>AB</sub></td> <td> = </td> <td> {{ form2.dZ_AB}} m </td>
+                <td>dZ<sub>AB</sub></td> <td> = </td> <td> {{ form.dZ_AB}} m </td>
                 </tr>
             </table>
-
+             <hr>
+             Wprowadź wyniki końcowe: <br>
+            <table class="data_table">
+                <tr>
+                <td>&phi;<sub>B</sub> </td> <td> = </td> <td> {{ form.FiB_D}} &deg; {{ form.FiB_M}}' {{ form.FiB_S}}"</td>
+                </tr>
+                <tr>
+                <td>&lambda;<sub>B</sub> </td> <td> = </td> <td> {{ form.LbdB_D}} &deg; {{ form.LbdB_M}}' {{ form.LbdB_S}}"</td>
+                </tr>
+                <tr>
+                <td>H<sub>B</sub> </td> <td> = </td> <td> {{ form.HB}} m </td>
+                </tr>
+            </table>
+             <br>
+             <input type="submit" value="Sprawdź!">
 
         </div>
         </div>

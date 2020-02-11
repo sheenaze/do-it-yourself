@@ -14,18 +14,7 @@ from .forms import *
 # from geodesy.algorithms import *
 from networks.geodesy.geodesy_exercises import *
 
-
-
-def str_to_class(field):
-    parts = field.split('.')
-    module = ".".join(parts[:-1])
-    m = __import__( module )
-    for comp in parts[1:]:
-        m = getattr(m, comp)
-    return m
-
 # ================== Views ===============================================
-
 class ResultsView(View):
     def get(self, request, index_num):
         student = get_object_or_404(Student, index_number = index_num)
@@ -218,18 +207,39 @@ class GWDataView(LoginRequiredMixin,View):
         return render(request, 'networks/GW_data.html', {'data':data, 'ellipsoid':ellipsoid})
 
 class GWExercisesView(View):
-    def get(self, request, ex_number=0):
-        ex_number = int(ex_number)
-        form_name = f'Exercise_{2}Form'
-        if ex_number == 0:
-            return render(request, 'networks/GW_exercises.html')
-        elif ex_number in [1,2,3,4,5,6]:
+    def get(self, request):
+        return render(request, 'networks/GW_exercises.html')
 
-            form = str_to_class(form_name)
-            return render(request, f'networks/exercise_{ex_number}.html', {'form':form})
-        else:
-            raise Http404
+class GWExercise_2View(View):
+    def get(self, request):
+        form = Exercise_2Form()
+        return render(request, f'networks/exercise_2.html', {'form': form})
+    def post(self, request, ex_number=0):
+        form = Exercise_2Form(request.POST)
+        username = request.user.username
+        student = get_object_or_404(Student, index_number = username)
+        id = student.pk
+        set_num = student.GW_set_number
+        if form.is_valid():
+            CA = [form.cleaned_data['XA'], form.cleaned_data['YA'], form.cleaned_data['ZA']]
+            measurements = [form.cleaned_data['distance'], form.cleaned_data['zenith'], form.cleaned_data['azimuth']]
+            latA = form.cleaned_data['FiA_D']+form.cleaned_data['FiA_M']/60+form.cleaned_data['FiA_S']/3600
+            lonA = form.cleaned_data['LbdA_D']+form.cleaned_data['LbdA_M']/60+form.cleaned_data['LbdA_S']/3600
+            HA = form.cleaned_data['HA']
+            neu =[form.cleaned_data['neu_n'], form.cleaned_data['neu_e'], form.cleaned_data['neu_u']]
+            dXAB =[form.cleaned_data['dX_AB'], form.cleaned_data['dY_AB'], form.cleaned_data['dZ_AB']]
+            D = [[form.cleaned_data['D11'], form.cleaned_data['D12'], form.cleaned_data['D13']],
+                 [form.cleaned_data['D21'], form.cleaned_data['D22'], form.cleaned_data['D23']],
+                 [form.cleaned_data['D31'], form.cleaned_data['D32'], form.cleaned_data['D33']]]
+            CB = [form.cleaned_data['XB'], form.cleaned_data['YB'], form.cleaned_data['ZB']]
+            latB = form.cleaned_data['FiB_D']+form.cleaned_data['FiB_M']/60+form.cleaned_data['FiB_S']/3600
+            lonB = form.cleaned_data['LbdB_D']+form.cleaned_data['LbdB_M']/60+form.cleaned_data['LbdB_S']/3600
+            HB = form.cleaned_data['HB']
 
+            Exercise2.objects.create(index_number_id=id, set_num=set_num, XYZ_A=CA, measurements=measurements, lon_lat_H_A=[latA, lonA, HA],
+                                                neu_AB=neu, dX_AB=dXAB, D_matrix=D, XYZ_B=CB, lon_lat_H_B=[latB, lonB, HB])
+
+        return HttpResponse('jestem w poście')
 
 
 

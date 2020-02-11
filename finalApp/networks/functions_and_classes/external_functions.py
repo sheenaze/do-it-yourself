@@ -12,6 +12,7 @@ import xlrd
 # import numpy as np
 from networks.models import *
 from .leveling import *
+from networks.forms import *
 # from .stage_first import *
 
 
@@ -159,4 +160,17 @@ def failedRows(matrix):
             rows.append(ind + 1)
     return rows
 
-
+def geodesyExerciseForm(number):
+    if number == 1:
+        form = Exercise_1Form()
+    elif number == 2:
+        form = Exercise_2Form()
+    elif number == 3:
+        form = Exercise_3Form()
+    elif number == 4:
+        form = Exercise_4Form()
+    elif number == 5:
+        form = Exercise_5Form()
+    elif number == 6:
+        form = Exercise_6Form()
+    return form
