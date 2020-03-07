@@ -29,6 +29,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name = 'logout'),
     path('GW_data/', GWDataView.as_view(), name = 'GW_data'),
     path('GW_exercises/', GWExercisesView.as_view(), name = 'GW_exercises'),
-    path('GW_exercises/2', GWExercise_2View.as_view(), name = 'GW_exercises'),
+    path('GW_exercises/Hirvonen/', HirvonenView.as_view(), name = 'Hirvonen'),
 
 ]

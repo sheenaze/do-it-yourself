@@ -56,55 +56,57 @@ class ResetPasswordForm(forms.Form):
 class Exercise_1Form(forms.Form):
     pass
 
+class HirvonenForm(forms.Form):
+    pass
 
-class Exercise_2Form(forms.Form):
-    XA = forms.FloatField(label = 'X_A')
-    YA = forms.FloatField(label = 'Y_A')
-    ZA = forms.FloatField(label = 'Z_A')
-    zenith = forms.IntegerField(label = 'z_{AB}')
-    azimuth = forms.IntegerField(label = 'Az_{AB}')
-    distance = forms.IntegerField(label = 's_{AB}')
-    FiA_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
-    FiA_M = forms.IntegerField(min_value=0, max_value=59)
-    FiA_S = forms.FloatField(min_value=0, max_value=59.99999)
-
-    LbdA_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
-    LbdA_M = forms.IntegerField(min_value=0, max_value=59)
-    LbdA_S = forms.FloatField(min_value=0, max_value=59.99999)
-    HA = forms.FloatField(label='H_A')
-
-
-    neu_n = forms.FloatField(label='n')
-    neu_e = forms.FloatField(label='e')
-    neu_u = forms.FloatField(label='u')
-
-
-    D11 = forms.FloatField()
-    D12 = forms.FloatField()
-    D13 = forms.FloatField()
-    D21 = forms.FloatField()
-    D22 = forms.FloatField()
-    D23 = forms.FloatField()
-    D31 = forms.FloatField()
-    D32 = forms.FloatField()
-    D33 = forms.FloatField()
-
-    dX_AB = forms.FloatField(label='dX_AB')
-    dY_AB = forms.FloatField(label='dY_AB')
-    dZ_AB = forms.FloatField(label='dZ_AB')
-
-    XB = forms.FloatField(label = 'X_B')
-    YB = forms.FloatField(label = 'Y_B')
-    ZB = forms.FloatField(label = 'Z_B')
-
-    FiB_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
-    FiB_M = forms.IntegerField(min_value=0, max_value=59)
-    FiB_S = forms.FloatField(min_value=0, max_value=59.99999)
-
-    LbdB_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
-    LbdB_M = forms.IntegerField(min_value=0, max_value=59)
-    LbdB_S = forms.FloatField(min_value=0, max_value=59.99999)
-    HB = forms.FloatField(label='H_A')
+# class Exercise_2Form(forms.Form):
+#     XA = forms.FloatField(label = 'X_A')
+#     YA = forms.FloatField(label = 'Y_A')
+#     ZA = forms.FloatField(label = 'Z_A')
+#     zenith = forms.IntegerField(label = 'z_{AB}')
+#     azimuth = forms.IntegerField(label = 'Az_{AB}')
+#     distance = forms.IntegerField(label = 's_{AB}')
+#     FiA_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
+#     FiA_M = forms.IntegerField(min_value=0, max_value=59)
+#     FiA_S = forms.FloatField(min_value=0, max_value=59.99999)
+#
+#     LbdA_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
+#     LbdA_M = forms.IntegerField(min_value=0, max_value=59)
+#     LbdA_S = forms.FloatField(min_value=0, max_value=59.99999)
+#     HA = forms.FloatField(label='H_A')
+#
+#
+#     neu_n = forms.FloatField(label='n')
+#     neu_e = forms.FloatField(label='e')
+#     neu_u = forms.FloatField(label='u')
+#
+#
+#     D11 = forms.FloatField()
+#     D12 = forms.FloatField()
+#     D13 = forms.FloatField()
+#     D21 = forms.FloatField()
+#     D22 = forms.FloatField()
+#     D23 = forms.FloatField()
+#     D31 = forms.FloatField()
+#     D32 = forms.FloatField()
+#     D33 = forms.FloatField()
+#
+#     dX_AB = forms.FloatField(label='dX_AB')
+#     dY_AB = forms.FloatField(label='dY_AB')
+#     dZ_AB = forms.FloatField(label='dZ_AB')
+#
+#     XB = forms.FloatField(label = 'X_B')
+#     YB = forms.FloatField(label = 'Y_B')
+#     ZB = forms.FloatField(label = 'Z_B')
+#
+#     FiB_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
+#     FiB_M = forms.IntegerField(min_value=0, max_value=59)
+#     FiB_S = forms.FloatField(min_value=0, max_value=59.99999)
+#
+#     LbdB_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
+#     LbdB_M = forms.IntegerField(min_value=0, max_value=59)
+#     LbdB_S = forms.FloatField(min_value=0, max_value=59.99999)
+#     HB = forms.FloatField(label='H_A')
 
 class Exercise_3Form(forms.Form):
     pass

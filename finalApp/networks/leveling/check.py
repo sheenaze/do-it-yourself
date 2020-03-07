@@ -8,9 +8,9 @@ django.setup()
 # from networks.models import *
 # from networks.functions_and_classes.leveling import *
 # from networks.functions_and_classes.external_functions import *
-from networks.functions_and_classes.stage_first import *
-from networks.functions_and_classes.stage_second import *
-from networks.functions_and_classes.stage_third import *
+from networks.leveling.stage_first import *
+from networks.leveling.stage_second import *
+from networks.leveling.stage_third import *
 
 # index_num = 555653
 # student = get_object_or_404(Student, index_number=index_num)
