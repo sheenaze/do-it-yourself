@@ -2,22 +2,32 @@ from networks.geodesy.algorithms import *
 import math
 
 
-def diff_level(angle_diff):
+def diff_level_lat_lon(angle_diff):
     eps_sec = 1 / 3600 / 180 * math.pi  # one second in rad
     eps_min = 1 / 60 / 180 * math.pi  # one minute in rad
     eps_deg = 1 / 180 * math.pi  # one deg in rad
 
-    message = ''
     if angle_diff <= eps_sec:
-        message += 'Różnica nie przekracza jednej sekundy. \n'
+        message = 'Różnica nie przekracza jednej sekundy.'
     elif eps_sec < angle_diff < eps_min:
-        message += 'Różnica jest nie przekracza jednej minuty. \n'
+        message = 'Różnica jest nie przekracza jednej minuty. '
     elif eps_min < angle_diff < eps_deg:
-        message += 'Różnica jest nie przekracza jednego stopnia. \n'
+        message = 'Różnica jest nie przekracza jednego stopnia. '
     else:
-        message += 'Różnica jest większa niż jeden stopień. \n'
+        message = 'Różnica jest większa niż jeden stopień.'
     return message
 
+
+def diff_level_xyzh(cooridnate_difference, coordinate_name):
+    if cooridnate_difference == 0:
+        message = f'Współrzędna {coordinate_name} jest w porządku.'
+    elif cooridnate_difference <= 1:
+        message = f'Współrzędna {coordinate_name} niepoprawna. Różnica nie przekracza 1 m.'
+    else:
+        diff = round(cooridnate_difference)
+        message = f'Współrzędna {coordinate_name} niepoprawna. Bezwględna różnica wynosi ok. {round(diff, 0)} m.'
+
+    return message
 
 def check_hirvonen(x, y, z, fi, lbd, h, ellipsoid):
     """
@@ -43,23 +53,35 @@ def check_hirvonen(x, y, z, fi, lbd, h, ellipsoid):
     if dif_fi <= eps:
         message.append('Podana szerokość jest poprawna.')
     else:
-        message.append(f'Podana szerokość jest niepoprawna. {diff_level(dif_fi)}')
+        message.append(f'Podana szerokość jest niepoprawna. {diff_level_lat_lon(dif_fi)}')
 
     if dif_lbd <= eps:
         message.append('Podana długość jest poprawna.')
     else:
-        message.append(f'Podana długość jest niepoprawna. {diff_level(dif_lbd)}')
+        message.append(f'Podana długość jest niepoprawna. {diff_level_lat_lon(dif_lbd)}')
 
     if dif_h <= 0.001:
         message.append('Podana wysokość jest poprawna.')
-    elif 0.01 >= dif_h > 0.001:
-        message.append('Podana wysokość nie jest poprawna. Różnica nie przekracza 1 cm.')
-    elif 0.1 >= dif_h > 0.01:
-        message.append('Podana wysokość nie jest poprawna. Różnica nie przekracza 10 cm.')
-    elif 1 >= dif_h > 0.1:
-        message.append('Podana wysokość nie jest poprawna. Różnica nie przekracza 1 m.')
     else:
-        message.append('Podana wysokość nie jest poprawna. Różnica przekracza 1 m.')
+        message.append(diff_level_xyzh(dif_h, 'H'))
+
+
+    return message
+
+
+def check_fi_lbd_h_to_xyz(fi, lbd, h, x, y, z, ellipsoid):
+    fi_rad = deg2rad(fi)
+    lbd_rad = deg2rad(lbd)
+
+    x_check, y_check, z_check = fi_lbd_h_to_xyz(fi_rad, lbd_rad, h, ellipsoid)
+    dif_x = abs(round(x_check, 3) - round(x, 3))
+    dif_y = abs(round(y_check, 3) - round(y, 3))
+    dif_z = abs(round(z_check, 3) - round(z, 3))
+
+    message = []
+    message.append(diff_level_xyzh(dif_x, 'X'))
+    message.append(diff_level_xyzh(dif_y, 'Y'))
+    message.append(diff_level_xyzh(dif_z, 'Z'))
 
     return message
 
@@ -81,3 +103,10 @@ if __name__ == '__main__':
     print(fi, lbd, h)
     info = check_hirvonen(X, Y, Z, fi, lbd, h, GRS80)
     print(info)
+
+    fi_new = deg2rad(52)
+    lbd_new = deg2rad(21)
+    H_new = 100
+    x_new, y_new, z_new = fi_lbd_h_to_xyz(fi_new, lbd_new, H_new, GRS80)
+
+    print(x_new, y_new, z_new)

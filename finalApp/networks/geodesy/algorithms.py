@@ -84,7 +84,8 @@ def hirvonen(x, y, z, ellipsoid):
     return [fi, lbd, h]
 
 
-def fi_lbd_h_to_xyz(fi, lbd, h, e2=GRS80.e2):
+def fi_lbd_h_to_xyz(fi, lbd, h, ellipsoid):
+    e2 = ellipsoid.e2
     n = n_radius(fi)
     x = (n + h) * mt.cos(fi) * mt.cos(lbd)
     y = (n + h) * mt.cos(fi) * mt.sin(lbd)

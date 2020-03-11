@@ -69,6 +69,7 @@ class HirvonenForm(forms.Form):
     HA = forms.FloatField(label='H_A')
 
 
+
 # class Exercise_2Form(forms.Form):
 #     XA = forms.FloatField(label = 'X_A')
 #     YA = forms.FloatField(label = 'Y_A')

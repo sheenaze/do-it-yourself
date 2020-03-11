@@ -30,5 +30,6 @@ urlpatterns = [
     path('GW_data/', GWDataView.as_view(), name = 'GW_data'),
     path('GW_exercises/', GWExercisesView.as_view(), name = 'GW_exercises'),
     path('GW_exercises/Hirvonen/', HirvonenView.as_view(), name = 'Hirvonen'),
+    path('GW_exercises/LonLatH2XYZ/', LonLatH2XYZ_View.as_view(), name = 'Hirvonen'),
 
 ]

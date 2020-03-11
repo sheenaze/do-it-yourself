@@ -118,7 +118,7 @@ class GWView(LoginRequiredMixin, View):
             return redirect('GW_exercises')
 
 
-class StudentView(LoginRequiredMixin,View):
+class StudentView(LoginRequiredMixin, View):
     def get(self, request):
         username = request.user.username
         student = get_object_or_404(Student, index_number=int(username))
@@ -188,6 +188,7 @@ class GWExercisesView(View):
     def get(self, request):
         return render(request, 'networks/GW_exercises.html')
 
+
 # class GWExercise_2View(View):
 #     def get(self, request):
 #         form = Exercise_2Form()
@@ -222,7 +223,7 @@ class GWExercisesView(View):
 class HirvonenView(View):
     def get(self, request):
         form = HirvonenForm()
-        return render(request, f'networks/hirvonen.html', {'form': form})
+        return render(request, 'networks/hirvonen.html', {'form': form})
 
     def post(self, request):
         form = HirvonenForm(request.POST)
@@ -230,10 +231,28 @@ class HirvonenView(View):
             x = form.cleaned_data['XA']
             y = form.cleaned_data['YA']
             z = form.cleaned_data['ZA']
-            fi_deg = form.cleaned_data['FiA_D'] + form.cleaned_data['FiA_M']/60 + form.cleaned_data['FiA_S']/3600
-            lbd_deg = form.cleaned_data['LbdA_D'] + form.cleaned_data['LbdA_M']/60 + form.cleaned_data['LbdA_S']/3600
+            fi_deg = form.cleaned_data['FiA_D'] + form.cleaned_data['FiA_M'] / 60 + form.cleaned_data['FiA_S'] / 3600
+            lbd_deg = form.cleaned_data['LbdA_D'] + form.cleaned_data['LbdA_M'] / 60 + form.cleaned_data[
+                'LbdA_S'] / 3600
             height = form.cleaned_data['HA']
             message = check_hirvonen(x, y, z, fi_deg, lbd_deg, height, GRS80)
-            return render(request, f'networks/hirvonen.html', {'form': form, 'message': message})
+            return render(request, 'networks/hirvonen.html', {'form': form, 'message': message})
 
 
+class LonLatH2XYZ_View(View):
+    def get(self, request):
+        form = HirvonenForm()
+        return render(request, 'networks/LonLatH2XYZ.html', {'form':form})
+
+    def post(self, request):
+        form = HirvonenForm(request.POST)
+        if form.is_valid():
+            fi_deg = form.cleaned_data['FiA_D'] + form.cleaned_data['FiA_M'] / 60 + form.cleaned_data['FiA_S'] / 3600
+            lbd_deg = form.cleaned_data['LbdA_D'] + form.cleaned_data['LbdA_M'] / 60 + form.cleaned_data[
+                'LbdA_S'] / 3600
+            height = form.cleaned_data['HA']
+            x = form.cleaned_data['XA']
+            y = form.cleaned_data['YA']
+            z = form.cleaned_data['ZA']
+            message = check_fi_lbd_h_to_xyz(fi_deg, lbd_deg, height, x, y, z,  GRS80)
+            return render(request, 'networks/LonLatH2XYZ.html', {'form': form, 'message': message})
