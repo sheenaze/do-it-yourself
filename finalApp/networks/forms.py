@@ -53,11 +53,21 @@ class ResetPasswordForm(forms.Form):
         if password != rep_password:
             raise forms.ValidationError('Hasło i powtórzone hasło się nie zgadzają')
 
-class Exercise_1Form(forms.Form):
-    pass
+# class Exercise_1Form(forms.Form):
+#     pass
 
 class HirvonenForm(forms.Form):
-    pass
+    XA = forms.FloatField(label = 'X_A')
+    YA = forms.FloatField(label = 'Y_A')
+    ZA = forms.FloatField(label = 'Z_A')
+    FiA_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
+    FiA_M = forms.IntegerField(min_value=0, max_value=59)
+    FiA_S = forms.FloatField(min_value=0, max_value=59.99999)
+    LbdA_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
+    LbdA_M = forms.IntegerField(min_value=0, max_value=59)
+    LbdA_S = forms.FloatField(min_value=0, max_value=59.99999)
+    HA = forms.FloatField(label='H_A')
+
 
 # class Exercise_2Form(forms.Form):
 #     XA = forms.FloatField(label = 'X_A')
@@ -107,15 +117,15 @@ class HirvonenForm(forms.Form):
 #     LbdB_M = forms.IntegerField(min_value=0, max_value=59)
 #     LbdB_S = forms.FloatField(min_value=0, max_value=59.99999)
 #     HB = forms.FloatField(label='H_A')
-
-class Exercise_3Form(forms.Form):
-    pass
-
-class Exercise_4Form(forms.Form):
-    pass
-
-class Exercise_5Form(forms.Form):
-    pass
-
-class Exercise_6Form(forms.Form):
-    pass
+#
+# class Exercise_3Form(forms.Form):
+#     pass
+#
+# class Exercise_4Form(forms.Form):
+#     pass
+#
+# class Exercise_5Form(forms.Form):
+#     pass
+#
+# class Exercise_6Form(forms.Form):
+#     pass

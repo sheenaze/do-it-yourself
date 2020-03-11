@@ -24,7 +24,7 @@ class ResultsView(View):
 class MainView(View):
     def get(self, request):
         form = AddUserForm()
-        title = 'Sprawdź sobie sam'
+        title = 'Serwis do samodzielnego sprawdzania ćwiczeń'
         return render(request, 'networks/index.html', {'form': form, 'title': title})
 
     def post(self, request):
@@ -38,7 +38,6 @@ class MainView(View):
             return redirect('raw_login')
         else:
             return render(request, "networks/index.html", {'form': form})
-
 
 
 class RaWView(LoginRequiredMixin, View):
@@ -118,7 +117,7 @@ class GWView(LoginRequiredMixin, View):
             return redirect('GW_exercises')
 
 
-class StudentView(View):
+class StudentView(LoginRequiredMixin,View):
     def get(self, request):
         username = request.user.username
         student = get_object_or_404(Student, index_number=int(username))
@@ -154,18 +153,13 @@ class LoginView(View):
     def post(self, request):
         form = LoginForm(request.POST)
         if form.is_valid():
-            currUrl = self.request.path
-            print(currUrl)
-
             username = form.cleaned_data['login']
             password = form.cleaned_data['password']
             user = authenticate(username=username, password=password)
-            # print(username, password, user)
             if user is not None:
                 login(request, user)  # udało się sprawdzić użytkownika
                 url = request.GET.get("next") if request.GET.get("next") is not None else 'main'
                 return redirect(url)
-                # return HttpResponse('zalogowany')
             else:
                 info = 'Błędny login lub hasło'
                 return render(request, 'networks/login.html', {'form': form, 'info': info})  # nie udało się :(
@@ -227,4 +221,4 @@ class GWExercisesView(View):
 class HirvonenView(View):
     def get(self, request):
         form = HirvonenForm()
-        return render(request, f'networks/exercise_2.html', {'form': form})
+        return render(request, f'networks/hirvonen.html', {'form': form})

@@ -44,13 +44,6 @@ class Points(models.Model):
     height = models.FloatField(verbose_name='Wysokość', default=0.000)
 
 
-    # def setField(self, field_num,value):
-    #     field = self._meta.fields[field_num].name
-    #     self.field = value
-    # def get_fields(self, value):
-    #     return [(field.name, field.value_to_string(value)) for field in StudentsResults._meta.fields]
-
-# #
 class StudentsResults(models.Model):
     index_number = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Numer indeksu')
     date = models.DateTimeField(auto_now_add=True)
@@ -71,12 +64,13 @@ class StudentsResults(models.Model):
     sig_0 = models.FloatField(blank=True, null=True)
     report = ArrayField(ArrayField(models.TextField()), blank=True, null=True)
 
-class Hirvonen(models.Model):
-        index_number = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Numer indeksu')
-        date = models.DateTimeField(auto_now_add=True)
-        XA = models.FloatField(verbose_name='X')
-        YA = models.FloatField(verbose_name='Y')
-        ZA = models.FloatField(verbose_name='Z')
+# class Hirvonen(models.Model):
+#         index_number = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Numer indeksu')
+#         date = models.DateTimeField(auto_now_add=True)
+#         XA = models.FloatField(verbose_name='X')
+#         YA = models.FloatField(verbose_name='Y')
+#         ZA = models.FloatField(verbose_name='Z')
+
 # class Exercise2(models.Model):
 #     index_number = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name='Numer indeksu')
 #     date = models.DateTimeField(auto_now_add=True)

@@ -1,0 +1,42 @@
+{% extends 'networks/GW_exercises.html' %}
+{% block exercises%}
+<form method="post">
+        <div class="row">
+        <div class="col-md-4 service-item">
+            Wprowadź dane wyjściowe:
+            <table class="data_table">
+            <tr>
+            </tr>
+            <tr>
+                <td>X<sub>A</sub> </td> <td> = </td> <td> {{ form.XA}} m |</td>
+                <td>Y<sub>A</sub> </td> <td> = </td> <td> {{ form.YA}} m |</td>
+                <td>Z<sub>A</sub> </td> <td> = </td> <td> {{ form.ZA}} m </td>
+            </tr>
+{#            <tr>#}
+{#                <td>s<sub>AB</sub> </td> <td> = </td> <td> {{ form.distance}} m |</td>#}
+{#                <td>z<sub>AB</sub> </td> <td> = </td> <td> {{ form.zenith}} &deg; |</td>#}
+{#                <td>Az<sub>AB</sub> </td> <td> = </td> <td> {{ form.azimuth}} &deg; </td>#}
+{#            </tr>#}
+            </table>
+        </div>
+            <hr>
+         <div>
+             Wprowadź wyniki pośrednie: <br>
+            <table class="data_table">
+                <tr>
+                <td>&phi;<sub>A</sub> </td> <td> = </td> <td> {{ form.FiA_D}} &deg; {{ form.FiA_M}}' {{ form.FiA_S}}"</td>
+                </tr>
+                <tr>
+                <td>&lambda;<sub>A</sub> </td> <td> = </td> <td> {{ form.LbdA_D}} &deg; {{ form.LbdA_M}}' {{ form.LbdA_S}}"</td>
+                </tr>
+                <tr>
+                <td>H<sub>A</sub> </td> <td> = </td> <td> {{ form.HA}} m </td>
+                </tr>
+            </table>
+             <br>
+             <input type="submit" value="Sprawdź!">
+
+        </div>
+        </div>
+    </form>
+{% endblock %}

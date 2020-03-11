@@ -5,10 +5,10 @@
         <div class="col-md-12">
           <h3 class="section-title">Zadania z Geodezji Wyższej</h3>
             <p align="center">
-                <a href="{% url 'GW_main' %}"> GW </a> |
-                <a href="{% url 'RaW_main' %}"> RaW </a> |
-                <a href="{% url 'student' %}"> Profil </a> |
-                <a href="{% url 'logout' %}"> Wyloguj </a>
+                <a href="{% url 'GW_main' %}">  GW     </a> |
+                <a href="{% url 'RaW_main' %}"> RaW    </a> |
+                <a href="{% url 'student' %}">  Profil </a> |
+                <a href="{% url 'logout' %}">  Wyloguj </a>
             </p>
           <div class="section-title-divider_student"></div>
           <p class="section-description"></p>
@@ -18,19 +18,20 @@
     <div class="row">
         <div class="col-md-4 service-item">
             <hr>
-            <a href="/GW_exercises/1" class="btn-get-started">Zadanie 1</a>
-            <a href="/GW_exercises/2" class="btn-get-started">Zadanie 2</a>
-            <a href="/GW_exercises/3" class="btn-get-started">Zadanie 3</a>
-            <a href="/GW_exercises/4" class="btn-get-started">Zadanie 4</a>
-            <a href="/GW_exercises/5" class="btn-get-started">Zadanie 5</a>
-            <a href="/GW_exercises/6" class="btn-get-started">Zadanie 6</a>
+{#            <a href="/GW_exercises/1" class="btn-get-started">Zadanie 1</a>#}
+{#            <a href="/GW_exercises/2" class="btn-get-started">Zadanie 2</a>#}
+{#            <a href="/GW_exercises/3" class="btn-get-started">Zadanie 3</a>#}
+{#            <a href="/GW_exercises/4" class="btn-get-started">Zadanie 4</a>#}
+{#            <a href="/GW_exercises/5" class="btn-get-started">Zadanie 5</a>#}
+{#            <a href="/GW_exercises/6" class="btn-get-started">Zadanie 6</a>#}
+            <a href="/GW_exercises/Hirvonen" class="btn-get-started">Algorytm Hirvonena</a>
             <hr>
         </div>
     </div>
     <div class="hidden">
 {#    {% include 'networks/exercise_2.html' %}#}
     {% block exercises%}
-        {% endblock %}
+    {% endblock %}
     </div>
 {#    </div>#}
 
