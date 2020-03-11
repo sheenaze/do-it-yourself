@@ -6,6 +6,10 @@ def validate_coordinates(angle):
     return 0 <= angle <= 2 * mt.pi
 
 
+def deg2rad(angle):
+    return angle * mt.pi / 180
+
+
 def middle_point_coordinates(x1, x2, y1, y2):
     xm = (x1 + x2) / 2
     ym = (y1 + y2) / 2
@@ -63,7 +67,8 @@ def m_radius(fi, a_axis=GRS80.a_axis, e2=GRS80.e2):
     return nominator / denominator
 
 
-def hirvonen(x, y, z, e2=GRS80.e2):
+def hirvonen(x, y, z, ellipsoid):
+    e2 = ellipsoid.e2
     radius = mt.sqrt(x ** 2 + y ** 2)
     fi = mt.atan(z / radius * (1 - e2) ** (-1))
     n = n_radius(fi)
@@ -166,7 +171,7 @@ def vincenty_algorithm(fi_1, lbd_1, fi_2, lbd_2, b_axis=GRS80.b_axis, f=GRS80.f,
     a_component = 1 + u2 / 16384 * (4096 + u2 * (-768 + u2 * (320 - 175 * u2)))
     b_component = u2 / 1024 * (256 + u2 * (-128 + u2 * (74 - 47 * u2)))
     delta_sig = b_component * sin_sig * (cos_2sigm + b_component / 4 * (
-                cos_sig * (-1 + 2 * cos_2sigm ** 2) - b_component / 6 * cos_2sigm * (-3 + 4 * cos_2sigm ** 2)))
+            cos_sig * (-1 + 2 * cos_2sigm ** 2) - b_component / 6 * cos_2sigm * (-3 + 4 * cos_2sigm ** 2)))
     s = b_axis * a_component * (sig - delta_sig)
     az_12 = mt.atan2(cos_u2 * sin_lbd, cos_u1 * sin_u2 - sin_u1 * cos_u2 * cos_lbd)
     az_21 = mt.atan2(cos_u1 * sin_lbd, -sin_u1 * cos_u2 + cos_u1 * sin_u2 * cos_lbd)
@@ -304,39 +309,40 @@ def transformation(coordinates_to_transform, m=1 + 0.8407728 * 10 ** -6, ex=-1.7
     return np.matmul(rotation_matrix, coordinates_to_transform) + translation_vector
 
 
-c = mt.pi / 180
-FLA = kivioj_method(52 * c, 21 * c, 45 * c, 28000, 28)
-print(FLA)
-print(degrees_to_dms(FLA[0] / c))
-print(degrees_to_dms(FLA[1] / c))
-print(degrees_to_dms(FLA[2] / c))
+if __name__ == '__main__':
+    c = mt.pi / 180
+    FLA = kivioj_method(52 * c, 21 * c, 45 * c, 28000, 28)
+    print(FLA)
+    print(degrees_to_dms(FLA[0] / c))
+    print(degrees_to_dms(FLA[1] / c))
+    print(degrees_to_dms(FLA[2] / c))
 
-Reverse = vincenty_algorithm(52 * c, 21 * c, FLA[0], FLA[1])
-print(degrees_to_dms(Reverse[0] / c))
-print(degrees_to_dms(Reverse[1] / c))
-print(Reverse[2])
+    Reverse = vincenty_algorithm(52 * c, 21 * c, FLA[0], FLA[1])
+    print(degrees_to_dms(Reverse[0] / c))
+    print(degrees_to_dms(Reverse[1] / c))
+    print(Reverse[2])
 
-XY = gk_direct(52 * c, 22 * c, 21 * c, GRS80)
-print(XY)
+    XY = gk_direct(52 * c, 22 * c, 21 * c, GRS80)
+    print(XY)
 
-FIL = gk_back(XY[0], XY[1], 21 * c, GRS80)
-print(degrees_to_dms(FIL[0] / c))
-print(degrees_to_dms(FIL[1] / c))
+    FIL = gk_back(XY[0], XY[1], 21 * c, GRS80)
+    print(degrees_to_dms(FIL[0] / c))
+    print(degrees_to_dms(FIL[1] / c))
 
-coordinates = np.array([[1], [2], [1]])
-print(transformation(coordinates))
+    coordinates = np.array([[1], [2], [1]])
+    print(transformation(coordinates))
 
-# print(get_data(9))
-# print(n_radius(52*mt.pi/180))
-# print(m_radius(52*mt.pi/180))
-# data = get_data(5)
-# FLH = hirvonen(data[0], data[1], data[2])
-# print(degrees_to_dms(FLH[0]*180/mt.pi))
-# print(degrees_to_dms(FLH[1]*180/mt.pi))
-# print(FLH[2])
-# print(FLH[0])
-# print(FLH[1])
-#
-# print(data[5], data[4], data[3])
-# print(neu_vector(data[5], data[4], data[3]))
-# print(neu_to_xyz(FLH[0], FLH[1]))
+    # print(get_data(9))
+    # print(n_radius(52*mt.pi/180))
+    # print(m_radius(52*mt.pi/180))
+    # data = get_data(5)
+    # FLH = hirvonen(data[0], data[1], data[2], GRS80)
+    # print(degrees_to_dms(FLH[0]*180/mt.pi))
+    # print(degrees_to_dms(FLH[1]*180/mt.pi))
+    # print(FLH[2])
+    # print(FLH[0])
+    # print(FLH[1])
+    #
+    # print(data[5], data[4], data[3])
+    # print(neu_vector(data[5], data[4], data[3]))
+    # print(neu_to_xyz(FLH[0], FLH[1]))

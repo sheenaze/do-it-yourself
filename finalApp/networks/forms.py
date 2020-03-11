@@ -63,7 +63,7 @@ class HirvonenForm(forms.Form):
     FiA_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
     FiA_M = forms.IntegerField(min_value=0, max_value=59)
     FiA_S = forms.FloatField(min_value=0, max_value=59.99999)
-    LbdA_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
+    LbdA_D = forms.IntegerField(label='Lbd', min_value=0, max_value=360)
     LbdA_M = forms.IntegerField(min_value=0, max_value=59)
     LbdA_S = forms.FloatField(min_value=0, max_value=59.99999)
     HA = forms.FloatField(label='H_A')

@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from networks.leveling.check import *
+from networks.geodesy.check_algorithms import *
 
 # ========  my files ==================
 from .forms import *
@@ -222,3 +223,17 @@ class HirvonenView(View):
     def get(self, request):
         form = HirvonenForm()
         return render(request, f'networks/hirvonen.html', {'form': form})
+
+    def post(self, request):
+        form = HirvonenForm(request.POST)
+        if form.is_valid():
+            x = form.cleaned_data['XA']
+            y = form.cleaned_data['YA']
+            z = form.cleaned_data['ZA']
+            fi_deg = form.cleaned_data['FiA_D'] + form.cleaned_data['FiA_M']/60 + form.cleaned_data['FiA_S']/3600
+            lbd_deg = form.cleaned_data['LbdA_D'] + form.cleaned_data['LbdA_M']/60 + form.cleaned_data['LbdA_S']/3600
+            height = form.cleaned_data['HA']
+            message = check_hirvonen(x, y, z, fi_deg, lbd_deg, height, GRS80)
+            return render(request, f'networks/hirvonen.html', {'form': form, 'message': message})
+
+
