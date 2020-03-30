@@ -162,7 +162,7 @@ def vincenty_algorithm(fi_1, lbd_1, fi_2, lbd_2, b_axis=GRS80.b_axis, f=GRS80.f,
         sig = mt.asin(sin_sig)
         sin_alpha = cos_u1 * cos_u2 * sin_lbd / sin_sig
         cos_alpha2 = 1 - sin_alpha ** 2
-        cos_2sigm = cos_sig - 2 * sin_u1 * sin_u2 / cos_alpha2
+        cos_2sigm = cos_sig - 2 * sin_u1 * sin_u2 / cos_alpha2 if sin_u1 != 0 and sin_u2 != 0 else cos_sig
         c_component = f / 16 * cos_alpha2 * (4 + f * (4 - 3 * cos_alpha2))
         lbd = lambda_difference + (1 - c_component) * f * sin_alpha * (
                 sig + c_component * sin_sig * (cos_2sigm + c_component * cos_sig * (-1 + 2 * cos_2sigm ** 2)))
@@ -312,26 +312,26 @@ def transformation(coordinates_to_transform, m=1 + 0.8407728 * 10 ** -6, ex=-1.7
 
 if __name__ == '__main__':
     c = mt.pi / 180
-    FLA = kivioj_method(52 * c, 21 * c, 45 * c, 28000, 28)
+    FLA = kivioj_method(0 * c, 21 * c, 45 * c, 28000, 28)
     print(FLA)
-    print(degrees_to_dms(FLA[0] / c))
-    print(degrees_to_dms(FLA[1] / c))
-    print(degrees_to_dms(FLA[2] / c))
+    # print(degrees_to_dms(FLA[0] / c))
+    # print(degrees_to_dms(FLA[1] / c))
+    # print(degrees_to_dms(FLA[2] / c))
 
-    Reverse = vincenty_algorithm(52 * c, 21 * c, FLA[0], FLA[1])
+    Reverse = vincenty_algorithm(0 * c, 21 * c, 0, 22*c)
     print(degrees_to_dms(Reverse[0] / c))
     print(degrees_to_dms(Reverse[1] / c))
     print(Reverse[2])
 
-    XY = gk_direct(52 * c, 22 * c, 21 * c, GRS80)
-    print(XY)
-
-    FIL = gk_back(XY[0], XY[1], 21 * c, GRS80)
-    print(degrees_to_dms(FIL[0] / c))
-    print(degrees_to_dms(FIL[1] / c))
-
-    coordinates = np.array([[1], [2], [1]])
-    print(transformation(coordinates))
+    # XY = gk_direct(52 * c, 22 * c, 21 * c, GRS80)
+    # print(XY)
+    #
+    # FIL = gk_back(XY[0], XY[1], 21 * c, GRS80)
+    # print(degrees_to_dms(FIL[0] / c))
+    # print(degrees_to_dms(FIL[1] / c))
+    #
+    # coordinates = np.array([[1], [2], [1]])
+    # print(transformation(coordinates))
 
     # print(get_data(9))
     # print(n_radius(52*mt.pi/180))

@@ -36,7 +36,7 @@ class MainView(View):
             password = form.cleaned_data['password']
 
             User.objects.create_user(username=username, password=password)
-            return redirect('raw_login')
+            return redirect('login')
         else:
             return render(request, "networks/index.html", {'form': form})
 
@@ -223,7 +223,11 @@ class GWExercisesView(View):
 class HirvonenView(View):
     def get(self, request):
         form = HirvonenForm()
-        return render(request, 'networks/hirvonen.html', {'form': form})
+        path = request.path
+        if 'Hirvonen' in path:
+            return render(request, 'networks/hirvonen.html', {'form': form})
+        elif "LonLatH2XYZ" in path:
+            return render(request, 'networks/LonLatH2XYZ.html', {'form': form})
 
     def post(self, request):
         form = HirvonenForm(request.POST)
@@ -235,24 +239,11 @@ class HirvonenView(View):
             lbd_deg = form.cleaned_data['LbdA_D'] + form.cleaned_data['LbdA_M'] / 60 + form.cleaned_data[
                 'LbdA_S'] / 3600
             height = form.cleaned_data['HA']
-            message = check_hirvonen(x, y, z, fi_deg, lbd_deg, height, GRS80)
-            return render(request, 'networks/hirvonen.html', {'form': form, 'message': message})
+            path = request.path
+            if 'Hirvonen' in path:
+                message = check_hirvonen(x, y, z, fi_deg, lbd_deg, height, GRS80)
+                return render(request, 'networks/hirvonen.html', {'form': form, 'message': message})
+            elif "LonLatH2XYZ" in path:
+                message = check_fi_lbd_h_to_xyz(fi_deg, lbd_deg, height, x, y, z, GRS80)
+                return render(request, 'networks/LonLatH2XYZ.html', {'form': form, 'message': message})
 
-
-class LonLatH2XYZ_View(View):
-    def get(self, request):
-        form = HirvonenForm()
-        return render(request, 'networks/LonLatH2XYZ.html', {'form':form})
-
-    def post(self, request):
-        form = HirvonenForm(request.POST)
-        if form.is_valid():
-            fi_deg = form.cleaned_data['FiA_D'] + form.cleaned_data['FiA_M'] / 60 + form.cleaned_data['FiA_S'] / 3600
-            lbd_deg = form.cleaned_data['LbdA_D'] + form.cleaned_data['LbdA_M'] / 60 + form.cleaned_data[
-                'LbdA_S'] / 3600
-            height = form.cleaned_data['HA']
-            x = form.cleaned_data['XA']
-            y = form.cleaned_data['YA']
-            z = form.cleaned_data['ZA']
-            message = check_fi_lbd_h_to_xyz(fi_deg, lbd_deg, height, x, y, z,  GRS80)
-            return render(request, 'networks/LonLatH2XYZ.html', {'form': form, 'message': message})
