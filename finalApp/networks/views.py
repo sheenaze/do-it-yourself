@@ -247,3 +247,32 @@ class HirvonenView(View):
                 message = check_fi_lbd_h_to_xyz(fi_deg, lbd_deg, height, x, y, z, GRS80)
                 return render(request, 'networks/LonLatH2XYZ.html', {'form': form, 'message': message})
 
+class NeuXYZ_View(View):
+    def get(self, request):
+        form = NeuXYZ_Form()
+        path = request.path
+        if 'XYZ_to_neu' in path:
+            return render(request, 'networks/XYZ_to_neu.html', {'form': form})
+        elif 'neu_to_XYZ' in path:
+            return render(request, 'networks/neu_to_XYZ.html', {'form': form})
+
+    def post(self, request):
+        form = NeuXYZ_Form()
+        path = request.path
+        if form.is_valid():
+            dX = form.cleaned_data['dX']
+            dY = form.cleaned_data['dY']
+            dZ = form.cleaned_data['dZ']
+            north = form.cleaned_data['north']
+            east = form.cleaned_data['east']
+            up = form.cleaned_data['up']
+            fi_deg = form.cleaned_data['FiA_D'] + form.cleaned_data['FiA_M'] / 60 + form.cleaned_data['FiA_S'] / 3600
+            lbd_deg = form.cleaned_data['LbdA_D'] + form.cleaned_data['LbdA_M'] / 60 + form.cleaned_data[
+                'LbdA_S'] / 3600
+
+            if 'XYZ_to_neu' in path:
+                message = check_NEU_XYZ(dX, dY, dZ, north, east, up, fi_deg, lbd_deg, Neu2XYZ=False)
+                return render(request, 'networks/XYZ_to_neu.html', {'form': form, 'message':message})
+            elif 'neu_to_XYZ' in path:
+                message = check_NEU_XYZ(dX, dY, dZ, north, east, up, fi_deg, lbd_deg, Neu2XYZ=True)
+                return render(request, 'networks/neu_to_XYZ.html', {'form': form, 'message':message})

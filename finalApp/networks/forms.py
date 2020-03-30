@@ -68,7 +68,19 @@ class HirvonenForm(forms.Form):
     LbdA_S = forms.FloatField(min_value=0, max_value=59.99999)
     HA = forms.FloatField(label='H_A')
 
-
+class NeuXYZ_Form(forms.Form):
+    north = forms.FloatField(label='n')
+    east = forms.FloatField(label='e')
+    up = forms.FloatField(label='u')
+    dX = forms.FloatField(label = 'dX')
+    dY = forms.FloatField(label = 'dY')
+    dZ = forms.FloatField(label = 'dZ')
+    FiA_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
+    FiA_M = forms.IntegerField(min_value=0, max_value=59)
+    FiA_S = forms.FloatField(min_value=0, max_value=59.99999)
+    LbdA_D = forms.IntegerField(label='Lbd', min_value=0, max_value=360)
+    LbdA_M = forms.IntegerField(min_value=0, max_value=59)
+    LbdA_S = forms.FloatField(min_value=0, max_value=59.99999)
 
 # class Exercise_2Form(forms.Form):
 #     XA = forms.FloatField(label = 'X_A')

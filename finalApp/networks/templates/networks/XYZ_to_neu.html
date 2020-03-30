@@ -1,0 +1,65 @@
+{% extends 'networks/GW_exercises.html' %}
+{% block exercises%}
+<form method="post">
+        <div class="row">
+        <div class="col-md-4 service-item">
+            <br>
+            Wprowadź dane wyjściowe:
+
+            <table class="data_table">
+                <tr>
+                </tr>
+                <tr>
+                    <td>dX<sub>AB</sub> </td> <td> = </td> <td> {{ form.dX}} m </td>
+                </tr>
+                <tr>
+                    <td>dY<sub>AB</sub> </td> <td> = </td> <td> {{ form.dY}} m </td>
+                </tr>
+                <tr>
+                    <td>dZ<sub>AB</sub> </td> <td> = </td> <td> {{ form.dZ}} m </td>
+                </tr>
+            </table>
+        </div>
+            <br>
+        <div>
+             Wprowadź długość i szerokość punktu zaczepienia układu NEU: <br>
+            <table class="data_table">
+                <tr>
+                <td>&phi;<sub>A</sub> </td> <td> = </td> <td> {{ form.FiA_D}} &deg; {{ form.FiA_M}}' {{ form.FiA_S}}"</td>
+                </tr>
+                <tr>
+                <td>&lambda;<sub>A</sub> </td> <td> = </td> <td> {{ form.LbdA_D}} &deg; {{ form.LbdA_M}}' {{ form.LbdA_S}}"</td>
+                </tr>
+            </table>
+             <br>
+        </div>
+             <br>
+        <div>
+             Wprowadź wyniki końcowe: <br>
+            <table class="data_table">
+                <tr>
+                </tr>
+                <tr>
+                    <td>n<sub>AB</sub> </td> <td> = </td> <td> {{ form.north}} m </td>
+                </tr>
+                <tr>
+                    <td>e<sub>AB</sub> </td> <td> = </td> <td> {{ form.east}} m </td>
+                </tr>
+                <tr>
+                    <td>u<sub>AB</sub> </td> <td> = </td> <td> {{ form.up}} m </td>
+                </tr>
+            </table>
+             <br>
+             <input type="submit" value="Sprawdź!">
+
+        </div>
+        <hr>
+        <div>
+            {% for line in message %}
+              <p>  {{ line }} </p>
+            {% endfor %}
+        </div>
+        </div>
+        {% csrf_token %}
+    </form>
+{% endblock %}

@@ -31,5 +31,6 @@ urlpatterns = [
     path('GW_exercises/', GWExercisesView.as_view(), name = 'GW_exercises'),
     path('GW_exercises/Hirvonen/', HirvonenView.as_view(), name = 'Hirvonen'),
     path('GW_exercises/LonLatH2XYZ/', HirvonenView.as_view(), name = 'LonLat'),
-    # path('GW_exercises/LonLatH2XYZ/', LonLatH2XYZ_View.as_view(), name = 'Hirvonen'),
+    path('GW_exercises/XYZ_to_neu/', NeuXYZ_View.as_view(), name = 'xyz2neu'),
+    path('GW_exercises/neu_to_XYZ/', NeuXYZ_View.as_view(), name = 'neu2xyz'),
 ]
