@@ -257,7 +257,7 @@ class NeuXYZ_View(View):
             return render(request, 'networks/neu_to_XYZ.html', {'form': form})
 
     def post(self, request):
-        form = NeuXYZ_Form()
+        form = NeuXYZ_Form(request.POST)
         path = request.path
         if form.is_valid():
             dX = form.cleaned_data['dX']
@@ -276,3 +276,6 @@ class NeuXYZ_View(View):
             elif 'neu_to_XYZ' in path:
                 message = check_NEU_XYZ(dX, dY, dZ, north, east, up, fi_deg, lbd_deg, Neu2XYZ=True)
                 return render(request, 'networks/neu_to_XYZ.html', {'form': form, 'message':message})
+
+        message = 'Ooops coś nie tak'
+        return render(request, 'networks/neu_to_XYZ.html', {'form': form, 'message': message})

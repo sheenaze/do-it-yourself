@@ -21,13 +21,14 @@ def diff_level_lat_lon(angle_diff):
 def diff_level_xyzh(cooridnate_difference, coordinate_name):
     if cooridnate_difference == 0:
         message = f'Współrzędna {coordinate_name} jest w porządku.'
-    elif cooridnate_difference <= 1:
-        message = f'Współrzędna {coordinate_name} niepoprawna. Różnica nie przekracza 1 m.'
+    elif cooridnate_difference <= 0.001:
+        message = f'Współrzędna {coordinate_name} niepoprawna. Różnica nie przekracza 1 mm.'
     else:
         diff = round(cooridnate_difference)
         message = f'Współrzędna {coordinate_name} niepoprawna. Bezwględna różnica wynosi ok. {round(diff, 0)} m.'
 
     return message
+
 
 def check_hirvonen(x, y, z, fi, lbd, h, ellipsoid):
     """
@@ -65,7 +66,6 @@ def check_hirvonen(x, y, z, fi, lbd, h, ellipsoid):
     else:
         message.append(diff_level_xyzh(dif_h, 'H'))
 
-
     return message
 
 
@@ -86,18 +86,48 @@ def check_fi_lbd_h_to_xyz(fi, lbd, h, x, y, z, ellipsoid):
     return message
 
 
+def check_NEU_XYZ(dX, dY, dZ, north, east, up, fi, lbd, Neu2XYZ=False):
+    fi_rad = deg2rad(fi)
+    lbd_rad = deg2rad(lbd)
+    neu = np.array([north, east, up]).reshape((3, 1))
+    dxyz = np.array([dX, dY, dZ]).reshape((3, 1))
+    message = []
+    if Neu2XYZ:
+        D = neu_to_xyz(fi_rad, lbd_rad)
+        dxyz_test = np.round(np.dot(D, neu), 3)
+        diff = np.round(np.abs(dxyz_test - dxyz), 3)
+        print(diff[0,0], diff[1,0], diff[2,0])
+        message.append(diff_level_xyzh(diff[0, 0], 'dX'))
+        message.append(diff_level_xyzh(diff[1, 0], 'dY'))
+        message.append(diff_level_xyzh(diff[2, 0], 'dZ'))
+
+
+    else:
+        D = np.transpose(neu_to_xyz(fi_rad, lbd_rad))
+        neu_test = np.round(np.dot(D, dxyz), 3)
+
+        diff = np.round(np.abs(neu_test - neu), 3)
+        print(diff[0,0], diff[1,0], diff[2,0])
+        message.append(diff_level_xyzh(diff[0, 0], 'n'))
+        message.append(diff_level_xyzh(diff[1, 0], 'e'))
+        message.append(diff_level_xyzh(diff[2, 0], 'u'))
+
+
+    return message
+
+
 if __name__ == '__main__':
     X = 3648420
     Y = 1474120
     Z = 5003200
 
-    fi, lbd, h = hirvonen(X, Y, Z, GRS80)
-    fi = fi * 180 / math.pi
-    lbd = lbd * 180 / math.pi
+    fi_rad, lbd_rad, h = hirvonen(X, Y, Z, GRS80)
+    fi = fi_rad * 180 / math.pi
+    lbd = lbd_rad * 180 / math.pi
     h = h
 
-    print(degrees_to_dms(fi))
-    print(degrees_to_dms(lbd))
+    print(f'Fi: {degrees_to_dms(fi)}')
+    print(f"Lbd: {degrees_to_dms(lbd)}")
     print(h)
 
     print(fi, lbd, h)
@@ -110,3 +140,12 @@ if __name__ == '__main__':
     x_new, y_new, z_new = fi_lbd_h_to_xyz(fi_new, lbd_new, H_new, GRS80)
 
     print(x_new, y_new, z_new)
+
+    n, e, u = neu_vector(deg2rad(35), deg2rad(73), 455)
+    neu = np.array([n, e, u])
+    D = neu_to_xyz(fi_rad, lbd_rad)
+    dx, dy, dz = np.dot(D, neu.reshape((3, 1)))
+
+    print(f'NEU: {n, e, u}')
+    print(f'dXYZ: {dx, dy, dz}')
+    print(check_NEU_XYZ(dx, dy, dz, n, e, u, fi, lbd, True))
