@@ -20,12 +20,12 @@ def diff_level_lat_lon(angle_diff):
 
 def diff_level_xyzh(cooridnate_difference, coordinate_name):
     if cooridnate_difference == 0:
-        message = f'Współrzędna {coordinate_name} jest w porządku.'
+        message = f'Wartość {coordinate_name} jest w porządku.'
     elif cooridnate_difference <= 0.001:
-        message = f'Współrzędna {coordinate_name} niepoprawna. Różnica nie przekracza 1 mm.'
+        message = f'Wartość {coordinate_name} niepoprawna. Różnica nie przekracza 1 mm.'
     else:
         diff = round(cooridnate_difference)
-        message = f'Współrzędna {coordinate_name} niepoprawna. Bezwględna różnica wynosi ok. {round(diff, 0)} m.'
+        message = f'Wartość {coordinate_name} niepoprawna. Bezwględna różnica wynosi ok. {round(diff, 0)} m.'
 
     return message
 
@@ -78,15 +78,12 @@ def check_fi_lbd_h_to_xyz(fi, lbd, h, x, y, z, ellipsoid):
     dif_y = abs(round(y_check, 3) - round(y, 3))
     dif_z = abs(round(z_check, 3) - round(z, 3))
 
-    message = []
-    message.append(diff_level_xyzh(dif_x, 'X'))
-    message.append(diff_level_xyzh(dif_y, 'Y'))
-    message.append(diff_level_xyzh(dif_z, 'Z'))
+    message = [diff_level_xyzh(dif_x, 'X'), diff_level_xyzh(dif_y, 'Y'), diff_level_xyzh(dif_z, 'Z')]
 
     return message
 
 
-def check_NEU_XYZ(dX, dY, dZ, north, east, up, fi, lbd, Neu2XYZ=False):
+def check_neu_xyz(dX, dY, dZ, north, east, up, fi, lbd, Neu2XYZ=False):
     fi_rad = deg2rad(fi)
     lbd_rad = deg2rad(lbd)
     neu = np.array([north, east, up]).reshape((3, 1))
@@ -96,22 +93,79 @@ def check_NEU_XYZ(dX, dY, dZ, north, east, up, fi, lbd, Neu2XYZ=False):
         D = neu_to_xyz(fi_rad, lbd_rad)
         dxyz_test = np.round(np.dot(D, neu), 3)
         diff = np.round(np.abs(dxyz_test - dxyz), 3)
-        print(diff[0,0], diff[1,0], diff[2,0])
+        print(diff[0, 0], diff[1, 0], diff[2, 0])
         message.append(diff_level_xyzh(diff[0, 0], 'dX'))
         message.append(diff_level_xyzh(diff[1, 0], 'dY'))
         message.append(diff_level_xyzh(diff[2, 0], 'dZ'))
-
 
     else:
         D = np.transpose(neu_to_xyz(fi_rad, lbd_rad))
         neu_test = np.round(np.dot(D, dxyz), 3)
 
         diff = np.round(np.abs(neu_test - neu), 3)
-        print(diff[0,0], diff[1,0], diff[2,0])
+        print(diff[0, 0], diff[1, 0], diff[2, 0])
         message.append(diff_level_xyzh(diff[0, 0], 'n'))
         message.append(diff_level_xyzh(diff[1, 0], 'e'))
         message.append(diff_level_xyzh(diff[2, 0], 'u'))
 
+    return message
+
+
+def check_kivioja(fiA, lbdA, AzAB, s, n, fiB, lbdB, AzBA):
+    fiB_test, lbdB_test, AzBA_test = kivioja_algorithm(deg2rad(fiA), deg2rad(lbdA), deg2rad(AzAB), s, n)
+    fiB_rad = deg2rad(fiB)
+    lbdB_rad = deg2rad(lbdB)
+    AzBA_rad = deg2rad(AzBA)
+
+    diff_fi = abs(fiB_rad - fiB_test)
+    diff_lbd = abs(lbdB_rad - lbdB_test)
+    diff_Az = abs(AzBA_rad - AzBA_test)
+    eps_Az = 0.001 / 3600 / 180 * math.pi
+    eps = 0.0001 / 3600 / 180 * math.pi
+
+    message = []
+    if diff_fi <= eps:
+        message.append('Podana szerokość jest poprawna.')
+    else:
+        message.append(f'Podana szerokość jest niepoprawna. {diff_level_lat_lon(diff_fi)}')
+
+    if diff_lbd <= eps:
+        message.append('Podana długość jest poprawna.')
+    else:
+        message.append(f'Podana długość jest niepoprawna. {diff_level_lat_lon(diff_lbd)}')
+
+    if diff_Az <= eps_Az:
+        message.append('Podana wysokość jest poprawna.')
+    else:
+        message.append(f'Podana długość jest niepoprawna. {diff_level_lat_lon(diff_Az)}')
+
+    return message
+
+
+def check_vincenty(fiA, lbdA, fiB, lbdB, AzAB, AzBA, s):
+    AzAB_test, AzBA_test, s_test = vincenty_algorithm(deg2rad(fiA), deg2rad(lbdA), deg2rad(fiB), deg2rad(lbdB))
+    AzAB_rad = deg2rad(AzAB)
+    AzBA_rad = deg2rad(AzBA)
+    diff_AzAB = abs(AzAB_rad - AzAB_test)
+    diff_AzBA = abs(AzBA_rad - AzBA_test)
+    diff_s = abs(s - s_test)
+    eps_Az = 0.001 / 3600 / 180 * math.pi
+    message = []
+
+    if diff_AzAB <= eps_Az:
+        message.append('Podana wysokość jest poprawna.')
+    else:
+        message.append(f'Podana długość jest niepoprawna. {diff_level_lat_lon(diff_AzAB)}')
+
+    if diff_AzBA <= eps_Az:
+        message.append('Podana wysokość jest poprawna.')
+    else:
+        message.append(f'Podana długość jest niepoprawna. {diff_level_lat_lon(diff_AzBA)}')
+
+    if diff_s <= 0.001:
+        message.append('Podana odległość jest poprawna.')
+    else:
+        message.append(diff_level_xyzh(diff_s, 's'))
 
     return message
 
@@ -148,4 +202,4 @@ if __name__ == '__main__':
 
     print(f'NEU: {n, e, u}')
     print(f'dXYZ: {dx, dy, dz}')
-    print(check_NEU_XYZ(dx, dy, dz, n, e, u, fi, lbd, True))
+    print(check_neu_xyz(dx, dy, dz, n, e, u, fi, lbd, True))

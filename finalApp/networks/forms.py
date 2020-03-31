@@ -4,24 +4,30 @@ from django.forms import ModelForm
 from .models import *
 from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
+
+
 class MainViewForm(ModelForm):
     class Meta:
         model = StudentsResults
         fields = ['index_number']
 
+
 class LoginForm(forms.Form):
-    login = forms.CharField(label = 'Login', max_length=120)
+    login = forms.CharField(label='Login', max_length=120)
     password = forms.CharField(label='Hasło', max_length=120, widget=forms.PasswordInput)
     # submit = forms.CharField()
+
 
 class UploadFileForm(forms.Form):
     # title = forms.CharField(max_length=50)
     file = forms.FileField()
 
+
 class AddUserForm(forms.Form):
-    username = forms.IntegerField(label = 'Numer indeksu')
+    username = forms.IntegerField(label='Numer indeksu')
     password = forms.CharField(label='Hasło', max_length=120, widget=forms.PasswordInput)
     rep_password = forms.CharField(label='Powtórz hasło', max_length=120, widget=forms.PasswordInput)
+
     # name =  forms.CharField(label = 'Imię', max_length=120)
     # last_name =  forms.CharField(label = 'Nazwisko', max_length=120)
 
@@ -42,6 +48,7 @@ class AddUserForm(forms.Form):
         if password != rep_password:
             raise forms.ValidationError('Hasło i powtórzone hasło się nie zgadzają')
 
+
 class ResetPasswordForm(forms.Form):
     password = forms.CharField(label='Wprowadź nowe hasło', max_length=120, widget=forms.PasswordInput)
     rep_password = forms.CharField(label='Powtórz hasło', max_length=120, widget=forms.PasswordInput)
@@ -53,13 +60,11 @@ class ResetPasswordForm(forms.Form):
         if password != rep_password:
             raise forms.ValidationError('Hasło i powtórzone hasło się nie zgadzają')
 
-# class Exercise_1Form(forms.Form):
-#     pass
 
 class HirvonenForm(forms.Form):
-    XA = forms.FloatField(label = 'X_A')
-    YA = forms.FloatField(label = 'Y_A')
-    ZA = forms.FloatField(label = 'Z_A')
+    XA = forms.FloatField(label='X_A')
+    YA = forms.FloatField(label='Y_A')
+    ZA = forms.FloatField(label='Z_A')
     FiA_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
     FiA_M = forms.IntegerField(min_value=0, max_value=59)
     FiA_S = forms.FloatField(min_value=0, max_value=59.99999)
@@ -68,19 +73,48 @@ class HirvonenForm(forms.Form):
     LbdA_S = forms.FloatField(min_value=0, max_value=59.99999)
     HA = forms.FloatField(label='H_A')
 
+
 class NeuXYZ_Form(forms.Form):
     north = forms.FloatField(label='n')
     east = forms.FloatField(label='e')
     up = forms.FloatField(label='u')
-    dX = forms.FloatField(label = 'dX')
-    dY = forms.FloatField(label = 'dY')
-    dZ = forms.FloatField(label = 'dZ')
+    dX = forms.FloatField(label='dX')
+    dY = forms.FloatField(label='dY')
+    dZ = forms.FloatField(label='dZ')
     FiA_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
     FiA_M = forms.IntegerField(min_value=0, max_value=59)
     FiA_S = forms.FloatField(min_value=0, max_value=59.99999)
     LbdA_D = forms.IntegerField(label='Lbd', min_value=0, max_value=360)
     LbdA_M = forms.IntegerField(min_value=0, max_value=59)
     LbdA_S = forms.FloatField(min_value=0, max_value=59.99999)
+
+
+class KiviojVincentyForm(forms.Form):
+    FiA_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
+    FiA_M = forms.IntegerField(min_value=0, max_value=59)
+    FiA_S = forms.FloatField(min_value=0, max_value=59.99999)
+
+    ds_number = forms.IntegerField(label='liczba odcinków', min_value= 1, max_value= 9999999999)
+    LbdA_D = forms.IntegerField(label='Lbd', min_value=0, max_value=360)
+    LbdA_M = forms.IntegerField(min_value=0, max_value=59)
+    LbdA_S = forms.FloatField(min_value=0, max_value=59.99999)
+
+    distance = forms.FloatField(label='s')
+    AzAB_D = forms.IntegerField(label='Lbd', min_value=0, max_value=360)
+    AzAB_M = forms.IntegerField(min_value=0, max_value=59)
+    AzAB_S = forms.FloatField(min_value=0, max_value=59.99999)
+
+    FiB_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
+    FiB_M = forms.IntegerField(min_value=0, max_value=59)
+    FiB_S = forms.FloatField(min_value=0, max_value=59.99999)
+
+    LbdB_D = forms.IntegerField(label='Lbd', min_value=0, max_value=360)
+    LbdB_M = forms.IntegerField(min_value=0, max_value=59)
+    LbdB_S = forms.FloatField(min_value=0, max_value=59.99999)
+
+    AzBA_D = forms.IntegerField(label='Lbd', min_value=0, max_value=360)
+    AzBA_M = forms.IntegerField(min_value=0, max_value=59)
+    AzBA_S = forms.FloatField(min_value=0, max_value=59.99999)
 
 # class Exercise_2Form(forms.Form):
 #     XA = forms.FloatField(label = 'X_A')

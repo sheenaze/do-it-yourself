@@ -33,4 +33,6 @@ urlpatterns = [
     path('GW_exercises/LonLatH2XYZ/', HirvonenView.as_view(), name = 'LonLat'),
     path('GW_exercises/XYZ_to_neu/', NeuXYZ_View.as_view(), name = 'xyz2neu'),
     path('GW_exercises/neu_to_XYZ/', NeuXYZ_View.as_view(), name = 'neu2xyz'),
+    path('GW_exercises/Kivioja/', KiviojaVincentyView.as_view(), name = 'kivioja'),
+    path('GW_exercises/Vincenty/', KiviojaVincentyView.as_view(), name = 'vincenty'),
 ]

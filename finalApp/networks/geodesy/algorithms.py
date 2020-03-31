@@ -107,7 +107,7 @@ def neu_to_xyz(fi, lbd):
     return np.array([r1, r2, r3])
 
 
-def kivioj_method(fi_p, lbd_p, azim_ell, dist_ell, lines_number):
+def kivioja_algorithm(fi_p, lbd_p, azim_ell, dist_ell, lines_number):
     ds = dist_ell / lines_number
     if ds > 1500:
         return 'Odcinki przekraczają 1500m, podać inną liczbę odcinków'
@@ -312,13 +312,13 @@ def transformation(coordinates_to_transform, m=1 + 0.8407728 * 10 ** -6, ex=-1.7
 
 if __name__ == '__main__':
     c = mt.pi / 180
-    FLA = kivioj_method(52 * c, 21 * c, 45 * c, 28000, 28)
+    FLA = kivioja_algorithm(52 * c, 21 * c, 45 * c, 28000, 28)
     print(FLA)
     print(degrees_to_dms(FLA[0] / c))
     print(degrees_to_dms(FLA[1] / c))
     print(degrees_to_dms(FLA[2] / c))
 
-    Reverse = vincenty_algorithm(0 * c, 21 * c, 0, 22*c)
+    Reverse = vincenty_algorithm(0 * c, 21 * c, 0, 22 * c)
     print(degrees_to_dms(Reverse[0] / c))
     print(degrees_to_dms(Reverse[1] / c))
     print(Reverse[2])
