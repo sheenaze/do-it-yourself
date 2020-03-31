@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %} {{ title }} {% endblock %}</title>
-  <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
 
 </head>
 <body>
-        {% block maincontent %}
-            <form method="post">
-            {% csrf_token %}
-                {{ form.as_p }}
-                <button> Wczytaj plik </button>
-{#        <button> Wybierz plik </button>#}
-{#            <input type="button" value="Wczytaj plik">#}
-            </form>
-        {% endblock %}
+{% block maincontent %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button> Wczytaj plik</button>
+        {#        <button> Wybierz plik </button>#}
+        {#            <input type="button" value="Wczytaj plik">#}
+    </form>
+{% endblock %}
 
 </body>
 </html>

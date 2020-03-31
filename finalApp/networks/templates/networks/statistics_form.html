@@ -1,10 +1,10 @@
 {% extends 'networks/base.html' %}
 
 {% block maincontent %}
-            <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="button" value="Wczytaj plik">
-            </form>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="button" value="Wczytaj plik">
+    </form>
 
 {% endblock %}

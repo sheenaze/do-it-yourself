@@ -1,49 +1,60 @@
 {% extends 'networks/GW_exercises.html' %}
-{% block exercises%}
-<form method="post">
+{% block exercises %}
+    <form method="post">
         <div class="row">
-        <div class="col-md-4 service-item">
+            <div class="col-md-4 service-item">
+                <br>
+                <b> Wprowadź dane wyjściowe: </b><br>
+                <table class="data_table">
+                    <tr>
+                        <td>&phi;<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.FiA_D }} &deg; {{ form.FiA_M }}' {{ form.FiA_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>&lambda;<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.LbdA_D }} &deg; {{ form.LbdA_M }}' {{ form.LbdA_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>H<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.HA }} m</td>
+                    </tr>
+                </table>
+            </div>
             <br>
-            Wprowadź dane wyjściowe:
+            <div>
+                <b> Wprowadź wyniki końcowe:</b> <br>
+                <table class="data_table">
+                    <tr>
+                    </tr>
+                    <tr>
+                        <td>X<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.XA }} m</td>
+                    </tr>
+                    <tr>
+                        <td>Y<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.YA }} m</td>
+                    </tr>
+                    <tr>
+                        <td>Z<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.ZA }} m</td>
+                    </tr>
+                </table>
+                <br>
+                <input type="submit" value="Sprawdź!">
 
-            <table class="data_table">
-                <tr>
-                <td>&phi;<sub>A</sub> </td> <td> = </td> <td> {{ form.FiA_D}} &deg; {{ form.FiA_M}}' {{ form.FiA_S}}"</td>
-                </tr>
-                <tr>
-                <td>&lambda;<sub>A</sub> </td> <td> = </td> <td> {{ form.LbdA_D}} &deg; {{ form.LbdA_M}}' {{ form.LbdA_S}}"</td>
-                </tr>
-                <tr>
-                <td>H<sub>A</sub> </td> <td> = </td> <td> {{ form.HA}} m </td>
-                </tr>
-            </table>
-        </div>
-            <br>
-        <div>
-             Wprowadź wyniki końcowe: <br>
-            <table class="data_table">
-                <tr>
-                </tr>
-                <tr>
-                    <td>X<sub>A</sub> </td> <td> = </td> <td> {{ form.XA}} m </td>
-                </tr>
-                <tr>
-                    <td>Y<sub>A</sub> </td> <td> = </td> <td> {{ form.YA}} m </td>
-                </tr>
-                <tr>
-                    <td>Z<sub>A</sub> </td> <td> = </td> <td> {{ form.ZA}} m </td>
-                </tr>
-            </table>
-             <br>
-             <input type="submit" value="Sprawdź!">
-
-        </div>
-        <hr>
-        <div>
-            {% for line in message %}
-              <p>  {{ line }} </p>
-            {% endfor %}
-        </div>
+            </div>
+            <hr>
+            <div>
+                {% for line in message %}
+                    <p>  {{ line }} </p>
+                {% endfor %}
+            </div>
         </div>
         {% csrf_token %}
     </form>

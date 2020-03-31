@@ -1,91 +1,133 @@
 {% extends 'networks/GW_exercises.html' %}
-{% block exercises%}
-<form method="post">
+{% block exercises %}
+    <form method="post">
         <div class="row">
-        <div class="col-md-4 service-item">
-            Wprowadź dane wyjściowe:
-            <table class="data_table">
-            <tr>
-            </tr>
-            <tr>
-                <td>X<sub>A</sub> </td> <td> = </td> <td> {{ form.XA}} m |</td>
-                <td>Y<sub>A</sub> </td> <td> = </td> <td> {{ form.YA}} m |</td>
-                <td>Z<sub>A</sub> </td> <td> = </td> <td> {{ form.ZA}} m </td>
-            </tr>
-            <tr>
-                <td>s<sub>AB</sub> </td> <td> = </td> <td> {{ form.distance}} m |</td>
-                <td>z<sub>AB</sub> </td> <td> = </td> <td> {{ form.zenith}} &deg; |</td>
-                <td>Az<sub>AB</sub> </td> <td> = </td> <td> {{ form.azimuth}} &deg; </td>
-            </tr>
-            </table>
-        </div>
+            <div class="col-md-4 service-item">
+                Wprowadź dane wyjściowe:
+                <table class="data_table">
+                    <tr>
+                    </tr>
+                    <tr>
+                        <td>X<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.XA }} m |</td>
+                        <td>Y<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.YA }} m |</td>
+                        <td>Z<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.ZA }} m</td>
+                    </tr>
+                    <tr>
+                        <td>s<sub>AB</sub></td>
+                        <td> =</td>
+                        <td> {{ form.distance }} m |</td>
+                        <td>z<sub>AB</sub></td>
+                        <td> =</td>
+                        <td> {{ form.zenith }} &deg; |</td>
+                        <td>Az<sub>AB</sub></td>
+                        <td> =</td>
+                        <td> {{ form.azimuth }} &deg;</td>
+                    </tr>
+                </table>
+            </div>
             <hr>
-         <div>
-             Wprowadź wyniki pośrednie: <br>
-            <table class="data_table">
-                <tr>
-                <td>&phi;<sub>A</sub> </td> <td> = </td> <td> {{ form.FiA_D}} &deg; {{ form.FiA_M}}' {{ form.FiA_S}}"</td>
-                </tr>
-                <tr>
-                <td>&lambda;<sub>A</sub> </td> <td> = </td> <td> {{ form.LbdA_D}} &deg; {{ form.LbdA_M}}' {{ form.LbdA_S}}"</td>
-                </tr>
-                <tr>
-                <td>H<sub>A</sub> </td> <td> = </td> <td> {{ form.HA}} m </td>
-                </tr>
-            </table>
-            <br>
-            <table class="data_table">
-                <tr>
-                <td>n</td> <td> = </td> <td> {{ form.neu_n}} m</td>
-                </tr>
-                <tr>
-                <td>e</td> <td> = </td> <td> {{ form.neu_e}} m</td>
-                </tr>
-                <tr>
-                <td>u </td> <td> = </td> <td> {{ form.neu_u}} m </td>
-                </tr>
-            </table>
-            <br>
-             <table class="data_table">
-                <tr>
-                <td> </td> <td>  </td> <td> {{ form.D11}} {{ form.D12}} {{ form.D13}} </td>
-                </tr>
-                <tr>
-                <td>D</td> <td> = </td> <td> {{ form.D21}} {{ form.D22}} {{ form.D23}} </td>
-                </tr>
-                <tr>
-                <td> </td> <td>  </td> <td> {{ form.D31}} {{ form.D32}} {{ form.D33}} </td>
-                </tr>
-            </table>
-           <br>
-            <table class="data_table">
-                <tr>
-                <td>dX<sub>AB</sub></td> <td> = </td> <td> {{ form.dX_AB}} m</td>
-                </tr>
-                <tr>
-                <td>dY<sub>AB</sub></td> <td> = </td> <td> {{ form.dY_AB}} m</td>
-                </tr>
-                <tr>
-                <td>dZ<sub>AB</sub></td> <td> = </td> <td> {{ form.dZ_AB}} m </td>
-                </tr>
-            </table>
-             <hr>
-             Wprowadź wyniki końcowe: <br>
-            <table class="data_table">
-                <tr>
-                <td>&phi;<sub>B</sub> </td> <td> = </td> <td> {{ form.FiB_D}} &deg; {{ form.FiB_M}}' {{ form.FiB_S}}"</td>
-                </tr>
-                <tr>
-                <td>&lambda;<sub>B</sub> </td> <td> = </td> <td> {{ form.LbdB_D}} &deg; {{ form.LbdB_M}}' {{ form.LbdB_S}}"</td>
-                </tr>
-                <tr>
-                <td>H<sub>B</sub> </td> <td> = </td> <td> {{ form.HB}} m </td>
-                </tr>
-            </table>
-             <br>
-             <input type="submit" value="Sprawdź!">
+            <div>
+                Wprowadź wyniki pośrednie: <br>
+                <table class="data_table">
+                    <tr>
+                        <td>&phi;<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.FiA_D }} &deg; {{ form.FiA_M }}' {{ form.FiA_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>&lambda;<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.LbdA_D }} &deg; {{ form.LbdA_M }}' {{ form.LbdA_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>H<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.HA }} m</td>
+                    </tr>
+                </table>
+                <br>
+                <table class="data_table">
+                    <tr>
+                        <td>n</td>
+                        <td> =</td>
+                        <td> {{ form.neu_n }} m</td>
+                    </tr>
+                    <tr>
+                        <td>e</td>
+                        <td> =</td>
+                        <td> {{ form.neu_e }} m</td>
+                    </tr>
+                    <tr>
+                        <td>u</td>
+                        <td> =</td>
+                        <td> {{ form.neu_u }} m</td>
+                    </tr>
+                </table>
+                <br>
+                <table class="data_table">
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td> {{ form.D11 }} {{ form.D12 }} {{ form.D13 }} </td>
+                    </tr>
+                    <tr>
+                        <td>D</td>
+                        <td> =</td>
+                        <td> {{ form.D21 }} {{ form.D22 }} {{ form.D23 }} </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td> {{ form.D31 }} {{ form.D32 }} {{ form.D33 }} </td>
+                    </tr>
+                </table>
+                <br>
+                <table class="data_table">
+                    <tr>
+                        <td>dX<sub>AB</sub></td>
+                        <td> =</td>
+                        <td> {{ form.dX_AB }} m</td>
+                    </tr>
+                    <tr>
+                        <td>dY<sub>AB</sub></td>
+                        <td> =</td>
+                        <td> {{ form.dY_AB }} m</td>
+                    </tr>
+                    <tr>
+                        <td>dZ<sub>AB</sub></td>
+                        <td> =</td>
+                        <td> {{ form.dZ_AB }} m</td>
+                    </tr>
+                </table>
+                <hr>
+                Wprowadź wyniki końcowe: <br>
+                <table class="data_table">
+                    <tr>
+                        <td>&phi;<sub>B</sub></td>
+                        <td> =</td>
+                        <td> {{ form.FiB_D }} &deg; {{ form.FiB_M }}' {{ form.FiB_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>&lambda;<sub>B</sub></td>
+                        <td> =</td>
+                        <td> {{ form.LbdB_D }} &deg; {{ form.LbdB_M }}' {{ form.LbdB_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>H<sub>B</sub></td>
+                        <td> =</td>
+                        <td> {{ form.HB }} m</td>
+                    </tr>
+                </table>
+                <br>
+                <input type="submit" value="Sprawdź!">
 
-        </div>
+            </div>
         </div>
     </form>
 {% endblock %}

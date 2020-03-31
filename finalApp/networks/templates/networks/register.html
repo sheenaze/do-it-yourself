@@ -1,27 +1,31 @@
-  <section id="contact">
+<section id="contact">
     <div class="container wow fadeInUp">
-      <div class="row">
-        <div class="col-md-12">
-          <h3 class="section-title">Zarejestruj się</h3>
-          <div class="section-title-divider"></div>
-          <p class="section-description">Aby w pełni korzystać z możliwości serwisu zarejestruj sie używając swojego numeru indeksu </p>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="section-title">Zarejestruj się</h3>
+                <div class="section-title-divider"></div>
+                <p class="section-description">Aby w pełni korzystać z możliwości serwisu zarejestruj sie używając
+                    swojego numeru indeksu </p>
+            </div>
         </div>
-      </div>
 
-    <div class="register_form">
-{#              <div class="register_form">#}
-                <form  method="post">
-                    {% csrf_token %}
-{#                    {{ form.as_ul }}#}
+        <div class="register_form">
+            {#              <div class="register_form">#}
+            <form method="post">
+                {% csrf_token %}
+                {#                    {{ form.as_ul }}#}
                 {{ form.non_field_errors }}
-                    {% for item in form %}
-                  <div id="register">
-                       {{ item.label }}: <br> {{ item }}
-                  </div>
-                    {% endfor %}
-                 <br> <div id="register_btn"> <button type="submit">Zarejestruj się</button></div>
-                </form>
-{#              </div>#}
+                {% for item in form %}
+                    <div id="register">
+                        {{ item.label }}: <br> {{ item }}
+                    </div>
+                {% endfor %}
+                <br>
+                <div id="register_btn">
+                    <button type="submit">Zarejestruj się</button>
+                </div>
+            </form>
+            {#              </div>#}
+        </div>
     </div>
-    </div>
-  </section>
+</section>

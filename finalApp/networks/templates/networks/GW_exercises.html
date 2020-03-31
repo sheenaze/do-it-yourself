@@ -1,33 +1,35 @@
 {% extends 'networks/base.html' %}
 {% block maincontent %}
     <div class="container wow fadeInUp">
-      <div class="row">
-        <div class="col-md-12">
-          <h3 class="section-title">Zadania z Geodezji Wyższej</h3>
-            <p align="center">
-                <a href="{% url 'GW_main' %}">  GW     </a> |
-                <a href="{% url 'RaW_main' %}"> RaW    </a> |
-                <a href="{% url 'student' %}">  Profil </a> |
-                <a href="{% url 'logout' %}">  Wyloguj </a>
-            </p>
-          <div class="section-title-divider_student"></div>
-          <p class="section-description"></p>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="section-title">Zadania z Geodezji Wyższej</h3>
+                <p align="center">
+                    <a href="{% url 'GW_main' %}"> GW </a> |
+                    <a href="{% url 'RaW_main' %}"> RaW </a> |
+                    <a href="{% url 'student' %}"> Profil </a> |
+                    <a href="{% url 'logout' %}"> Wyloguj </a>
+                </p>
+                <div class="section-title-divider_student"></div>
+                <p class="section-description"></p>
+            </div>
         </div>
-      </div>
     </div>
     <div class="row">
         <div class="col-md-4 service-item">
             <hr>
-{#            <a href="/GW_exercises/1" class="btn-get-started">Zadanie 1</a>#}
-{#            <a href="/GW_exercises/2" class="btn-get-started">Zadanie 2</a>#}
-{#            <a href="/GW_exercises/3" class="btn-get-started">Zadanie 3</a>#}
-{#            <a href="/GW_exercises/4" class="btn-get-started">Zadanie 4</a>#}
-{#            <a href="/GW_exercises/5" class="btn-get-started">Zadanie 5</a>#}
-{#            <a href="/GW_exercises/6" class="btn-get-started">Zadanie 6</a>#}
+            {#            <a href="/GW_exercises/1" class="btn-get-started">Zadanie 1</a>#}
+            {#            <a href="/GW_exercises/2" class="btn-get-started">Zadanie 2</a>#}
+            {#            <a href="/GW_exercises/3" class="btn-get-started">Zadanie 3</a>#}
+            {#            <a href="/GW_exercises/4" class="btn-get-started">Zadanie 4</a>#}
+            {#            <a href="/GW_exercises/5" class="btn-get-started">Zadanie 5</a>#}
+            {#            <a href="/GW_exercises/6" class="btn-get-started">Zadanie 6</a>#}
             <a href="/GW_exercises/LonLatH2XYZ" class="btn-get-started">&varphi;&lambda;H -> XYZ </a> |
             <a href="/GW_exercises/Hirvonen" class="btn-get-started">Algorytm Hirvonena</a> |
             <a href="/GW_exercises/XYZ_to_neu" class="btn-get-started">dXYZ -> neu</a> |
             <a href="/GW_exercises/neu_to_XYZ" class="btn-get-started">neu -> dXYZ</a> |
+            <a href="/GW_exercises/Kivioja" class="btn-get-started">Algorytm Kivioji -> dXYZ</a> |
+            <a href="/GW_exercises/Vincenty" class="btn-get-started">Algorytm Vincentego</a> |
 
 
             <hr>
@@ -35,12 +37,13 @@
         </div>
     </div>
     <div class="hidden">
-{#    {% include 'networks/exercise_2.html' %}#}
-    {% block exercises%}
-    {% endblock %}
+        {#    {% include 'networks/exercise_2.html' %}#}
+        {% block exercises %}
+        {% endblock %}
     </div>
-{#    </div>#}
-     <b>UWAGA:</b> Wartości kątowe należy podawać z dokładnością 5 miejsc po przecinku dla sekundy, wartości metryczne z dokładnością 4 miejsc po przecinku (gdy jednostką są metry).
+    {#    </div>#}
+    <b>UWAGA:</b> Wartości kątowe należy podawać z dokładnością 5 miejsc po przecinku dla sekundy, wartości metryczne z
+    dokładnością 4 miejsc po przecinku (gdy jednostką są metry).
 
 
-{%  endblock %}
+{% endblock %}

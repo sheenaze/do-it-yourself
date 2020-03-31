@@ -1,15 +1,15 @@
 {% extends "networks/base.html" %}
 
 {% block maincontent %}
-{#<table style="border: solid 1px black"> #}
-{##}
-{##}
-{##}
-{##}
-{#</table>#}
-{#    <ul>#}
-   {% for comment in comments %}
-    <p>    {{ comment}} </p>
+    {#<table style="border: solid 1px black"> #}
+    {##}
+    {##}
+    {##}
+    {##}
+    {#</table>#}
+    {#    <ul>#}
+    {% for comment in comments %}
+        <p>    {{ comment }} </p>
     {% endfor %}
-{#    </ul>#}
+    {#    </ul>#}
 {% endblock %}

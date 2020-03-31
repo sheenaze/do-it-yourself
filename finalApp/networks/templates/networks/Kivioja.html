@@ -4,7 +4,34 @@
         <div class="row">
             <div class="col-md-4 service-item">
                 <br>
-                <b> Wprowadź dane wyjściowe: </b>
+                <b>Wprowadź dane wyjściowe:</b>
+
+                <table class="data_table">
+                    <tr>
+                        <td>&phi;<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.FiA_D }} &deg; {{ form.FiA_M }}' {{ form.FiA_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>&lambda;<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.LbdA_D }} &deg; {{ form.LbdA_M }}' {{ form.LbdA_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>Az<sub>AB</sub></td>
+                        <td> =</td>
+                        <td> {{ form.AzAB_D }} &deg; {{ form.AzAB_M }}' {{ form.AzAB_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>s<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.distance }} m</td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <div>
+                <b>Wprowadź wyniki końcowe:</b> <br>
                 <table class="data_table">
                     <tr>
                     </tr>
@@ -22,28 +49,6 @@
                         <td>Z<sub>A</sub></td>
                         <td> =</td>
                         <td> {{ form.ZA }} m</td>
-                    </tr>
-
-                </table>
-            </div>
-            <br>
-            <div>
-                <b>Wprowadź wyniki końcowe:</b> <br>
-                <table class="data_table">
-                    <tr>
-                        <td>&phi;<sub>A</sub></td>
-                        <td> =</td>
-                        <td> {{ form.FiA_D }} &deg; {{ form.FiA_M }}' {{ form.FiA_S }}"</td>
-                    </tr>
-                    <tr>
-                        <td>&lambda;<sub>A</sub></td>
-                        <td> =</td>
-                        <td> {{ form.LbdA_D }} &deg; {{ form.LbdA_M }}' {{ form.LbdA_S }}"</td>
-                    </tr>
-                    <tr>
-                        <td>H<sub>A</sub></td>
-                        <td> =</td>
-                        <td> {{ form.HA }} m</td>
                     </tr>
                 </table>
                 <br>
