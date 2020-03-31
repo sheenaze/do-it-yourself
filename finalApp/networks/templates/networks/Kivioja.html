@@ -23,9 +23,12 @@
                         <td> {{ form.AzAB_D }} &deg; {{ form.AzAB_M }}' {{ form.AzAB_S }}"</td>
                     </tr>
                     <tr>
-                        <td>s<sub>A</sub></td>
+                        <td>s<sub>AB</sub></td>
                         <td> =</td>
                         <td> {{ form.distance }} m</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"> liczba odcinków: {{ form.ds_number }}</td>
                     </tr>
                 </table>
             </div>
@@ -34,21 +37,19 @@
                 <b>Wprowadź wyniki końcowe:</b> <br>
                 <table class="data_table">
                     <tr>
+                        <td>&phi;<sub>B</sub></td>
+                        <td> =</td>
+                        <td> {{ form.FiB_D }} &deg; {{ form.FiB_M }}' {{ form.FiB_S }}"</td>
                     </tr>
                     <tr>
-                        <td>X<sub>A</sub></td>
+                        <td>&lambda;<sub>B</sub></td>
                         <td> =</td>
-                        <td> {{ form.XA }} m</td>
+                        <td> {{ form.LbdB_D }} &deg; {{ form.LbdB_M }}' {{ form.LbdB_S }}"</td>
                     </tr>
                     <tr>
-                        <td>Y<sub>A</sub></td>
+                        <td>Az<sub>BA</sub></td>
                         <td> =</td>
-                        <td> {{ form.YA }} m</td>
-                    </tr>
-                    <tr>
-                        <td>Z<sub>A</sub></td>
-                        <td> =</td>
-                        <td> {{ form.ZA }} m</td>
+                        <td> {{ form.AzBA_D }} &deg; {{ form.AzBA_M }}' {{ form.AzBA_S }}"</td>
                     </tr>
                 </table>
                 <br>

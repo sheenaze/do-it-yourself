@@ -1,0 +1,64 @@
+{% extends 'networks/GW_exercises.html' %}
+{% block exercises %}
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4 service-item">
+                <br>
+                <b>Wprowadź dane wyjściowe:</b>
+                <table class="data_table">
+                    <tr>
+                        <td>&phi;<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.FiA_D }} &deg; {{ form.FiA_M }}' {{ form.FiA_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>&lambda;<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.LbdA_D }} &deg; {{ form.LbdA_M }}' {{ form.LbdA_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>&phi;<sub>B</sub></td>
+                        <td> =</td>
+                        <td> {{ form.FiB_D }} &deg; {{ form.FiB_M }}' {{ form.FiB_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>&lambda;<sub>B</sub></td>
+                        <td> =</td>
+                        <td> {{ form.LbdB_D }} &deg; {{ form.LbdB_M }}' {{ form.LbdB_S }}"</td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <div>
+                <b>Wprowadź wyniki końcowe:</b> <br>
+                <table class="data_table">
+                    <tr>
+                        <td>Az<sub>AB</sub></td>
+                        <td> =</td>
+                        <td> {{ form.AzAB_D }} &deg; {{ form.AzAB_M }}' {{ form.AzAB_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>Az<sub>BA</sub></td>
+                        <td> =</td>
+                        <td> {{ form.AzBA_D }} &deg; {{ form.AzBA_M }}' {{ form.AzBA_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>s<sub>AB</sub></td>
+                        <td> =</td>
+                        <td> {{ form.distance }} m</td>
+                    </tr>
+                </table>
+                <br>
+                <input type="submit" value="Sprawdź!">
+
+            </div>
+            <hr>
+            <div>
+                {% for line in message %}
+                    <p>  {{ line }} </p>
+                {% endfor %}
+            </div>
+        </div>
+        {% csrf_token %}
+    </form>
+{% endblock %}
