@@ -313,4 +313,5 @@ class KiviojaVincentyView(View):
                 return render(request, 'networks/Kivioja.html', {'form': form, 'message': message})
             elif 'Vincenty' in path:
                 message = check_vincenty(fiA_deg, lbdA_deg, fiB_deg, lbdB_deg, AzAB_deg, AzBA_deg, s)
+                print(message)
                 return render(request, 'networks/Vincenty.html', {'form': form, 'message': message})

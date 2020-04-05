@@ -112,32 +112,35 @@ def check_neu_xyz(dX, dY, dZ, north, east, up, fi, lbd, Neu2XYZ=False):
 
 
 def check_kivioja(fiA, lbdA, AzAB, s, n, fiB, lbdB, AzBA):
-    fiB_test, lbdB_test, AzBA_test = kivioja_algorithm(deg2rad(fiA), deg2rad(lbdA), deg2rad(AzAB), s, n)
-    fiB_rad = deg2rad(fiB)
-    lbdB_rad = deg2rad(lbdB)
-    AzBA_rad = deg2rad(AzBA)
-
-    diff_fi = abs(fiB_rad - fiB_test)
-    diff_lbd = abs(lbdB_rad - lbdB_test)
-    diff_Az = abs(AzBA_rad - AzBA_test)
-    eps_Az = 0.001 / 3600 / 180 * math.pi
-    eps = 0.0001 / 3600 / 180 * math.pi
-
-    message = []
-    if diff_fi <= eps:
-        message.append('Podana szerokość jest poprawna.')
+    if type(kivioja_algorithm(deg2rad(fiA), deg2rad(lbdA), deg2rad(AzAB), s, n)) ==str:
+        message = [kivioja_algorithm(deg2rad(fiA), deg2rad(lbdA), deg2rad(AzAB), s, n)]
     else:
-        message.append(f'Podana szerokość jest niepoprawna. {diff_level_lat_lon(diff_fi)}')
+        fiB_test, lbdB_test, AzBA_test = kivioja_algorithm(deg2rad(fiA), deg2rad(lbdA), deg2rad(AzAB), s, n)
+        fiB_rad = deg2rad(fiB)
+        lbdB_rad = deg2rad(lbdB)
+        AzBA_rad = deg2rad(AzBA)
 
-    if diff_lbd <= eps:
-        message.append('Podana długość jest poprawna.')
-    else:
-        message.append(f'Podana długość jest niepoprawna. {diff_level_lat_lon(diff_lbd)}')
+        diff_fi = abs(fiB_rad - fiB_test)
+        diff_lbd = abs(lbdB_rad - lbdB_test)
+        diff_Az = abs(AzBA_rad - AzBA_test)
+        eps_Az = 0.001 / 3600 / 180 * math.pi
+        eps = 0.0001 / 3600 / 180 * math.pi
 
-    if diff_Az <= eps_Az:
-        message.append('Podana wysokość jest poprawna.')
-    else:
-        message.append(f'Podana długość jest niepoprawna. {diff_level_lat_lon(diff_Az)}')
+        message = []
+        if diff_fi <= eps:
+            message.append('Podana szerokość jest poprawna.')
+        else:
+            message.append(f'Podana szerokość jest niepoprawna. {diff_level_lat_lon(diff_fi)}')
+
+        if diff_lbd <= eps:
+            message.append('Podana długość jest poprawna.')
+        else:
+            message.append(f'Podana długość jest niepoprawna. {diff_level_lat_lon(diff_lbd)}')
+
+        if diff_Az <= eps_Az:
+            message.append('Podana wysokość jest poprawna.')
+        else:
+            message.append(f'Podana długość jest niepoprawna. {diff_level_lat_lon(diff_Az)}')
 
     return message
 
@@ -203,3 +206,15 @@ if __name__ == '__main__':
     print(f'NEU: {n, e, u}')
     print(f'dXYZ: {dx, dy, dz}')
     print(check_neu_xyz(dx, dy, dz, n, e, u, fi, lbd, True))
+
+    fiB, lbdB, AzBA = kivioja_algorithm(fi_rad, lbd_rad, deg2rad(45), 28000, 28)
+    fiB = fiB * 180 / math.pi
+    lbdB = lbdB * 180 / math.pi
+    AzBA = AzBA * 180 / math.pi
+
+    print(f'Fi: {degrees_to_dms(fiB)}')
+    print(f"Lbd: {degrees_to_dms(lbdB)}")
+    print(f"Lbd: {degrees_to_dms(AzBA)}")
+
+    text = check_vincenty(fi, lbd, fiB, lbdB, 45, AzBA, 28000)
+    print(text)
