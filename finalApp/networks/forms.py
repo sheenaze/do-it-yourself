@@ -94,7 +94,7 @@ class KiviojVincentyForm(forms.Form):
     FiA_M = forms.IntegerField(min_value=0, max_value=59)
     FiA_S = forms.FloatField(min_value=0, max_value=59.99999)
 
-    ds_number = forms.IntegerField(label='liczba odcinków', min_value= 1, max_value= 9999999999)
+    ds_number = forms.IntegerField(label='liczba odcinków', min_value= 1, max_value= 9999999999, required=False)
     LbdA_D = forms.IntegerField(label='Lbd', min_value=0, max_value=360)
     LbdA_M = forms.IntegerField(min_value=0, max_value=59)
     LbdA_S = forms.FloatField(min_value=0, max_value=59.99999)

@@ -299,7 +299,6 @@ class KiviojaVincentyView(View):
             lbdA_deg = form.cleaned_data['LbdA_D'] + form.cleaned_data['LbdA_M'] / 60 + form.cleaned_data[
                 'LbdA_S'] / 3600
             s = form.cleaned_data['distance']
-            ds_number = form.cleaned_data['ds_number']
             AzAB_deg = form.cleaned_data['AzAB_D'] + form.cleaned_data['AzAB_M'] / 60 + form.cleaned_data[
                 'AzAB_S'] / 3600
             fiB_deg = form.cleaned_data['FiB_D'] + form.cleaned_data['FiB_M'] / 60 + form.cleaned_data['FiB_S'] / 3600
@@ -307,11 +306,13 @@ class KiviojaVincentyView(View):
                 'LbdB_S'] / 3600
             AzBA_deg = form.cleaned_data['AzBA_D'] + form.cleaned_data['AzBA_M'] / 60 + form.cleaned_data[
                 'AzBA_S'] / 3600
-
             if 'Kivioja' in path:
+                ds_number = form.cleaned_data['ds_number'] #if form.cleaned_data['ds_number'] is not None else 1
                 message = check_kivioja(fiA_deg, lbdA_deg, AzAB_deg, s, ds_number, fiB_deg, lbdB_deg, AzBA_deg)
                 return render(request, 'networks/Kivioja.html', {'form': form, 'message': message})
             elif 'Vincenty' in path:
                 message = check_vincenty(fiA_deg, lbdA_deg, fiB_deg, lbdB_deg, AzAB_deg, AzBA_deg, s)
                 print(message)
                 return render(request, 'networks/Vincenty.html', {'form': form, 'message': message})
+        print(form.errors)
+        return render(request, 'networks/Vincenty.html', {'form': form})

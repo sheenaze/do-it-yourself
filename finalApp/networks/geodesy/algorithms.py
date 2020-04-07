@@ -177,6 +177,15 @@ def vincenty_algorithm(fi_1, lbd_1, fi_2, lbd_2, b_axis=GRS80.b_axis, f=GRS80.f,
     az_12 = mt.atan2(cos_u2 * sin_lbd, cos_u1 * sin_u2 - sin_u1 * cos_u2 * cos_lbd)
     az_21 = mt.atan2(cos_u1 * sin_lbd, -sin_u1 * cos_u2 + cos_u1 * sin_u2 * cos_lbd)
 
+    # if az_12 >= 0:
+    #     az_21 += mt.pi
+    # else:
+    #     az_12 += mt.pi * 2
+    #     az_21 += mt.pi
+
+    az_12 += mt.pi * 2 if az_12 < 0 else 0
+    az_21 += mt.pi
+
     return [az_12, az_21, s]
 
 

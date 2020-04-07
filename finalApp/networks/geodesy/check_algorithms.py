@@ -9,9 +9,9 @@ def diff_level_lat_lon(angle_diff):
 
     if angle_diff <= eps_sec:
         message = 'Różnica nie przekracza jednej sekundy.'
-    elif eps_sec < angle_diff < eps_min:
+    elif eps_sec < angle_diff <= eps_min:
         message = 'Różnica jest nie przekracza jednej minuty. '
-    elif eps_min < angle_diff < eps_deg:
+    elif eps_min < angle_diff <= eps_deg:
         message = 'Różnica jest nie przekracza jednego stopnia. '
     else:
         message = 'Różnica jest większa niż jeden stopień.'
@@ -138,9 +138,9 @@ def check_kivioja(fiA, lbdA, AzAB, s, n, fiB, lbdB, AzBA):
             message.append(f'Podana długość jest niepoprawna. {diff_level_lat_lon(diff_lbd)}')
 
         if diff_Az <= eps_Az:
-            message.append('Podana wysokość jest poprawna.')
+            message.append('Podany azymut odwrotny jest poprawny.')
         else:
-            message.append(f'Podana długość jest niepoprawna. {diff_level_lat_lon(diff_Az)}')
+            message.append(f'Podany azymut odwrotny jest t niepoprawny. {diff_level_lat_lon(diff_Az)}')
 
     return message
 
@@ -152,18 +152,18 @@ def check_vincenty(fiA, lbdA, fiB, lbdB, AzAB, AzBA, s):
     diff_AzAB = abs(AzAB_rad - AzAB_test)
     diff_AzBA = abs(AzBA_rad - AzBA_test)
     diff_s = abs(s - s_test)
-    eps_Az = 0.001 / 3600 / 180 * math.pi
+    eps_Az = 0.01 / 3600 / 180 * math.pi
     message = []
 
     if diff_AzAB <= eps_Az:
-        message.append('Podana wysokość jest poprawna.')
+        message.append('Podany azymut AB jest poprawny.')
     else:
-        message.append(f'Podana długość jest niepoprawna. {diff_level_lat_lon(diff_AzAB)}')
+        message.append(f'Podany azymut AB jest niepoprawny. {diff_level_lat_lon(diff_AzAB)}')
 
     if diff_AzBA <= eps_Az:
-        message.append('Podana wysokość jest poprawna.')
+        message.append('Podany azymut BA jest poprawny.')
     else:
-        message.append(f'Podana długość jest niepoprawna. {diff_level_lat_lon(diff_AzBA)}')
+        message.append(f'Podany azymut BA jest niepoprawny. {diff_level_lat_lon(diff_AzBA)}')
 
     if diff_s <= 0.001:
         message.append('Podana odległość jest poprawna.')
@@ -208,13 +208,22 @@ if __name__ == '__main__':
     print(check_neu_xyz(dx, dy, dz, n, e, u, fi, lbd, True))
 
     fiB, lbdB, AzBA = kivioja_algorithm(fi_rad, lbd_rad, deg2rad(45), 28000, 28)
+
+    AzAB_test, AzBA_test, s_test = vincenty_algorithm(deg2rad(fi), deg2rad(lbd), fiB, lbdB)
+
+    print(f'AzAB: {degrees_to_dms(AzAB_test*180/mt.pi)}')
+    print(f"AzBA: {degrees_to_dms(AzBA_test*180/mt.pi)}")
+    print(f"s: {s_test}")
+
+
     fiB = fiB * 180 / math.pi
     lbdB = lbdB * 180 / math.pi
     AzBA = AzBA * 180 / math.pi
 
     print(f'Fi: {degrees_to_dms(fiB)}')
     print(f"Lbd: {degrees_to_dms(lbdB)}")
-    print(f"Lbd: {degrees_to_dms(AzBA)}")
+    print(f"AzBA: {degrees_to_dms(AzBA)}")
 
     text = check_vincenty(fi, lbd, fiB, lbdB, 45, AzBA, 28000)
     print(text)
+
