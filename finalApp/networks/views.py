@@ -316,3 +316,12 @@ class KiviojaVincentyView(View):
                 return render(request, 'networks/Vincenty.html', {'form': form, 'message': message})
         print(form.errors)
         return render(request, 'networks/Vincenty.html', {'form': form})
+
+class GaussKrugerView(View):
+    def get(self, request):
+        form = GaussKrugerForm()
+        path = request.path
+        if 'direct' in path:
+            return render(request, 'networks/GK_direct.html', {'form': form})
+        elif 'back' in path:
+            return render(request, 'networks/GK_back.html', {'form': form})

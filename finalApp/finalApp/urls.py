@@ -36,4 +36,6 @@ urlpatterns = [
     path('GW_exercises/neu_to_XYZ/', NeuXYZ_View.as_view(), name = 'neu2xyz'),
     path('GW_exercises/Kivioja/', KiviojaVincentyView.as_view(), name = 'kivioja'),
     path('GW_exercises/Vincenty/', KiviojaVincentyView.as_view(), name = 'vincenty'),
+    path('GW_exercises/GK_direct/', GaussKrugerView.as_view(), name = 'gk_direct'),
+    path('GW_exercises/GK_back/', GaussKrugerView.as_view(), name = 'gk_back'),
 ]

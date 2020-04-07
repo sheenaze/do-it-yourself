@@ -116,6 +116,22 @@ class KiviojVincentyForm(forms.Form):
     AzBA_M = forms.IntegerField(min_value=0, max_value=59)
     AzBA_S = forms.FloatField(min_value=0, max_value=59.99999)
 
+class GaussKrugerForm(forms.Form):
+    FiA_D = forms.IntegerField(label='Fi', min_value=-90, max_value=90)
+    FiA_M = forms.IntegerField(min_value=0, max_value=59)
+    FiA_S = forms.FloatField(min_value=0, max_value=59.99999)
+
+    LbdA_D = forms.IntegerField(label='Lbd', min_value=0, max_value=360)
+    LbdA_M = forms.IntegerField(min_value=0, max_value=59)
+    LbdA_S = forms.FloatField(min_value=0, max_value=59.99999)
+
+    Lbd0 = forms.IntegerField(label='Lbd', min_value=15, max_value=24)
+
+    XGK = forms.FloatField(label= 'XGK')
+    YGK = forms.FloatField(label= 'YGK')
+
+
+
 # class Exercise_2Form(forms.Form):
 #     XA = forms.FloatField(label = 'X_A')
 #     YA = forms.FloatField(label = 'Y_A')

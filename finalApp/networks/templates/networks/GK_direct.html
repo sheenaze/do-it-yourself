@@ -1,0 +1,56 @@
+{% extends 'networks/GW_exercises.html' %}
+{% block exercises %}
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4 service-item">
+                <br>
+                <b>Wprowadź dane wyjściowe:</b>
+
+                <table class="data_table">
+                    <tr>
+                        <td>&phi;<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.FiA_D }} &deg; {{ form.FiA_M }}' {{ form.FiA_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>&lambda;<sub>A</sub></td>
+                        <td> =</td>
+                        <td> {{ form.LbdA_D }} &deg; {{ form.LbdA_M }}' {{ form.LbdA_S }}"</td>
+                    </tr>
+                    <tr>
+                        <td>&lambda;<sub>0</sub></td>
+                        <td> =</td>
+                        <td> {{ form.Lbd0 }} &deg; </td>
+                    </tr>
+
+                </table>
+            </div>
+            <br>
+            <div>
+                <b>Wprowadź wyniki końcowe:</b> <br>
+                <table class="data_table">
+                    <tr>
+                        <td>X<sub>A</sub><sup>GK</sup></td>
+                        <td> =</td>
+                        <td> {{ form.XGK }}  m</td>
+                    </tr>
+                    <tr>
+                        <td>Y<sub>A</sub><sup>GK</sup></td>
+                        <td> =</td>
+                        <td> {{ form.YGK }} m</td>
+                    </tr>
+                </table>
+                <br>
+                <input type="submit" value="Sprawdź!">
+
+            </div>
+            <hr>
+            <div>
+                {% for line in message %}
+                    <p>  {{ line }} </p>
+                {% endfor %}
+            </div>
+        </div>
+        {% csrf_token %}
+    </form>
+{% endblock %}
