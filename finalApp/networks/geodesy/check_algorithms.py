@@ -112,7 +112,7 @@ def check_neu_xyz(dX, dY, dZ, north, east, up, fi, lbd, Neu2XYZ=False):
 
 
 def check_kivioja(fiA, lbdA, AzAB, s, n, fiB, lbdB, AzBA):
-    if type(kivioja_algorithm(deg2rad(fiA), deg2rad(lbdA), deg2rad(AzAB), s, n)) ==str:
+    if type(kivioja_algorithm(deg2rad(fiA), deg2rad(lbdA), deg2rad(AzAB), s, n)) == str:
         message = [kivioja_algorithm(deg2rad(fiA), deg2rad(lbdA), deg2rad(AzAB), s, n)]
     else:
         fiB_test, lbdB_test, AzBA_test = kivioja_algorithm(deg2rad(fiA), deg2rad(lbdA), deg2rad(AzAB), s, n)
@@ -173,6 +173,38 @@ def check_vincenty(fiA, lbdA, fiB, lbdB, AzAB, AzBA, s):
     return message
 
 
+def check_gauss_kruger(fi, lbd, lbd0, XGK, YGK, direct=True):
+    if lbd0 != 19 and abs(lbd - lbd0) >= 1.5:
+        message = ['Błędny południk osiowy!']
+    else:
+        fi_rad = deg2rad(fi)
+        lbd_rad = deg2rad(lbd)
+        lbd0_rad = deg2rad(lbd0)
+        message = []
+        if direct:
+            X_test, Y_test = gk_direct(fi_rad, lbd_rad, lbd0_rad)
+            X_diff = abs(round(X_test, 3) - round(XGK, 3))
+            Y_diff = abs(round(Y_test, 3) - round(YGK, 3))
+            message.append(diff_level_xyzh(X_diff, 'XGK'))
+            message.append(diff_level_xyzh(Y_diff, 'YGK'))
+        else:
+            fi_test, lbd_test = gk_back(round(XGK, 3), round(YGK, 3), lbd0_rad)
+            diff_fi = abs(fi_rad - fi_test)
+            diff_lbd = abs(lbd_rad - lbd_test)
+            eps = 0.0001 * mt.pi / 180
+            if diff_fi <= eps:
+                message.append('Podana szerokość jest poprawna.')
+            else:
+                message.append(f'Podana szerokość jest niepoprawna. {diff_level_lat_lon(diff_fi)}')
+
+            if diff_lbd <= eps:
+                message.append('Podana szerokość jest poprawna.')
+            else:
+                message.append(f'Podana szerokość jest niepoprawna. {diff_level_lat_lon(diff_lbd)}')
+
+    return message
+
+
 if __name__ == '__main__':
     X = 3648420
     Y = 1474120
@@ -211,10 +243,9 @@ if __name__ == '__main__':
 
     AzAB_test, AzBA_test, s_test = vincenty_algorithm(deg2rad(fi), deg2rad(lbd), fiB, lbdB)
 
-    print(f'AzAB: {degrees_to_dms(AzAB_test*180/mt.pi)}')
-    print(f"AzBA: {degrees_to_dms(AzBA_test*180/mt.pi)}")
+    print(f'AzAB: {degrees_to_dms(AzAB_test * 180 / mt.pi)}')
+    print(f"AzBA: {degrees_to_dms(AzBA_test * 180 / mt.pi)}")
     print(f"s: {s_test}")
-
 
     fiB = fiB * 180 / math.pi
     lbdB = lbdB * 180 / math.pi
@@ -226,4 +257,9 @@ if __name__ == '__main__':
 
     text = check_vincenty(fi, lbd, fiB, lbdB, 45, AzBA, 28000)
     print(text)
+
+    c = mt.pi/180
+    X, Y = gk_direct(52 * c, 22 * c, 21 * c, GRS80)
+    print(check_gauss_kruger(52, 22, 21, X, Y, direct=True))
+    print(check_gauss_kruger(52+0.9/3600, 22+1/3600, 21, X, Y, direct=False))
 

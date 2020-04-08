@@ -189,7 +189,7 @@ def vincenty_algorithm(fi_1, lbd_1, fi_2, lbd_2, b_axis=GRS80.b_axis, f=GRS80.f,
     return [az_12, az_21, s]
 
 
-def gk_direct(fi, lbd, lbd0, ellipsoid):
+def gk_direct(fi, lbd, lbd0, ellipsoid = GRS80):
     a_axis = ellipsoid.a_axis
     e2p = ellipsoid.e2p
 
@@ -213,7 +213,7 @@ def gk_direct(fi, lbd, lbd0, ellipsoid):
     return [x, y]
 
 
-def gk_back(x_gk, y_gk, lbd0, ellipsoid):
+def gk_back(x_gk, y_gk, lbd0, ellipsoid = GRS80):
     a_axis = ellipsoid.a_axis
     e2p = ellipsoid.e2p
 
@@ -332,8 +332,7 @@ if __name__ == '__main__':
     print(degrees_to_dms(Reverse[1] / c))
     print(Reverse[2])
 
-    # XY = gk_direct(52 * c, 22 * c, 21 * c, GRS80)
-    # print(XY)
+
     #
     # FIL = gk_back(XY[0], XY[1], 21 * c, GRS80)
     # print(degrees_to_dms(FIL[0] / c))
@@ -356,3 +355,8 @@ if __name__ == '__main__':
     # print(data[5], data[4], data[3])
     # print(neu_vector(data[5], data[4], data[3]))
     # print(neu_to_xyz(FLH[0], FLH[1]))
+    X, Y = gk_direct(52 * c, 22 * c, 21 * c, GRS80)
+    print(f'X = {X}, Y = {Y}')
+    Fi, Lbd = gk_back(X+0.001, Y+0.001, 21*c, ellipsoid=GRS80)
+
+    print(f'Fi = {degrees_to_dms(Fi / c)}, Lbd = {degrees_to_dms(Lbd / c)}')

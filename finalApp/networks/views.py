@@ -325,3 +325,21 @@ class GaussKrugerView(View):
             return render(request, 'networks/GK_direct.html', {'form': form})
         elif 'back' in path:
             return render(request, 'networks/GK_back.html', {'form': form})
+
+    def post(self, request):
+        form = GaussKrugerForm(request.POST)
+        path = request.path
+        if form.is_valid():
+            fiA_deg = form.cleaned_data['FiA_D'] + form.cleaned_data['FiA_M'] / 60 + form.cleaned_data['FiA_S'] / 3600
+            lbdA_deg = form.cleaned_data['LbdA_D'] + form.cleaned_data['LbdA_M'] / 60 + form.cleaned_data[
+                'LbdA_S'] / 3600
+            lbd0 = form.cleaned_data['Lbd0']
+            XGK = form.cleaned_data['XGK']
+            YGK = form.cleaned_data['YGK']
+
+            if 'direct' in path:
+                message = check_gauss_kruger(fiA_deg, lbdA_deg, lbd0, XGK, YGK, direct=True)
+                return render(request, 'networks/GK_direct.html', {'form': form, 'message':message})
+            elif 'back' in path:
+                message = check_gauss_kruger(fiA_deg, lbdA_deg, lbd0, XGK, YGK, direct=False)
+                return render(request, 'networks/GK_back.html', {'form': form, 'message':message})
