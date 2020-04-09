@@ -131,6 +131,12 @@ class GaussKrugerForm(forms.Form):
     YGK = forms.FloatField(label= 'YGK')
 
 
+class ToDatumForm(forms.Form):
+    XGK = forms.FloatField(label='XGK')
+    YGK = forms.FloatField(label='YGK')
+    datum = forms.ChoiceField(choices=(('1992', 1992), ('2000/5', '2000/5'), ('2000/6', '2000/6'), ('2000/7', '2000/7'),('2000/8', '2000/8')))
+    X_datum = forms.FloatField()
+    Y_datum = forms.FloatField()
 
 # class Exercise_2Form(forms.Form):
 #     XA = forms.FloatField(label = 'X_A')

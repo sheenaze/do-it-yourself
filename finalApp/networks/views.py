@@ -307,7 +307,7 @@ class KiviojaVincentyView(View):
             AzBA_deg = form.cleaned_data['AzBA_D'] + form.cleaned_data['AzBA_M'] / 60 + form.cleaned_data[
                 'AzBA_S'] / 3600
             if 'Kivioja' in path:
-                ds_number = form.cleaned_data['ds_number'] #if form.cleaned_data['ds_number'] is not None else 1
+                ds_number = form.cleaned_data['ds_number']  # if form.cleaned_data['ds_number'] is not None else 1
                 message = check_kivioja(fiA_deg, lbdA_deg, AzAB_deg, s, ds_number, fiB_deg, lbdB_deg, AzBA_deg)
                 return render(request, 'networks/Kivioja.html', {'form': form, 'message': message})
             elif 'Vincenty' in path:
@@ -316,6 +316,7 @@ class KiviojaVincentyView(View):
                 return render(request, 'networks/Vincenty.html', {'form': form, 'message': message})
         print(form.errors)
         return render(request, 'networks/Vincenty.html', {'form': form})
+
 
 class GaussKrugerView(View):
     def get(self, request):
@@ -339,7 +340,24 @@ class GaussKrugerView(View):
 
             if 'direct' in path:
                 message = check_gauss_kruger(fiA_deg, lbdA_deg, lbd0, XGK, YGK, direct=True)
-                return render(request, 'networks/GK_direct.html', {'form': form, 'message':message})
+                return render(request, 'networks/GK_direct.html', {'form': form, 'message': message})
             elif 'back' in path:
                 message = check_gauss_kruger(fiA_deg, lbdA_deg, lbd0, XGK, YGK, direct=False)
-                return render(request, 'networks/GK_back.html', {'form': form, 'message':message})
+                return render(request, 'networks/GK_back.html', {'form': form, 'message': message})
+
+
+class ToDatumView(View):
+    def get(self, request):
+        form = ToDatumForm()
+        return render(request, 'networks/to_datum.html', {'form': form})
+
+    def post(self, request):
+        form = ToDatumForm(request.POST)
+        if form.is_valid():
+            XGK = form.cleaned_data['XGK']
+            YGK = form.cleaned_data['YGK']
+            datum = form.cleaned_data['datum']
+            X_datum = form.cleaned_data['X_datum']
+            Y_datum = form.cleaned_data['Y_datum']
+            message = check_to_datum(XGK, YGK, datum, X_datum, Y_datum)
+            return render(request, 'networks/to_datum.html', {'form': form, 'message': message})

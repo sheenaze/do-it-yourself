@@ -204,6 +204,19 @@ def check_gauss_kruger(fi, lbd, lbd0, XGK, YGK, direct=True):
 
     return message
 
+def check_to_datum(XGK, YGK, datum, X_datum, Y_datum):
+    if datum == '1992':
+        X_datum_test, Y_datum_test = to_datum_1992(XGK, YGK)
+    else:
+        zone = int(datum[5])
+        X_datum_test, Y_datum_test = to_datum_2000(XGK, YGK, zone)
+    message = []
+    diff_X = abs(round(X_datum, 3)-round(X_datum_test, 3))
+    diff_Y = abs(round(Y_datum, 3)-round(Y_datum_test, 3))
+    message.append(diff_level_xyzh(diff_X, f'X{datum}'))
+    message.append(diff_level_xyzh(diff_Y, f'Y{datum}'))
+    return message
+
 
 if __name__ == '__main__':
     X = 3648420
@@ -263,3 +276,11 @@ if __name__ == '__main__':
     print(check_gauss_kruger(52, 22, 21, X, Y, direct=True))
     print(check_gauss_kruger(52+0.9/3600, 22+1/3600, 21, X, Y, direct=False))
 
+    X2000, Y2000 = to_datum_2000(X, Y, 5)
+    X1992, Y1992 = to_datum_1992(X, Y)
+
+    print(f'XGK = {X}, YGK = {Y}')
+    print(f'X1992 = {X1992}, Y1992 = {Y1992}')
+    print(f'X2000 = {X2000}, Y2000 = {Y2000}')
+    print(check_to_datum(X, Y, '1992', X1992, Y1992))
+    print(check_to_datum(X, Y, '2000/5', X2000, Y2000))

@@ -38,4 +38,6 @@ urlpatterns = [
     path('GW_exercises/Vincenty/', KiviojaVincentyView.as_view(), name = 'vincenty'),
     path('GW_exercises/GK_direct/', GaussKrugerView.as_view(), name = 'gk_direct'),
     path('GW_exercises/GK_back/', GaussKrugerView.as_view(), name = 'gk_back'),
+    path('GW_exercises/to_datum/', ToDatumView.as_view(), name = 'to_datum'),
+
 ]
